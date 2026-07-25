@@ -8,7 +8,7 @@ import { wedding } from "@/config/wedding";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-red-500">
+    <section className="relative min-h-screen overflow-hidden">
 
       {/* Background */}
 
@@ -47,7 +47,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2 }}
-        className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white"
+        className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center text-white"
       >
 
         <h1 className="font-heading text-6xl font-light md:text-8xl">

@@ -1,17 +1,29 @@
 @import "tailwindcss";
 
+/* ==========================================
+   DESIGN TOKENS
+========================================== */
+
 :root {
-  --background: #f8f6f2;
+  /* Backgrounds */
+  --background: #f8f5f0;
   --surface: #ffffff;
 
-  --text: #2f2f2f;
-  --text-muted: #767676;
+  /* Typography */
+  --text: #2f2b28;
+  --text-muted: #6f6a65;
 
+  /* Brand */
   --primary: #7e8d80;
-  --accent: #c8b48a;
+  --accent: #b99d75;
 
-  --border: #e8e2da;
+  /* Borders */
+  --border: #ebe4db;
 }
+
+/* ==========================================
+   Tailwind Theme
+========================================== */
 
 @theme inline {
   --color-background: var(--background);
@@ -29,17 +41,45 @@
   --font-body: var(--font-body);
 }
 
-* {
+/* ==========================================
+   Base
+========================================== */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html,
-body {
-  height: 100%;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--text);
-  font-family: var(--font-body);
+  font-family: serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================
+   Utility Classes
+========================================== */
+
+.text-primary {
+  color: var(--text);
+}
+
+.text-secondary {
+  color: var(--text-muted);
+}
+
+.bg-surface {
+  background: var(--surface);
+}
+
+.border-soft {
+  border: 1px solid var(--border);
 }
