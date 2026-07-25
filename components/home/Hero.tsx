@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { Menu, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { wedding } from "@/config/wedding";
+import SiteMenu from "@/components/layout/Menu";
 
 export default function Hero() {
   return (
@@ -32,12 +33,7 @@ export default function Hero() {
           SM
         </div>
 
-        <button
-          aria-label="Apri menu"
-          className="rounded-full bg-white/10 p-3 backdrop-blur-sm transition hover:bg-white/20"
-        >
-          <Menu size={22} />
-        </button>
+        <SiteMenu />
 
       </div>
 

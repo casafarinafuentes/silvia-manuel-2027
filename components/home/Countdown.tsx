@@ -4,10 +4,15 @@ import { useEffect, useState } from "react";
 
 const weddingDate = new Date("2027-06-12T17:00:00");
 
-function getTimeRemaining() {
-  const now = new Date();
+type TimeRemaining = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
 
-  const difference = weddingDate.getTime() - now.getTime();
+function getTimeRemaining(): TimeRemaining {
+  const difference = weddingDate.getTime() - Date.now();
 
   if (difference <= 0) {
     return {
@@ -27,15 +32,44 @@ function getTimeRemaining() {
 }
 
 export default function Countdown() {
-  const [time, setTime] = useState(getTimeRemaining());
+  const [mounted, setMounted] = useState(false);
+
+  const [time, setTime] = useState<TimeRemaining>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    setMounted(true);
+
+    const update = () => {
       setTime(getTimeRemaining());
-    }, 1000);
+    };
+
+    update();
+
+    const interval = setInterval(update, 1000);
 
     return () => clearInterval(interval);
   }, []);
+
+  if (!mounted) {
+    return (
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-md rounded-3xl bg-white p-10 shadow-sm">
+          <p className="text-center text-xs uppercase tracking-[0.35em] text-secondary">
+            Countdown
+          </p>
+
+          <h2 className="mt-2 text-center text-lg tracking-[0.15em]">
+            AL NOSTRO GIORNO
+          </h2>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="px-6 py-20">
@@ -66,13 +100,12 @@ export default function Countdown() {
   );
 }
 
-function TimeBlock({
-  value,
-  label,
-}: {
+type TimeBlockProps = {
   value: number;
   label: string;
-}) {
+};
+
+function TimeBlock({ value, label }: TimeBlockProps) {
   return (
     <div>
       <div className="text-4xl font-light text-primary">
