@@ -33,7 +33,7 @@ export default function Hero() {
           SM
         </div>
 
-        <SiteMenu />
+        <SiteMenu variant="light" />
 
       </div>
 

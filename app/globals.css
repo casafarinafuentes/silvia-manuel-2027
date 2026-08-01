@@ -6,8 +6,9 @@
 
 :root {
   /* Backgrounds */
-  --background: #f8f5f0;
+  --background: #fcfbf8;
   --surface: #ffffff;
+  --panel: #f1ece4;
 
   /* Typography */
   --text: #2f2b28;
@@ -18,7 +19,7 @@
   --accent: #b99d75;
 
   /* Borders */
-  --border: #ebe4db;
+  --border: #e8e1d7;
 }
 
 /* ==========================================
@@ -28,6 +29,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-panel: var(--panel);
 
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
@@ -80,6 +82,20 @@ body {
   background: var(--surface);
 }
 
+.bg-panel {
+  background: var(--panel);
+}
+
 .border-soft {
   border: 1px solid var(--border);
+}
+/* Timeline */
+
+.timeline-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }

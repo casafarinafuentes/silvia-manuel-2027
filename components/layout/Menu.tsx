@@ -6,9 +6,14 @@ import { Menu, X, ArrowRight } from "lucide-react";
 
 import { navigation } from "@/data/navigation";
 
-export default function SiteMenu() {
-  const [open, setOpen] = useState(false);
+type SiteMenuProps = {
+  variant?: "light" | "dark";
+};
 
+export default function SiteMenu({
+  variant = "light",
+}: SiteMenuProps) {
+  const [open, setOpen] = useState(false);
   return (
     <>
       {/* Bottone Hamburger */}
@@ -16,7 +21,18 @@ export default function SiteMenu() {
       <button
         onClick={() => setOpen(true)}
         aria-label="Apri menu"
-        className="rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition hover:bg-white/20"
+        className={`
+rounded-full
+p-3
+transition
+backdrop-blur-sm
+
+${
+  variant === "light"
+    ? "bg-white/10 text-white hover:bg-white/20"
+    : "bg-transparent text-primary hover:bg-black/5"
+}
+`}
       >
         <Menu size={22} />
       </button>
