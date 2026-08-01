@@ -1,63 +1,62 @@
-import Section from "@/components/ui/Section";
+import Image from "next/image";
+import { Mail, Phone } from "lucide-react";
 
 export default function Contact() {
   return (
-    <Section>
-      <div className="mx-auto max-w-5xl rounded-[34px] border border-border bg-white shadow-[0_18px_60px_rgba(0,0,0,0.05)]">
-        <div className="grid gap-12 p-10 md:grid-cols-2 md:p-14">
-          {/* Sinistra */}
+    <section className="relative border-y border-border bg-white py-24">
+      <Image
+        src="/decorations/branch.svg"
+        alt=""
+        width={240}
+        height={240}
+        className="
+          pointer-events-none
+          absolute
+          bottom-0
+          right-0
+          hidden
+          opacity-10
+          lg:block
+        "
+      />
 
-          <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-              Hai bisogno di aiuto?
-            </p>
+      <div className="relative mx-auto max-w-3xl px-6 text-center">
 
-            <h2 className="mt-4 font-heading text-4xl font-light text-primary">
-              Contattaci
-            </h2>
+        <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">
+          Hai bisogno di aiuto?
+        </p>
 
-            <p className="mt-6 leading-8 text-secondary">
-              Se hai dubbi sulla conferma della presenza,
-              esigenze particolari oppure qualsiasi altra
-              domanda, siamo sempre felici di aiutarti.
-            </p>
-          </div>
+        <h2 className="mt-4 font-heading text-[42px] font-light text-primary">
+          Contattaci
+        </h2>
 
-          {/* Destra */}
+        <p className="mx-auto mt-6 max-w-2xl leading-8 text-secondary">
+          Per qualsiasi dubbio sulla conferma della presenza,
+          esigenze particolari o semplicemente per salutarci,
+          siamo sempre felici di sentirvi.
+        </p>
 
-          <div className="space-y-8">
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-secondary">
-                Email
-              </p>
+        <div className="mt-12 space-y-6">
 
-              <p className="mt-2 text-lg text-primary">
-                info@silviamanuel.it
-              </p>
-            </div>
+          <a
+            href="mailto:info@silviamanuel.it"
+            className="flex items-center justify-center gap-3 text-lg text-primary transition hover:text-accent"
+          >
+            <Mail size={18} />
+            info@silviamanuel.it
+          </a>
 
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-secondary">
-                Silvia
-              </p>
+          <a
+            href="tel:+393331234567"
+            className="flex items-center justify-center gap-3 text-lg text-primary transition hover:text-accent"
+          >
+            <Phone size={18} />
+            +39 333 123 4567
+          </a>
 
-              <p className="mt-2 text-lg text-primary">
-                +39 333 123 4567
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-secondary">
-                Manuel
-              </p>
-
-              <p className="mt-2 text-lg text-primary">
-                +39 333 765 4321
-              </p>
-            </div>
-          </div>
         </div>
+
       </div>
-    </Section>
+    </section>
   );
 }

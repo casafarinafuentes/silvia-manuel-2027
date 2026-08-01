@@ -24,36 +24,25 @@ export default function Textarea({
 
   return (
     <div className="group">
-      <label className="block text-[11px] uppercase tracking-[0.32em] text-secondary">
+      <label
+  className="
+    block
+    text-[11px]
+    uppercase
+    tracking-[0.32em]
+    text-secondary
+  "
+>
         {label}
       </label>
 
       <textarea
-        ref={textareaRef}
-        rows={1}
-        placeholder={placeholder}
-        onInput={handleInput}
-        className="
-          mt-4
-          w-full
-          resize-none
-          overflow-hidden
-          border-0
-          border-b
-          border-border
-          bg-transparent
-          pb-3
-          text-lg
-          leading-8
-          text-primary
-          placeholder:text-secondary/45
-          outline-none
-          transition-all
-          duration-300
-          focus:border-primary
-          focus:placeholder:text-secondary/25
-        "
-      />
+  ref={textareaRef}
+  rows={1}
+  placeholder={placeholder}
+  onInput={handleInput}
+  className="form-textarea placeholder:text-secondary/45 focus:border-primary focus:placeholder:text-secondary/20"
+/> 
 
       <div
         className="

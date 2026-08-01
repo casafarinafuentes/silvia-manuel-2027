@@ -13,31 +13,29 @@ export default function Input({
 }: InputProps) {
   return (
     <div className="group">
-      <label className="block text-[11px] uppercase tracking-[0.32em] text-secondary">
+      <label className="form-label">
         {label}
       </label>
 
       <input
-        type={type}
-        placeholder={placeholder}
-        className="
-          mt-4
-          w-full
-          border-0
-          border-b
-          border-border
-          bg-transparent
-          pb-3
-          text-lg
-          text-primary
-          placeholder:text-secondary/45
-          outline-none
-          transition-all
-          duration-300
-          focus:border-primary
-          focus:placeholder:text-secondary/25
-        "
-      />
+  className="
+    mt-4
+    w-full
+    border-0
+    border-b
+    border-border
+    bg-transparent
+    pb-3
+    text-lg
+    text-primary
+    placeholder:text-secondary/45
+    outline-none
+    transition-all
+    duration-300
+    focus:border-primary
+    focus:placeholder:text-secondary/20
+  "
+/>
 
       <div
         className="
