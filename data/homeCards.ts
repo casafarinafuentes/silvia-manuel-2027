@@ -31,7 +31,7 @@ export const homeCards = [
     href: "/hotel",
   },
   {
-    title: "Scopri la nostra Sardegna",
+    title: "La nostra Sardegna",
     description:
       "I luoghi del cuore che vi consigliamo di scoprire.",
     image: "/cards/sardinia.jpg",

@@ -4,13 +4,13 @@ import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 
+import Countdown from "@/components/ui/Countdown";
 import { wedding } from "@/config/wedding";
 import SiteMenu from "@/components/layout/Menu";
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden">
-
       {/* Background */}
 
       <Image
@@ -28,16 +28,14 @@ export default function Hero() {
       {/* Top Bar */}
 
       <div className="absolute left-0 top-0 z-20 flex w-full items-center justify-between p-6 text-white">
-
         <div className="font-heading text-3xl tracking-[0.25em]">
           SM
         </div>
 
         <SiteMenu variant="light" />
-
       </div>
 
-      {/* Center */}
+      {/* Contenuto */}
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -45,9 +43,8 @@ export default function Hero() {
         transition={{ duration: 1.2 }}
         className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center text-white"
       >
-
         <h1 className="font-heading text-6xl font-light md:text-8xl">
-          {wedding.couple.bride} & {wedding.couple.groom}
+          {wedding.couple.bride} &amp; {wedding.couple.groom}
         </h1>
 
         <p className="mt-8 text-sm uppercase tracking-[0.35em]">
@@ -65,21 +62,32 @@ export default function Hero() {
           {wedding.location.address.region}
         </p>
 
+        {/* Countdown */}
+
+        <div className="mt-12">
+          <Countdown variant="hero" />
+        </div>
       </motion.div>
 
       {/* Scroll */}
 
       <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-        }}
-        className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-white"
-      >
-        <ChevronDown size={34} />
-      </motion.div>
+  animate={{ y: [0, 10, 0] }}
+  transition={{
+    duration: 2,
+    repeat: Infinity,
+  }}
+  className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-center text-white"
+>
+  <p className="mb-2 text-[11px] uppercase tracking-[0.35em]">
+    Scorri
+  </p>
 
+  <ChevronDown
+    size={28}
+    className="block"
+  />
+</motion.div>
     </section>
   );
 }

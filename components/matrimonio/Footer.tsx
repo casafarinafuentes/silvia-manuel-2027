@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-
-import Countdown from "./Countdown";
+import Countdown from "@/components/ui/Countdown";
 
 export default function Footer() {
   return (

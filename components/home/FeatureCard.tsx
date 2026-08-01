@@ -1,64 +1,63 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LucideIcon, ArrowRight } from "lucide-react";
+
+import { ArrowRight, LucideIcon } from "lucide-react";
 
 type FeatureCardProps = {
   title: string;
   description: string;
-  image: string;
   href: string;
+  image: string;
   icon: LucideIcon;
 };
 
 export default function FeatureCard({
   title,
   description,
-  image,
   href,
+  image,
   icon: Icon,
 }: FeatureCardProps) {
   return (
     <Link
       href={href}
-      className="group block rounded-3xl border border-border bg-surface p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+      className="group flex h-full flex-col overflow-hidden border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
-      <div className="grid grid-cols-[120px_1fr] gap-5">
+      {/* Immagine */}
 
-        <div className="relative h-36 overflow-hidden rounded-2xl">
-          <Image
-            src={image}
-            alt={title}
-            fill
-            className="object-cover transition duration-500 group-hover:scale-105"
+      <div className="relative aspect-[1.7] overflow-hidden">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover transition duration-700 group-hover:scale-105"
+        />
+      </div>
+
+      {/* Contenuto */}
+
+      <div className="flex flex-1 flex-col items-center px-7 pt-6 pb-3 text-center">
+        <div className="text-primary">
+          <Icon
+            size={18}
+            strokeWidth={1.6}
           />
         </div>
 
-        <div className="flex flex-col justify-between">
+        <h3 className="mt-4 font-heading text-[16px] font-semibold uppercase tracking-[0.16em] text-primary">
+          {title}
+        </h3>
 
-          <div>
+        <p className="mt-4 text-[15px] leading-6 text-secondary">
+          {description}
+        </p>
 
-            <Icon
-              size={22}
-              className="mb-3 text-primary"
-            />
+        <div className="flex-1" />
 
-            <h3 className="text-2xl text-primary">
-              {title}
-            </h3>
-
-            <p className="mt-3 leading-7 text-secondary">
-              {description}
-            </p>
-
-          </div>
-
-          <ArrowRight
-            className="mt-6 transition-transform group-hover:translate-x-1"
-            size={20}
-          />
-
-        </div>
-
+        <ArrowRight
+          size={18}
+          className="mt-4 mb-1 transition-transform duration-300 group-hover:translate-x-1"
+        />
       </div>
     </Link>
   );

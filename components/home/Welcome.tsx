@@ -1,39 +1,67 @@
+import Image from "next/image";
+
 import Section from "@/components/ui/Section";
+import FeatureCard from "./FeatureCard";
+
+import { homeCards } from "@/data/homeCards";
 
 export default function Welcome() {
   return (
     <Section>
+      <div className="relative z-10 ">
+        {/* Decorazione */}
 
-      <div className="mx-auto max-w-3xl text-center">
+        <Image
+  src="/decorations/branch.svg"
+  alt=""
+  width={430}
+  height={430}
+  className="
+    pointer-events-none
+    absolute
+    -left-24
+    -top-15
+    z-0
+    hidden
+    scale-x-[-1]
+    opacity-12
+    lg:block
+  "
+/>
 
-        <h2 className="text-primary text-5xl font-light">
-          Benvenuti
-        </h2>
+        {/* Testo */}
 
-        <div className="mt-5 text-xl text-[#b99d75]">
-          ❦
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="font-heading text-[34px] leading-[1.15] text-primary md:text-[30px]">
+  Siamo felici di condividere con voi
+  <br />
+  uno dei giorni più importanti della nostra vita.
+</p>
+
+          <div className="mt-7 flex items-center justify-center">
+            <div className="h-px w-16 bg-border" />
+
+            <span className="mx-5 text-sm text-accent">
+              ❦
+            </span>
+
+            <div className="h-px w-16 bg-border" />
+          </div>
         </div>
 
-        <p className="mt-10 text-primary text-3xl leading-relaxed">
+        {/* Card */}
 
-          Siamo felici di condividere con voi
-          <br />
-          uno dei giorni più importanti
-          <br />
-          della nostra vita.
-
-        </p>
-
-        <p className="mt-10 text-secondary text-lg leading-9">
-
-          Abbiamo raccolto qui tutte le informazioni utili
-          per il matrimonio, insieme ad alcuni dei luoghi
-          della Sardegna che ci hanno fatto innamorare.
-
-        </p>
-
+        <div className="relative z-20 mt-10 flex justify-center gap-4">
+  {homeCards.map((card) => (
+    <div
+      key={card.title}
+      className="w-[300px]"
+    >
+      <FeatureCard {...card} />
+    </div>
+  ))}
+</div>
       </div>
-
     </Section>
   );
 }

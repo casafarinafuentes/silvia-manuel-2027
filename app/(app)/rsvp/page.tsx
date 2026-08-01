@@ -1,9 +1,17 @@
+import Hero from "@/components/rsvp/Hero";
+import Intro from "@/components/rsvp/Intro";
+import Form from "@/components/rsvp/Form";
+import Contact from "@/components/rsvp/Contact";
+import Footer from "@/components/matrimonio/Footer";
+
 export default function RSVPPage() {
   return (
-    <section className="flex min-h-full items-center justify-center px-6">
-      <h1 className="font-heading text-6xl text-primary">
-        RSVP
-      </h1>
-    </section>
+    <>
+      <Hero />
+      <Intro />
+      <Form />
+      <Contact />
+      <Footer />
+    </>
   );
 }
