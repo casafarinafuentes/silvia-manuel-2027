@@ -1,9 +1,28 @@
+import Hero from "@/components/hotel/Hero";
+import Intro from "@/components/hotel/Intro";
+import Navetta from "@/components/hotel/Navetta";
+import Hotels from "@/components/hotel/Hotels";
+
+import Contact from "@/components/hotel/Contact";
+import InfoSection from "@/components/hotel/InfoSection";
+import Footer from "@/components/matrimonio/Footer";
+
 export default function HotelPage() {
   return (
-    <section className="flex min-h-full items-center justify-center px-6">
-      <h1 className="font-heading text-6xl text-primary">
-        Hotel
-      </h1>
-    </section>
+    <>
+      <Hero />
+
+      <Intro />
+
+      <Navetta />
+
+      <Hotels />
+
+      <InfoSection />
+
+      <Contact />
+
+      <Footer />
+    </>
   );
 }

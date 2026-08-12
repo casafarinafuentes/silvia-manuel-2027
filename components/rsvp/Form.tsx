@@ -19,21 +19,7 @@ export default function Form() {
     <Section>
       <div className="mx-auto max-w-5xl">
 
-        {/* Titolo */}
-
-        <div className="text-center">
-
-          <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">
-            Conferma
-          </p>
-
-          <h2 className="mt-3 font-heading text-5xl font-light text-primary">
-            RSVP
-          </h2>
-
-          <div className="mx-auto mt-6 h-px w-14 bg-border" />
-
-        </div>
+      
 
         {/* Box */}
 

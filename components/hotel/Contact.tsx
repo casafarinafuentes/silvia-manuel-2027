@@ -31,9 +31,10 @@ export default function Contact() {
         </h2>
 
         <p className="mx-auto mt-6 max-w-2xl leading-8 text-secondary">
-          Per qualsiasi dubbio sulla conferma della presenza,
-          esigenze particolari o semplicemente per salutarci,
-          siamo sempre felici di sentirvi.
+          Se avete dubbi riguardo agli hotel, alla navetta
+          o al vostro soggiorno, non esitate a contattarci.
+          Saremo felici di darvi tutte le informazioni
+          necessarie.
         </p>
 
         <div className="mt-12">
