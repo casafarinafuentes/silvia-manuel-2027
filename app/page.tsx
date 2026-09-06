@@ -1,21 +1,19 @@
 import Hero from "@/components/home/Hero";
 import Welcome from "@/components/home/Welcome";
-import Countdown from "@/components/home/Countdown";
 import Sardegna from "@/components/home/Sardegna";
 import Footer from "@/components/matrimonio/Footer";
 
 export default function HomePage() {
   return (
     <>
-<Hero />
+      {/* Il countdown vive dentro l'Hero e, in chiusura, nel Footer. */}
+      <Hero />
 
-<Welcome />
+      <Welcome />
 
-<Sardegna />
+      <Sardegna />
 
-<Footer />
-
-
+      <Footer />
     </>
   );
 }
