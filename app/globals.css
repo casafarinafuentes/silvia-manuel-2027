@@ -51,6 +51,16 @@
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
+
+  /* Scala dei raggi.
+     Prima convivevano rounded-[20/24/28/32/36/40px] scelti caso per
+     caso: tre valori con un nome bastano e rendono il sistema leggibile.
+       tile  → riquadri piccoli e schede
+       photo → fotografie e blocchi editoriali
+       panel → grandi pannelli e contenitori */
+  --radius-tile: 20px;
+  --radius-photo: 28px;
+  --radius-panel: 36px;
 }
 
 /* ==========================================

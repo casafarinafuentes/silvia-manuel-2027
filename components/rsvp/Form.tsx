@@ -70,7 +70,7 @@ export default function Form() {
   return (
     <Section>
       <div className="mx-auto max-w-5xl">
-        <div className="rounded-[40px] border border-border bg-white px-6 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.06)] sm:px-10 md:px-16 md:py-18">
+        <div className="rounded-panel border border-border bg-white px-6 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.06)] sm:px-10 md:px-16 md:py-18">
           <div className="mx-auto max-w-3xl">
             {state.status === "success" ? (
               <Success
@@ -118,7 +118,11 @@ export default function Form() {
                   />
                 </div>
 
-                <div className="mt-10 grid gap-10 md:grid-cols-2">
+                {/* Email a tutta larghezza: affiancarla al contatore
+                    ospiti, che compare solo confermando la presenza,
+                    lasciava mezza riga vuota. Il contatore è ora nel
+                    blocco condizionale più sotto, dove ha senso. */}
+                <div className="mt-10">
                   <Input
                     label="Email"
                     name="email"
@@ -128,11 +132,6 @@ export default function Form() {
                     maxLength={160}
                     error={errors.email}
                   />
-
-                  {/* Ha senso solo per chi partecipa. */}
-                  {attending === true && (
-                    <GuestCounter value={guests} onChange={setGuests} />
-                  )}
                 </div>
 
                 {/* Il contatore è un controllo custom: il valore viaggia qui. */}
@@ -189,7 +188,9 @@ export default function Form() {
                       transition={{ duration: 0.35 }}
                       className="overflow-hidden"
                     >
-                      <div className="mt-12">
+                      <div className="mt-12 grid items-start gap-10 md:grid-cols-2">
+                        <GuestCounter value={guests} onChange={setGuests} />
+
                         <Input
                           label="Allergie o intolleranze"
                           name="dietary"

@@ -197,7 +197,7 @@ export default function Food() {
               min-h-[120px]
               items-center
               justify-center
-              rounded-[20px]
+              rounded-tile
               border
               border-dashed
               border-border

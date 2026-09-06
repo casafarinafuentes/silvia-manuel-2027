@@ -24,7 +24,8 @@ function connect(url) {
       if (!m.id || !pending.has(m.id)) return;
       const { resolve: d, reject: f } = pending.get(m.id);
       pending.delete(m.id);
-      m.error ? f(new Error(m.error.message)) : d(m.result);
+      if (m.error) f(new Error(m.error.message));
+      else d(m.result);
     });
 
     socket.addEventListener("error", reject);

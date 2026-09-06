@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+
+    // Output del QA visivo: contiene un profilo Chrome con migliaia
+    // di file JS che non sono codice di questo progetto.
+    ".qa/**",
   ]),
 ]);
 

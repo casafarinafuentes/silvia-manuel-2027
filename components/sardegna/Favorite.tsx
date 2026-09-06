@@ -2,19 +2,19 @@ import Image from "next/image";
 
 export default function Favorite() {
   return (
-    <section className="px-6 py-24 md:py-32">
+    <section className="bg-panel-photo px-6 py-20 md:py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
           <p className="text-[10px] uppercase tracking-[0.4em] text-secondary">
             Il nostro posto del cuore
           </p>
 
-          <h2 className="mt-4 font-heading text-5xl font-light text-primary md:text-6xl">
+          <h2 className="mt-4 font-heading text-4xl font-light text-primary md:text-5xl">
             Cala Moresca
           </h2>
         </div>
 
-        <div className="relative aspect-[16/8] overflow-hidden rounded-[36px]">
+        <div className="relative aspect-[16/8] overflow-hidden rounded-panel">
           <Image
             src="/sardegna/cala-moresca.jpg"
             alt="Cala Moresca"

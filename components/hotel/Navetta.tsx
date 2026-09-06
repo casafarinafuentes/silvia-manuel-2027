@@ -9,7 +9,7 @@ export default function Navetta() {
         className="
           mx-auto
           max-w-5xl
-          rounded-[32px]
+          rounded-photo
           border
           border-border
           bg-white

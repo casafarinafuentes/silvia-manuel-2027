@@ -35,7 +35,7 @@ function Photo({
 }) {
   return (
     <figure>
-      <div className={`relative ${aspect} overflow-hidden rounded-[28px] bg-panel-photo`}>
+      <div className={`relative ${aspect} overflow-hidden rounded-photo bg-panel-photo`}>
         <Image
           src={beach.image}
           alt={beach.name}
@@ -94,7 +94,7 @@ export default function Beaches() {
           </Reveal>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1 lg:gap-8">
-            <Reveal delay={0.08}>
+            <Reveal delay={80}>
               <Photo
                 beach={capriccioli}
                 aspect="aspect-[4/3] lg:aspect-[16/9]"
@@ -102,7 +102,7 @@ export default function Beaches() {
               />
             </Reveal>
 
-            <Reveal delay={0.16}>
+            <Reveal delay={160}>
               <Photo
                 beach={pevero}
                 aspect="aspect-[4/3] lg:aspect-[16/9]"
@@ -131,7 +131,7 @@ export default function Beaches() {
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {others.map((beach, index) => (
-              <Reveal key={beach.name} delay={index * 0.06}>
+              <Reveal key={beach.name} delay={index * 60}>
                 <Photo
                   beach={beach}
                   aspect="aspect-[4/5]"

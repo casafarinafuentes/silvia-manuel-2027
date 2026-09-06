@@ -32,7 +32,7 @@ export default function HotelCard({
     <article
       className="
         overflow-hidden
-        rounded-[36px]
+        rounded-panel
         border
         border-border
         bg-white

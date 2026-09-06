@@ -32,7 +32,7 @@ export default function RadioCard({
       className={`
         relative
         overflow-hidden
-        rounded-[24px]
+        rounded-tile
         border
         p-8
         text-left

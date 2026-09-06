@@ -33,7 +33,7 @@ export default function FAQ() {
     <div
       className="
         h-full
-        rounded-[36px]
+        rounded-panel
         border
         border-border
         bg-white

@@ -110,7 +110,7 @@ export default function Villages() {
           */}
           <div
             className="
-              relative min-h-[420px] overflow-hidden rounded-[32px]
+              relative min-h-[420px] overflow-hidden rounded-photo
               border border-border bg-panel-photo
               lg:sticky lg:top-28 lg:min-h-[560px]
             "

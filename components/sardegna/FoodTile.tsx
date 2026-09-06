@@ -46,7 +46,7 @@ export default function FoodTile({
           className={`
             group relative flex w-full flex-col justify-end
             ${ASPECT[aspect]}
-            overflow-hidden rounded-[20px]
+            overflow-hidden rounded-tile
             border border-border bg-panel-photo
             p-6 md:p-7
             transition-colors duration-500
@@ -91,7 +91,7 @@ export default function FoodTile({
         className={`
           group relative w-full
           ${ASPECT[aspect]}
-          overflow-hidden rounded-[20px] bg-[#e8e4dc]
+          overflow-hidden rounded-tile bg-[#e8e4dc]
         `}
       >
         <Image
@@ -172,7 +172,7 @@ function Wrapper({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="block rounded-[20px]"
+      className="block rounded-tile"
     >
       {children}
     </Link>

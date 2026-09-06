@@ -4,7 +4,7 @@ export default function Map() {
       className="
         h-full
         overflow-hidden
-        rounded-[36px]
+        rounded-panel
         border
         border-border
         bg-white
@@ -20,7 +20,7 @@ export default function Map() {
         <iframe
           title="Mappa Hotel"
           src="https://www.google.com/maps/embed?pb=INSERISCI_IL_TUO_LINK"
-          className="h-[380px] w-full rounded-[24px] border-0"
+          className="h-[380px] w-full rounded-tile border-0"
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
