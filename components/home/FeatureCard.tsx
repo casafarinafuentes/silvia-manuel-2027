@@ -30,7 +30,8 @@ export default function FeatureCard({
           src={image}
           alt={title}
           fill
-          className="object-cover transition duration-700 group-hover:scale-105"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+          className="object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none"
         />
       </div>
 

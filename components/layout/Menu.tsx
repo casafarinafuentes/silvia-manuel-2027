@@ -1,86 +1,140 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 import { navigation } from "@/data/navigation";
+import { wedding } from "@/config/wedding";
 
 type SiteMenuProps = {
   variant?: "light" | "dark";
 };
 
-export default function SiteMenu({
-  variant = "light",
-}: SiteMenuProps) {
+export default function SiteMenu({ variant = "light" }: SiteMenuProps) {
   const [open, setOpen] = useState(false);
+
+  const panelRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  // Esc chiude il menu, e il focus torna dove l'utente lo aveva
+  // lasciato invece di ripartire dall'inizio della pagina.
+  useEffect(() => {
+    if (!open) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
+  // Con il menu aperto la pagina sotto non deve scorrere.
+  useEffect(() => {
+    if (!open) return;
+
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
   return (
     <>
       {/* Bottone Hamburger */}
 
       <button
+        ref={triggerRef}
         onClick={() => setOpen(true)}
         aria-label="Apri menu"
+        aria-expanded={open}
         className={`
-rounded-full
-p-3
-transition
-backdrop-blur-sm
-
-${
-  variant === "light"
-    ? "bg-white/10 text-white hover:bg-white/20"
-    : "bg-transparent text-primary hover:bg-black/5"
-}
-`}
+          rounded-full p-3 transition backdrop-blur-sm
+          ${
+            variant === "light"
+              ? "bg-white/10 text-white hover:bg-white/20"
+              : "bg-transparent text-primary hover:bg-black/5"
+          }
+        `}
       >
-        <Menu size={22} />
+        <Menu size={22} aria-hidden="true" />
       </button>
 
-      {/* Overlay + Menu */}
+      {/* Overlay + Menu
+
+          `overflow-hidden`: da chiuso il pannello è spostato fuori
+          schermo con translate-x-full e, senza clipping, allargherebbe
+          il documento (overflow orizzontale su mobile).
+
+          `inert` da chiuso: senza, i link resterebbero raggiungibili
+          con Tab pur essendo invisibili. */}
 
       <div
-        className={`fixed inset-0 z-50 flex justify-end transition-opacity duration-300 ${
-          open
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
-        }`}
+        inert={!open}
+        className={`
+          fixed inset-0 z-50 flex justify-end overflow-hidden
+          transition-opacity duration-300 motion-reduce:transition-none
+          ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}
+        `}
       >
-        {/* Overlay */}
+        {/* Sfondo */}
 
-        <div
+        <button
+          type="button"
+          tabIndex={-1}
+          aria-label="Chiudi menu"
           onClick={() => setOpen(false)}
-          className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${
-            open ? "opacity-100" : "opacity-0"
-          }`}
+          className={`
+            absolute inset-0 h-full w-full cursor-default bg-black/40
+            transition-opacity duration-300 motion-reduce:transition-none
+            ${open ? "opacity-100" : "opacity-0"}
+          `}
         />
 
         {/* Pannello */}
 
         <div
-          className={`relative flex h-full w-96 flex-col bg-background p-8 shadow-2xl transition-transform duration-300 ease-out ${
-            open ? "translate-x-0" : "translate-x-full"
-          }`}
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu di navigazione"
+          className={`
+            relative flex h-full w-96 max-w-[calc(100vw-2.5rem)] flex-col
+            bg-background p-8 shadow-2xl
+            transition-transform duration-300 ease-out
+            motion-reduce:transition-none
+            ${open ? "translate-x-0" : "translate-x-full"}
+          `}
         >
           {/* Header */}
 
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-sm uppercase tracking-[0.35em] text-secondary">
-                Silvia & Manuel
+                {wedding.couple.bride} &amp; {wedding.couple.groom}
               </p>
 
-              <h2 className="mt-3 text-4xl font-light text-primary">
+              <h2 className="mt-3 font-heading text-4xl font-light text-primary">
                 Menu
               </h2>
             </div>
 
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                triggerRef.current?.focus();
+              }}
               aria-label="Chiudi menu"
-              className="text-primary transition hover:text-accent"
+              className="shrink-0 text-primary transition hover:text-accent"
             >
-              <X size={28} />
+              <X size={28} aria-hidden="true" />
             </button>
           </div>
 
@@ -88,23 +142,24 @@ ${
 
           {/* Navigazione */}
 
-<nav className="flex flex-col gap-8">
-  {navigation.map((item) => (
-    <Link
-      key={item.href}
-      href={item.href}
-      onClick={() => setOpen(false)}
-      className="group flex items-center justify-between text-left text-2xl font-light text-primary transition hover:text-accent"
-    >
-      <span>{item.label}</span>
+          <nav className="flex flex-col gap-8">
+            {navigation.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="group flex items-center justify-between gap-4 text-left text-2xl font-light text-primary transition hover:text-accent"
+              >
+                <span>{item.label}</span>
 
-      <ArrowRight
-  size={20}
-  className="transition-transform duration-200 group-hover:translate-x-1"
-/>
-    </Link>
-  ))}
-</nav>
+                <ArrowRight
+                  size={20}
+                  aria-hidden="true"
+                  className="shrink-0 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+                />
+              </Link>
+            ))}
+          </nav>
 
           {/* Footer */}
 
@@ -112,11 +167,12 @@ ${
             <div className="mb-8 h-px bg-border" />
 
             <p className="text-sm uppercase tracking-[0.35em] text-secondary">
-              Li Capanni
+              {wedding.location.venue}
             </p>
 
             <p className="mt-2 text-lg text-primary">
-              Cannigione · Sardegna
+              {wedding.location.address.locality} ·{" "}
+              {wedding.location.address.region}
             </p>
           </div>
         </div>

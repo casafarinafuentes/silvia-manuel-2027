@@ -1,118 +1,103 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+import { wedding } from "@/config/wedding";
 
 type CountdownProps = {
   variant?: "hero" | "footer";
 };
 
-type TimeRemaining = {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-};
+/** Istante con fuso orario esplicito: uguale per tutti i visitatori. */
+const weddingDate = new Date(wedding.dates.startsAt);
 
-const weddingDate = new Date("2027-06-12T17:30:00");
+/* --------------------------------------------------------------------
+   L'orologio è una sorgente esterna a React: la modelliamo come store.
 
-const INITIAL_STATE: TimeRemaining = {
-  days: 0,
-  hours: 0,
-  minutes: 0,
-  seconds: 0,
-};
+   Lo snapshot è il numero di secondi mancanti — un primitivo, quindi
+   stabile tra due letture nello stesso tick. Restituire un oggetto
+   nuovo a ogni chiamata manderebbe useSyncExternalStore in loop.
+-------------------------------------------------------------------- */
 
-function calculate(): TimeRemaining {
-  const difference = weddingDate.getTime() - Date.now();
-
-  if (difference <= 0) {
-    return INITIAL_STATE;
-  }
-
-  return {
-    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((difference / (1000 * 60)) % 60),
-    seconds: Math.floor((difference / 1000) % 60),
-  };
+function remainingSeconds(): number {
+  return Math.max(
+    0,
+    Math.floor((weddingDate.getTime() - Date.now()) / 1000),
+  );
 }
 
-export default function Countdown({
-  variant = "footer",
-}: CountdownProps) {
-  const [mounted, setMounted] = useState(false);
+let snapshot = remainingSeconds();
 
-  const [time, setTime] =
-    useState<TimeRemaining>(INITIAL_STATE);
+function subscribe(onChange: () => void): () => void {
+  const interval = setInterval(() => {
+    const next = remainingSeconds();
 
-  useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      setMounted(true);
-      setTime(calculate());
-    });
+    if (next !== snapshot) {
+      snapshot = next;
+      onChange();
+    }
+  }, 1000);
 
-    const interval = setInterval(() => {
-      setTime(calculate());
-    }, 1000);
+  return () => clearInterval(interval);
+}
 
-    return () => {
-      cancelAnimationFrame(id);
-      clearInterval(interval);
-    };
-  }, []);
+function getSnapshot(): number {
+  return snapshot;
+}
+
+/** Sul server non esiste un "adesso" del visitatore: mostriamo "--". */
+function getServerSnapshot(): null {
+  return null;
+}
+
+export default function Countdown({ variant = "footer" }: CountdownProps) {
+  const seconds = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
 
   const dark = variant === "footer";
 
-  const items = [
-    {
-      label: "Giorni",
-      value: mounted
-        ? String(time.days).padStart(2, "0")
-        : "--",
-    },
-    {
-      label: "Ore",
-      value: mounted
-        ? String(time.hours).padStart(2, "0")
-        : "--",
-    },
-    {
-      label: "Minuti",
-      value: mounted
-        ? String(time.minutes).padStart(2, "0")
-        : "--",
-    },
-    {
-      label: "Secondi",
-      value: mounted
-        ? String(time.seconds).padStart(2, "0")
-        : "--",
-    },
-  ];
+  const items =
+    seconds === null
+      ? [
+          { label: "Giorni", value: null },
+          { label: "Ore", value: null },
+          { label: "Minuti", value: null },
+          { label: "Secondi", value: null },
+        ]
+      : [
+          { label: "Giorni", value: Math.floor(seconds / 86_400) },
+          { label: "Ore", value: Math.floor(seconds / 3_600) % 24 },
+          { label: "Minuti", value: Math.floor(seconds / 60) % 60 },
+          { label: "Secondi", value: seconds % 60 },
+        ];
 
   return (
-    <div className="flex items-center justify-center whitespace-nowrap">
+    <div
+      className="flex items-center justify-center whitespace-nowrap"
+      role="timer"
+      aria-label="Tempo mancante al matrimonio"
+    >
       {items.map((item, index) => (
-        <div
-          key={item.label}
-          className="flex items-center"
-        >
-          <div className="w-[62px] text-center md:w-[78px]">
+        <div key={item.label} className="flex items-center">
+          {/* Larghezze scalate: a 360px quattro colonne fisse da 62px
+              più i separatori uscivano dallo schermo. */}
+          <div className="w-[46px] text-center sm:w-[62px] md:w-[78px]">
             <p
-              className={`font-heading font-light leading-none ${
-                dark
-                  ? "text-5xl text-primary"
-                  : "text-4xl text-white md:text-5xl"
+              className={`font-heading font-light leading-none tabular-nums text-3xl sm:text-4xl md:text-5xl ${
+                dark ? "text-primary" : "text-white"
               }`}
             >
-              {item.value}
+              {item.value === null
+                ? "--"
+                : String(item.value).padStart(2, "0")}
             </p>
 
             <p
-              className={`mt-3 text-[10px] uppercase tracking-[0.32em] ${
-                dark
-                  ? "text-secondary"
-                  : "text-white/80"
+              className={`mt-2 text-[9px] uppercase tracking-[0.22em] sm:mt-3 sm:text-[10px] sm:tracking-[0.32em] ${
+                dark ? "text-secondary" : "text-white/80"
               }`}
             >
               {item.label}
@@ -121,10 +106,9 @@ export default function Countdown({
 
           {index !== items.length - 1 && (
             <div
-              className={`mx-4 h-12 w-px ${
-                dark
-                  ? "bg-border"
-                  : "bg-white/25"
+              aria-hidden="true"
+              className={`mx-2 h-9 w-px sm:mx-3 sm:h-12 md:mx-4 ${
+                dark ? "bg-border" : "bg-white/25"
               }`}
             />
           )}

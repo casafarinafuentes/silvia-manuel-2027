@@ -8,7 +8,8 @@
   /* Backgrounds */
   --background: #fcfbf8;
   --surface: #ffffff;
-  --panel: #f1ece4;
+  --panel: #f3eee7;
+  --panel-photo: #f7f3ee;
 
   /* Typography */
   --text: #2f2b28;
@@ -20,6 +21,13 @@
 
   /* Borders */
   --border: #e8e1d7;
+
+  /* Feedback */
+  --danger: #a4553f;
+
+  /* Altezza della mini-nav sticky della pagina Sardegna: serve a
+     calcolare lo scroll-margin delle ancore. */
+  --sticky-nav-height: 4.5rem;
 }
 
 /* ==========================================
@@ -30,6 +38,7 @@
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-panel: var(--panel);
+  --color-panel-photo: var(--panel-photo);
 
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
@@ -38,6 +47,7 @@
   --color-accent: var(--accent);
 
   --color-border: var(--border);
+  --color-danger: var(--danger);
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
@@ -61,9 +71,30 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--text);
-  font-family: serif;
+  /* Il testo corrente usa Inter (--font-body); i titoli passano a
+     Cormorant tramite la utility `font-heading`. */
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Nessun elemento deve poter allargare la pagina in orizzontale. */
+body {
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+/* Focus visibile e coerente su tutto il sito, senza outline
+   permanente al click del mouse. */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 /* ==========================================
@@ -89,7 +120,72 @@ body {
 .border-soft {
   border: 1px solid var(--border);
 }
-/* Timeline */
+
+/* Le ancore non devono finire sotto la nav sticky. */
+.anchor-offset {
+  scroll-margin-top: calc(var(--sticky-nav-height) + 1.5rem);
+}
+
+/* ==========================================
+   Form
+========================================== */
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--text-muted);
+}
+
+.form-textarea {
+  margin-top: 1rem;
+  width: 100%;
+  min-height: 3rem;
+  resize: none;
+  overflow: hidden;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  padding-bottom: 0.75rem;
+  font: inherit;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--text);
+  outline: none;
+  transition: border-color 300ms ease;
+}
+
+/* ==========================================
+   Reveal on scroll
+
+   Il contenuto è visibile di default: lo stato nascosto esiste solo
+   sotto `html.js`, quindi solo quando il JavaScript sta girando
+   davvero. Senza JS (o se qualcosa va storto) si vede tutto.
+========================================== */
+
+.reveal {
+  opacity: 1;
+}
+
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* ==========================================
+   Timeline
+========================================== */
 
 .timeline-scroll::-webkit-scrollbar {
   display: none;
@@ -98,4 +194,32 @@ body {
 .timeline-scroll {
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+/* ==========================================
+   Reduced motion
+   Chi ha chiesto meno animazioni non deve subirle: azzeriamo
+   transizioni e animazioni, incluse quelle di Framer Motion.
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Niente comparse: il contenuto è già al suo posto. */
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import Countdown from "@/components/ui/Countdown";
 import { wedding } from "@/config/wedding";
 import SiteMenu from "@/components/layout/Menu";
 
 export default function Hero() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section className="relative min-h-screen overflow-hidden">
       {/* Background */}
@@ -18,6 +20,7 @@ export default function Hero() {
         alt="Li Capanni"
         fill
         priority
+        sizes="100vw"
         className="object-cover"
       />
 
@@ -38,7 +41,7 @@ export default function Hero() {
       {/* Contenuto */}
 
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2 }}
         className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center text-white"
@@ -71,23 +74,22 @@ export default function Hero() {
 
       {/* Scroll */}
 
+      {/* L'indicatore oscilla in continuo: lo fermiamo del tutto per
+          chi ha chiesto meno animazioni. */}
       <motion.div
-  animate={{ y: [0, 10, 0] }}
-  transition={{
-    duration: 2,
-    repeat: Infinity,
-  }}
-  className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-center text-white"
->
-  <p className="mb-2 text-[11px] uppercase tracking-[0.35em]">
-    Scorri
-  </p>
+        animate={reduceMotion ? undefined : { y: [0, 10, 0] }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+        }}
+        className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-center text-white"
+      >
+        <p className="mb-2 text-[11px] uppercase tracking-[0.35em]">
+          Scorri
+        </p>
 
-  <ChevronDown
-    size={28}
-    className="block"
-  />
-</motion.div>
+        <ChevronDown size={28} aria-hidden="true" className="block" />
+      </motion.div>
     </section>
   );
 }

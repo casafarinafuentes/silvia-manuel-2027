@@ -23,7 +23,7 @@ export default function CTA() {
           <div className="mx-auto flex w-full max-w-3xl flex-col items-center text-center">
 
             <h2 className="font-heading text-[30px] font-light leading-[1.2] text-white sm:text-[38px] md:text-[56px]">
-              Non vediamo l'ora
+              Non vediamo l&apos;ora
               <br />
               di festeggiare con voi.
             </h2>

@@ -50,7 +50,7 @@ export default function Footer() {
           </p>
 
           <Link
-            href="#faq"
+            href="/matrimonio#faq"
             className="mt-5 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary transition hover:text-accent"
           >
             Scopri di più →
@@ -71,7 +71,7 @@ export default function Footer() {
           </p>
 
           <Link
-            href="/contatti"
+            href="/rsvp#contatti"
             className="mt-5 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary transition hover:text-accent"
           >
             Scrivici →

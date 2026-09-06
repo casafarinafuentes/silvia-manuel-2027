@@ -1,48 +1,61 @@
 "use client";
 
-import { useRef } from "react";
+import { useId, useRef } from "react";
 
-type TextareaProps = {
+type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label: string;
-  placeholder?: string;
+  error?: string;
 };
 
 export default function Textarea({
   label,
-  placeholder,
+  error,
+  id,
+  onInput,
+  className = "",
+  ...props
 }: TextareaProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  function handleInput() {
+  const generatedId = useId();
+  const textareaId = id ?? generatedId;
+  const errorId = `${textareaId}-error`;
+
+  function handleInput(event: React.InputEvent<HTMLTextAreaElement>) {
     const textarea = textareaRef.current;
 
-    if (!textarea) return;
+    if (textarea) {
+      // Azzerare prima l'altezza permette al campo di rimpicciolirsi
+      // quando si cancella del testo, non solo di crescere.
+      textarea.style.height = "0px";
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
 
-    textarea.style.height = "0px";
-    textarea.style.height = `${textarea.scrollHeight}px`;
+    onInput?.(event);
   }
 
   return (
     <div className="group">
-      <label
-  className="
-    block
-    text-[11px]
-    uppercase
-    tracking-[0.32em]
-    text-secondary
-  "
->
+      <label htmlFor={textareaId} className="form-label">
         {label}
       </label>
 
       <textarea
-  ref={textareaRef}
-  rows={1}
-  placeholder={placeholder}
-  onInput={handleInput}
-  className="form-textarea placeholder:text-secondary/45 focus:border-primary focus:placeholder:text-secondary/20"
-/> 
+        {...props}
+        id={textareaId}
+        ref={textareaRef}
+        rows={1}
+        onInput={handleInput}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? errorId : undefined}
+        className={`
+          form-textarea
+          placeholder:text-secondary/45
+          focus:placeholder:text-secondary/20
+          ${error ? "border-[#a4553f]" : "focus:border-primary"}
+          ${className}
+        `}
+      />
 
       <div
         className="
@@ -52,8 +65,15 @@ export default function Textarea({
           transition-all
           duration-300
           group-focus-within:w-full
+          motion-reduce:transition-none
         "
       />
+
+      {error && (
+        <p id={errorId} role="alert" className="mt-3 text-[13px] text-[#a4553f]">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

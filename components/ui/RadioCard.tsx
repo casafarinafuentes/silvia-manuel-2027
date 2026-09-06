@@ -19,6 +19,8 @@ export default function RadioCard({
   return (
     <motion.button
       type="button"
+      role="radio"
+      aria-checked={selected}
       onClick={onClick}
       whileHover={{ y: -4 }}
       whileTap={{ scale: 0.985 }}

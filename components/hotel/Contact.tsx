@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+
+import ContactAction from "@/components/ui/ContactAction";
 
 export default function Contact() {
   return (
@@ -38,32 +39,7 @@ export default function Contact() {
         </p>
 
         <div className="mt-12">
-          <Link
-            href="https://wa.me/393331234567"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              inline-flex
-              items-center
-              justify-center
-              rounded-full
-              border
-              border-border
-              px-10
-              py-4
-              text-[11px]
-              uppercase
-              tracking-[0.32em]
-              text-primary
-              transition-all
-              duration-300
-              hover:border-primary
-              hover:bg-primary
-              hover:text-white
-            "
-          >
-            Scrivici
-          </Link>
+          <ContactAction />
         </div>
 
       </div>
