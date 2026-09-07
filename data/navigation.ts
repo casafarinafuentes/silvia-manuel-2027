@@ -15,4 +15,9 @@ export const navigation = [
     label: "La nostra Sardegna",
     href: "/sardegna",
   },
+  {
+    // Volutamente ultima: presente per chi la cerca, mai in evidenza.
+    label: "Lista nozze",
+    href: "/lista-nozze",
+  },
 ];

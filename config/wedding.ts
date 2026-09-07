@@ -81,6 +81,24 @@ export const wedding = {
     email: null as string | null,
   },
 
+  /**
+   * Lista nozze.
+   *
+   * DA FORNIRE. L'IBAN qui sotto è composto di soli zeri: non
+   * corrisponde ad alcun conto e va sostituito prima di pubblicare.
+   *
+   * `holder` è l'intestatario del conto ed è obbligatorio: senza,
+   * chi fa il bonifico non sa a chi lo sta mandando. Finché resta
+   * null la pagina non mostra i riferimenti, così non può partire
+   * un bonifico verso un intestatario sbagliato.
+   */
+  gift: {
+    iban: "IT00 0000 0000 0000 0000 0000 000",
+    holder: null as string | null,
+    /** Causale suggerita, per capire da chi arriva il pensiero. */
+    reference: "Regalo di nozze",
+  },
+
   rsvpDeadline: "2027-04-30",
 };
 

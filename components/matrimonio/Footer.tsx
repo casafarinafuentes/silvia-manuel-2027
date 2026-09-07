@@ -88,7 +88,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl justify-center px-6 py-5">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-5 gap-y-2 px-6 py-5">
           <p className="text-center text-xs text-secondary">
             Con amore,{" "}
             <span className="text-primary">
@@ -96,6 +96,20 @@ export default function Footer() {
             </span>{" "}
             ♡
           </p>
+
+          <span
+            aria-hidden="true"
+            className="hidden h-3 w-px bg-border sm:block"
+          />
+
+          {/* Secondo punto d'accesso alla lista nozze, dove di solito
+              si cercano le cose di servizio. Nessuna enfasi. */}
+          <Link
+            href="/lista-nozze"
+            className="text-xs text-secondary transition hover:text-primary"
+          >
+            Lista nozze
+          </Link>
         </div>
       </div>
     </footer>
