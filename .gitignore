@@ -50,3 +50,9 @@ next-env.d.ts
 
 # QA visivo (screenshot, report) — generato da scripts/qa-screenshots.mjs
 .qa/
+
+.vercel
+.env*
+
+# password admin generata localmente, mai da versionare
+.admin-password.txt
