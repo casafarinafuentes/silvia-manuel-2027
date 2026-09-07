@@ -1,0 +1,18 @@
+# Vercel non legge .gitignore quando si carica dalla CLI: senza questo
+# file finivano nell'upload anche il profilo Chrome del QA (con file
+# bloccati dal sistema, che facevano fallire il deploy con EBUSY).
+
+# Output del QA visivo
+.qa/
+
+# Strumenti di sviluppo e QA: non servono in produzione
+scripts/
+
+# Migration: si applicano con `npm run db:migrate`, non al deploy
+db/
+
+# Locale
+.admin-password.txt
+node_modules
+.next
+.git
