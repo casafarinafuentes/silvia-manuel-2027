@@ -1,5 +1,6 @@
 import Divider from "@/components/ui/Divider";
 import Section from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
 
 import { timeline } from "@/data/timeline";
 import { timelineIcons } from "@/lib/icons";
@@ -18,8 +19,9 @@ export default function Timeline() {
       const Icon = timelineIcons[item.icon];
 
       return (
-        <div
+        <Reveal
           key={item.time}
+          delay={index * 160}
           className="relative flex-1 text-center"
         >
           {/* Icona */}
@@ -36,14 +38,14 @@ export default function Timeline() {
 
           <div className="relative h-6">
             {index !== 0 && (
-              <div className="absolute left-0 top-1/2 h-px w-1/2 -translate-y-1/2 bg-border" />
+              <div className="tl-line absolute left-0 top-1/2 h-px w-1/2 -translate-y-1/2 bg-accent/60" />
             )}
 
             {index !== timeline.length - 1 && (
-              <div className="absolute right-0 top-1/2 h-px w-1/2 -translate-y-1/2 bg-border" />
+              <div className="tl-line absolute right-0 top-1/2 h-px w-1/2 -translate-y-1/2 bg-accent/60" />
             )}
 
-            <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
+            <div className="tl-dot absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
           </div>
 
           <p className="mt-5 font-heading text-3xl text-primary">
@@ -59,7 +61,7 @@ export default function Timeline() {
               {item.description}
             </p>
           )}
-        </div>
+        </Reveal>
       );
     })}
   </div>

@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { wedding } from "@/config/wedding";
 import { siteUrl } from "@/config/site";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -102,6 +103,8 @@ export default function RootLayout({
         </a>
 
         {children}
+
+        <CustomCursor />
 
         {/* Statistiche di visita senza cookie. Si attivano dalla dashboard
             Vercel (Analytics → Enable); finché non sono attive non fanno nulla. */}

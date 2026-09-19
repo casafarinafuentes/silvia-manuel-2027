@@ -104,6 +104,19 @@ export default function Footer() {
 
           {/* Secondo punto d'accesso alla lista nozze, dove di solito
               si cercano le cose di servizio. Nessuna enfasi. */}
+          <a
+            href="/calendario"
+            download
+            className="text-xs text-secondary transition hover:text-primary"
+          >
+            Aggiungi al calendario
+          </a>
+
+          <span
+            aria-hidden="true"
+            className="hidden h-3 w-px bg-border sm:block"
+          />
+
           <Link
             href="/lista-nozze"
             className="text-xs text-secondary transition hover:text-primary"

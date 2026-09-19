@@ -1,11 +1,13 @@
 "use client";
 
-import Image from "next/image";
+import ParallaxImage from "@/components/ui/ParallaxImage";
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
 import Link from "next/link";
 
+import SplitTitle from "@/components/ui/SplitTitle";
+import Magnetic from "@/components/ui/Magnetic";
 import Countdown from "@/components/ui/Countdown";
 import { wedding } from "@/config/wedding";
 import SiteMenu from "@/components/layout/Menu";
@@ -17,10 +19,9 @@ export default function Hero() {
     <section className="relative min-h-screen overflow-hidden">
       {/* Background */}
 
-      <Image
+      <ParallaxImage
         src="/hero.jpg"
         alt="Li Capanni"
-        fill
         priority
         sizes="100vw"
         className="object-cover"
@@ -31,6 +32,9 @@ export default function Hero() {
       {/* Velo a gradiente: scurisce di più dove sta il testo (titolo al
           centro, countdown in basso) e lascia respirare la foto sopra. */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/25 to-black/55" />
+
+      {/* Sfumatura in basso: la foto si scioglie nel colore della pagina. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-40 bg-gradient-to-b from-transparent to-background" />
 
       {/* Top Bar */}
 
@@ -51,7 +55,9 @@ export default function Hero() {
         className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center text-white"
       >
         <h1 className="font-heading text-6xl font-light md:text-8xl">
-          {wedding.couple.bride} &amp; {wedding.couple.groom}
+          <SplitTitle
+            text={`${wedding.couple.bride} & ${wedding.couple.groom}`}
+          />
         </h1>
 
         <p className="mt-8 text-sm uppercase tracking-[0.35em]">
@@ -75,12 +81,13 @@ export default function Hero() {
           <Countdown variant="hero" />
         </div>
 
-        <Link
-          href="/rsvp"
-          className="mt-10 inline-flex items-center gap-3 border border-white bg-white px-8 py-3.5 text-xs uppercase tracking-[0.28em] text-[#2f2b28] transition hover:bg-transparent hover:text-white"
+        <Magnetic className="mt-10">
+          <Link href="/rsvp"
+          className="inline-flex items-center gap-3 border border-white bg-white px-8 py-3.5 text-xs uppercase tracking-[0.28em] text-[#2f2b28] transition hover:bg-transparent hover:text-white"
         >
           Conferma la tua presenza
         </Link>
+        </Magnetic>
       </motion.div>
 
       {/* Scroll */}
@@ -93,7 +100,7 @@ export default function Hero() {
           duration: 2,
           repeat: Infinity,
         }}
-        className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-center text-white"
+        className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-center text-primary"
       >
         <p className="mb-2 text-xs uppercase tracking-[0.35em]">
           Scorri

@@ -1,4 +1,6 @@
 import Image from "next/image";
+import ParallaxImage from "@/components/ui/ParallaxImage";
+import Reveal from "@/components/ui/Reveal";
 
 import { wedding } from "@/config/wedding";
 
@@ -10,15 +12,14 @@ export default function Location() {
 
           {/* Foto */}
 
-          <div className="relative aspect-[16/10]">
-            <Image
+          <Reveal variant="zoom" className="relative aspect-[16/10]">
+            <ParallaxImage
               src="/matrimonio/location.jpg"
               alt={wedding.location.venue}
-              fill
               sizes="(max-width:1024px) 100vw, 60vw"
               className="object-cover"
             />
-          </div>
+          </Reveal>
 
           {/* Pannello */}
 

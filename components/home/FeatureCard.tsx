@@ -22,6 +22,7 @@ export default function FeatureCard({
   return (
     <Link
       href={href}
+      data-cursor="Scopri"
       className="group flex h-full flex-col overflow-hidden border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
       {/* Immagine */}

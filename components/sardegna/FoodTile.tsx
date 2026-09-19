@@ -206,6 +206,7 @@ function Wrapper({
   return (
     <Link
       href={href}
+      data-cursor="Scopri"
       target="_blank"
       rel="noopener noreferrer"
       className="block rounded-tile"

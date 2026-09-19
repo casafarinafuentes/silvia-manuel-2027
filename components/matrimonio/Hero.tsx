@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import ParallaxImage from "@/components/ui/ParallaxImage";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -9,10 +9,9 @@ export default function Hero() {
     <section className="relative min-h-screen overflow-hidden">
       {/* Background */}
 
-      <Image
+      <ParallaxImage
         src="/matrimonio/hero.jpg"
         alt="Cerimonia"
-        fill
         priority
         sizes="100vw"
         className="object-cover"

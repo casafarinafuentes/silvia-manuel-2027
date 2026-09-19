@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { wedding } from "@/config/wedding";
 
@@ -50,6 +51,37 @@ function getServerSnapshot(): null {
   return null;
 }
 
+/**
+ * Le cifre scorrono verso l'alto quando cambiano, come un contapassi.
+ * Ogni posizione ha la sua chiave: cambia solo la cifra che è cambiata.
+ */
+function Roll({ value }: { value: string }) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) return <>{value}</>;
+
+  return (
+    <span className="inline-flex overflow-hidden py-[0.08em]">
+      {[...value].map((char, position) => (
+        <span key={position} className="relative inline-block">
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.span
+              key={char}
+              initial={{ y: "80%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-80%", opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="inline-block"
+            >
+              {char}
+            </motion.span>
+          </AnimatePresence>
+        </span>
+      ))}
+    </span>
+  );
+}
+
 export default function Countdown({ variant = "footer" }: CountdownProps) {
   const seconds = useSyncExternalStore(
     subscribe,
@@ -58,6 +90,20 @@ export default function Countdown({ variant = "footer" }: CountdownProps) {
   );
 
   const dark = variant === "footer";
+
+  // Il giorno è arrivato: al posto dei numeri, un saluto che pulsa piano.
+  if (seconds === 0) {
+    return (
+      <p
+        className={`font-heading text-3xl font-light sm:text-4xl ${
+          dark ? "text-primary" : "text-white"
+        }`}
+        style={{ animation: "heartbeat 2.4s ease-in-out infinite" }}
+      >
+        È il giorno! ♡
+      </p>
+    );
+  }
 
   const items =
     seconds === null
@@ -90,9 +136,11 @@ export default function Countdown({ variant = "footer" }: CountdownProps) {
                 dark ? "text-primary" : "text-white"
               }`}
             >
-              {item.value === null
-                ? "--"
-                : String(item.value).padStart(2, "0")}
+              {item.value === null ? (
+                "--"
+              ) : (
+                <Roll value={String(item.value).padStart(2, "0")} />
+              )}
             </p>
 
             <p

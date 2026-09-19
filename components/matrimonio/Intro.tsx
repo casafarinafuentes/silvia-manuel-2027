@@ -1,4 +1,6 @@
 import Image from "next/image";
+import ParallaxImage from "@/components/ui/ParallaxImage";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Intro() {
   return (
@@ -6,19 +8,18 @@ export default function Intro() {
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-10">
         {/* Immagine */}
 
-        <div className="relative aspect-[4/3] overflow-hidden">
-          <Image
+        <Reveal variant="left" className="relative aspect-[4/3] overflow-hidden">
+          <ParallaxImage
             src="/matrimonio/intro.jpg"
             alt="Cerimonia"
-            fill
             sizes="(max-width:1024px) 100vw, 50vw"
             className="object-cover"
           />
-        </div>
+        </Reveal>
 
         {/* Testo */}
 
-        <div className="relative mx-auto flex w-full max-w-xl flex-col text-center lg:mx-0 lg:text-left">
+        <Reveal variant="right" delay={120} className="relative mx-auto flex w-full max-w-xl flex-col text-center lg:mx-0 lg:text-left">
           <p className="text-xs uppercase tracking-[0.35em] text-secondary">
             IL MATRIMONIO
           </p>
@@ -44,7 +45,7 @@ export default function Intro() {
             height={140}
             className="object-contain pointer-events-none absolute -right-6 top-0 hidden h-auto opacity-15 lg:block"
           />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

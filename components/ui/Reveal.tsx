@@ -7,6 +7,8 @@ type RevealProps = {
   /** Ritardo in millisecondi, per sfalsare elementi vicini. */
   delay?: number;
   className?: string;
+  /** Direzione di comparsa: dal basso (default), da sinistra/destra, o con zoom. */
+  variant?: "up" | "left" | "right" | "zoom";
 };
 
 /**
@@ -26,6 +28,7 @@ export default function Reveal({
   children,
   delay = 0,
   className = "",
+  variant = "up",
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -68,7 +71,7 @@ export default function Reveal({
   return (
     <div
       ref={ref}
-      className={`reveal ${className}`}
+      className={`reveal ${variant === "up" ? "" : `reveal-${variant}`} ${className}`}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}

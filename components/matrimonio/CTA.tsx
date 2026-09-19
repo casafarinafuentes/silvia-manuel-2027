@@ -1,14 +1,14 @@
-import Image from "next/image";
+import ParallaxImage from "@/components/ui/ParallaxImage";
 import Link from "next/link";
+import Magnetic from "@/components/ui/Magnetic";
 
 export default function CTA() {
   return (
     <section className="relative overflow-hidden">
       <div className="relative h-[260px] sm:h-[280px] md:h-[320px]">
-        <Image
+        <ParallaxImage
           src="/matrimonio/cta.jpg"
           alt="Panorama della location"
-          fill
           sizes="100vw"
           className="object-cover"
         />
@@ -30,13 +30,14 @@ export default function CTA() {
 
             <div className="mt-4 h-px w-10 bg-white/60" />
 
-            <Link
-              href="/rsvp"
-              className="mt-6 inline-flex items-center gap-3 bg-[#3F5643] px-7 py-3 text-xs uppercase tracking-[0.24em] text-white transition hover:bg-[#334637] sm:px-8 sm:text-xs sm:tracking-[0.28em]"
+            <Magnetic className="mt-6">
+              <Link href="/rsvp"
+              className="inline-flex items-center gap-3 bg-[#3F5643] px-7 py-3 text-xs uppercase tracking-[0.24em] text-white transition hover:bg-[#334637] sm:px-8 sm:text-xs sm:tracking-[0.28em]"
             >
               Conferma la tua presenza
               <span className="text-base">→</span>
             </Link>
+            </Magnetic>
 
           </div>
         </div>

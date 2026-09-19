@@ -215,6 +215,20 @@ video {
   will-change: opacity, transform;
 }
 
+/* Varianti di comparsa: da sinistra, da destra, con zoom. Devono stare
+   prima di .is-visible, che le annulla (stessa specificità). */
+.js .reveal.reveal-left {
+  transform: translateX(-48px);
+}
+
+.js .reveal.reveal-right {
+  transform: translateX(48px);
+}
+
+.js .reveal.reveal-zoom {
+  transform: scale(0.94);
+}
+
 .js .reveal.is-visible {
   opacity: 1;
   transform: none;
@@ -235,6 +249,93 @@ video {
 }
 
 /* ==========================================
+   Transizione tra pagine (solo CSS, vedi app/template.tsx)
+========================================== */
+
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: var(--panel);
+  transform-origin: top;
+  animation: wipe 850ms cubic-bezier(0.76, 0, 0.24, 1) 250ms both;
+}
+
+.page-wipe-mark {
+  animation: wipeMark 700ms ease 100ms both;
+}
+
+.page-enter {
+  animation: pageEnter 800ms cubic-bezier(0.22, 1, 0.36, 1) 600ms both;
+}
+
+@keyframes wipe {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes wipeMark {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.6em;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ==========================================
+   Programma: la linea si disegna e i pallini si accendono
+========================================== */
+
+.js .reveal .tl-line {
+  transform-origin: left center;
+  scale: 0 1;
+  transition: scale 800ms cubic-bezier(0.22, 1, 0.36, 1) 150ms;
+}
+
+.js .reveal.is-visible .tl-line {
+  scale: 1 1;
+}
+
+.js .reveal .tl-dot {
+  scale: 0;
+  transition: scale 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 400ms;
+}
+
+.js .reveal.is-visible .tl-dot {
+  scale: 1;
+}
+
+/* Il giorno arrivato: il cuore pulsa piano. */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+/* ==========================================
    Reduced motion
    Chi ha chiesto meno animazioni non deve subirle: azzeriamo
    transizioni e animazioni, incluse quelle di Framer Motion.
@@ -252,6 +353,14 @@ video {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .page-wipe {
+    display: none;
+  }
+
+  .page-enter {
+    animation: none;
   }
 
   /* Niente comparse: il contenuto è già al suo posto. */

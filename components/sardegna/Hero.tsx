@@ -1,14 +1,13 @@
-import Image from "next/image";
+import ParallaxImage from "@/components/ui/ParallaxImage";
 
 export default function Hero() {
   return (
     <section className="relative h-[82vh] min-h-[680px] overflow-hidden">
       {/* Immagine */}
 
-      <Image
+      <ParallaxImage
         src="/sardegna/sardegna-hero.jpg"
         alt="La nostra Sardegna"
-        fill
         priority
         className="object-cover object-center"
       />
