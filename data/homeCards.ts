@@ -26,7 +26,7 @@ export const homeCards = [
   {
     title: "Hotel",
     description:
-      "Gli alberghi di Cannigione e come organizzare il soggiorno.",
+      "Gli alberghi di Cannigione, la navetta e come prenotare.",
     image: "/cards/hotel.jpg",
     icon: BedDouble,
     href: "/hotel",

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ParallaxImage from "@/components/ui/ParallaxImage";
 
 export default function Hero() {
   return (
@@ -6,10 +6,9 @@ export default function Hero() {
 
       {/* Background */}
 
-      <Image
+      <ParallaxImage
         src="/hotel/hotel-hero.jpg"
         alt="Hotel in Sardegna"
-        fill
         priority
         className="object-cover object-center"
       />

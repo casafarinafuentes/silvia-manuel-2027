@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import ParallaxImage from "@/components/ui/ParallaxImage";
 import { motion } from "framer-motion";
 
 export default function Hero() {
@@ -8,10 +8,9 @@ export default function Hero() {
     <section className="relative h-[470px] overflow-hidden">
       {/* Background */}
 
-      <Image
+      <ParallaxImage
         src="/rsvp/rsvp-hero.jpg"
         alt="RSVP"
-        fill
         priority
         className="object-cover object-[center_28%]"
       />

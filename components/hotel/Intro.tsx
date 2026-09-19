@@ -49,7 +49,8 @@ export default function Intro() {
               minuti dalla location. Gli hotel non ci hanno dato una
               convenzione, ma applicano una tariffa dedicata ai gruppi:
               per questo vi chiediamo di indicare la vostra preferenza
-              già nella conferma di presenza.
+              già nella conferma di presenza. Per chi alloggia in questi
+              hotel è prevista una navetta da e per la location.
             </p>
           </div>
 

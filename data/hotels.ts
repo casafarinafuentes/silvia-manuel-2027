@@ -14,61 +14,104 @@
  * sono arrivate le prime risposte.
  */
 
+export type HotelFeature = "sea" | "pool" | "beach" | "breakfast" | "rooms" | "garden" | "restaurant";
+
 export type Hotel = {
   id: string;
   name: string;
-  category: string;
+  /** Stelle (1–5), come dichiarate da Tripadvisor o dal sito dell'hotel. */
+  stars: number;
+  image: string;
   description: string;
+  /** Massimo tre punti di forza, solo dati trovati su fonti pubbliche. */
+  features: { icon: HotelFeature; label: string }[];
   priceRange: string | null;
+  /** Sito ufficiale dell'hotel. */
+  website: string;
   /** Ricerca su Google Maps: sempre valida, non richiede un link verificato. */
   mapsQuery: string;
 };
 
 export const hotels: Hotel[] = [
   {
-    id: "micalosu",
-    name: "Hotel Micalosu",
-    category: "3 stelle",
+    id: "cala-di-falco",
+    name: "Resort Cala di Falco",
+    stars: 4,
+    image: "/hotel/cala-di-falco.jpg",
     description:
-      "Camere semplici e curate, la soluzione più economica tra quelle che vi consigliamo.",
+      "Resort affacciato sull'arcipelago della Maddalena, con spiaggia, due piscine e due ristoranti: pensato anche per chi viaggia con la famiglia.",
+    features: [
+      { icon: "sea", label: "Fronte mare" },
+      { icon: "pool", label: "Due piscine" },
+      { icon: "restaurant", label: "Due ristoranti" },
+    ],
     priceRange: null,
-    mapsQuery: "Hotel Micalosu Cannigione",
-  },
-  {
-    id: "moma",
-    name: "Moma Hotel",
-    category: "Boutique hotel",
-    description:
-      "In collina sopra il golfo di Cannigione, con giardino e vista panoramica sulla baia.",
-    priceRange: null,
-    mapsQuery: "Moma Hotel Cannigione",
+    website: "https://www.hotelcaladifalco.com/",
+    mapsQuery: "Resort Cala di Falco Cannigione",
   },
   {
     id: "stelle-marine",
-    name: "Stelle Marine Hotel & Resort",
-    category: "4 stelle",
+    name: "MYO Hotel Stelle Marine",
+    stars: 4,
+    image: "/hotel/stelle-marine.jpg",
     description:
-      "Resort di 72 camere in un ampio giardino alberato, alcune con vista sull'isola della Maddalena.",
+      "Già Stelle Marine Hotel & Resort: camere immerse in un giardino di cinque ettari, spiaggia privata e vista sull'arcipelago della Maddalena.",
+    features: [
+      { icon: "beach", label: "Spiaggia privata" },
+      { icon: "pool", label: "Piscina" },
+      { icon: "garden", label: "Giardino di 5 ettari" },
+    ],
     priceRange: null,
-    mapsQuery: "Stelle Marine Hotel Resort Cannigione",
-  },
-  {
-    id: "cala-di-falco",
-    name: "Resort Cala di Falco",
-    category: "4 stelle",
-    description:
-      "Resort con vista mare, adatto anche a chi viaggia con la famiglia.",
-    priceRange: null,
-    mapsQuery: "Resort Cala di Falco Cannigione",
+    website: "https://www.myohotelstellemarine.com/",
+    mapsQuery: "Stelle Marine Hotel Cannigione",
   },
   {
     id: "grand-hotel-cannigione",
     name: "Grand Hotel Cannigione",
-    category: "Hotel di alta categoria",
+    stars: 5,
+    image: "/hotel/grand-hotel-cannigione.jpg",
     description:
-      "Recentemente rinnovato, con architettura bianca a corte e arredi ispirati alla tradizione sarda.",
+      "Recentemente rinnovato, con architettura bianca a corte, piscina e arredi ispirati alla tradizione sarda. La struttura più raffinata tra quelle che vi consigliamo.",
+    features: [
+      { icon: "breakfast", label: "Colazione inclusa" },
+      { icon: "pool", label: "Piscina" },
+      { icon: "rooms", label: "Appena rinnovato" },
+    ],
     priceRange: null,
+    website: "https://grandhotelcannigione.it/",
     mapsQuery: "Grand Hotel Cannigione",
+  },
+  {
+    id: "moma",
+    name: "Moma Hotel",
+    stars: 3,
+    image: "/hotel/moma.jpg",
+    description:
+      "Hotel di charme in collina sopra il golfo, con terrazza panoramica, giardino e solo dieci camere: un'atmosfera intima, ma con pochi posti.",
+    features: [
+      { icon: "rooms", label: "Solo 10 camere" },
+      { icon: "garden", label: "Terrazza e giardino" },
+      { icon: "breakfast", label: "Colazione a buffet" },
+    ],
+    priceRange: null,
+    website: "https://momahotel.it/",
+    mapsQuery: "Moma Hotel Cannigione",
+  },
+  {
+    id: "micalosu",
+    name: "Hotel Micalosu",
+    stars: 3,
+    image: "/hotel/micalosu.jpg",
+    description:
+      "In posizione elevata sul mare, con camere semplici e curate: la soluzione più economica tra quelle che vi consigliamo.",
+    features: [
+      { icon: "sea", label: "Vista mare" },
+      { icon: "pool", label: "Piscina" },
+      { icon: "rooms", label: "52 camere" },
+    ],
+    priceRange: null,
+    website: "https://www.hotelmicalosu.it/",
+    mapsQuery: "Hotel Micalosu Cannigione",
   },
 ];
 

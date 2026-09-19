@@ -20,6 +20,11 @@ const faqs = [
       "Sotto ogni struttura trovi una fascia di prezzo indicativa per camera doppia. Il prezzo definitivo dipende dalla tariffa che ci verrà proposta per il gruppo.",
   },
   {
+    question: "C'è la navetta?",
+    answer:
+      "Sì: per chi alloggia negli hotel che vi consigliamo è prevista una navetta dedicata da e per la location. Gli orari saranno comunicati nei giorni precedenti al matrimonio.",
+  },
+  {
     question: "Dove sono rispetto alla location?",
     answer:
       "Tutte le strutture sono a Cannigione, la stessa località di Li Capanni. Nella mappa qui accanto vedi la zona.",

@@ -10,6 +10,7 @@ import Textarea from "@/components/ui/Textarea";
 import RadioCard from "@/components/ui/RadioCard";
 import GuestCounter from "@/components/ui/GuestCounter";
 import SubmitButton from "@/components/ui/SubmitButton";
+import Magnetic from "@/components/ui/Magnetic";
 
 import { submitRsvp, type RsvpState } from "@/lib/rsvp/actions";
 import { isPastRsvpDeadline } from "@/lib/rsvp/deadline";
@@ -251,7 +252,7 @@ export default function Form() {
                                 ...hotels.map((h) => ({
                                   id: h.id,
                                   title: h.name,
-                                  subtitle: [h.category, h.priceRange]
+                                  subtitle: [`${"★".repeat(h.stars)}`, h.priceRange]
                                     .filter(Boolean)
                                     .join(" · "),
                                 })),
@@ -330,7 +331,9 @@ export default function Form() {
                 )}
 
                 <div className="mt-16 flex justify-center">
-                  <SubmitButton>Invia conferma</SubmitButton>
+                  <Magnetic>
+                    <SubmitButton>Invia conferma</SubmitButton>
+                  </Magnetic>
                 </div>
               </form>
             )}

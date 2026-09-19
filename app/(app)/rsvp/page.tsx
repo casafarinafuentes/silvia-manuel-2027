@@ -24,7 +24,7 @@ export default function RSVPPage() {
 
       <NextStep
         title="Dove dormire"
-        description="Gli alberghi consigliati a Cannigione e come prenotare."
+        description="Gli alberghi consigliati a Cannigione, con navetta per la location."
         href="/hotel"
         cta="Scopri gli hotel"
       />
