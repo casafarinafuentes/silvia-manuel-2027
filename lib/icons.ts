@@ -6,8 +6,7 @@ import {
   CakeSlice,
   Sparkles,
   Shirt,
-  Sun,
-  GlassWater,
+  Footprints,
 } from "lucide-react";
 
 export const timelineIcons = {
@@ -20,10 +19,8 @@ export const timelineIcons = {
 } as const;
 
 export const dressCodeIcons = {
-  elegant: Shirt,
-  summer: Sun,
-  details: Sparkles,
-  relax: GlassWater,
+  shoes: Footprints,
+  jacket: Shirt,
 } as const;
 
 export type TimelineIconName = keyof typeof timelineIcons;

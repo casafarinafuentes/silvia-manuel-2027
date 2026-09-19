@@ -6,10 +6,10 @@ export default function DressCode() {
   return (
     <Section>
       <p className="mb-7 text-center text-xs uppercase tracking-[0.35em] text-secondary">
-        Dress Code
+        Cosa indossare
       </p>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
         {dressCode.map((item) => {
           const Icon = dressCodeIcons[item.icon];
 

@@ -8,27 +8,15 @@ export type DressCodeItem = {
 
 export const dressCode: DressCodeItem[] = [
   {
-    title: "Elegante",
+    title: "Saremo su un prato",
     description:
-      "Abiti lunghi o midi per le signore, completo o spezzato per i signori.",
-    icon: "elegant",
+      "Cerimonia e ricevimento si svolgono sull'erba: vi consigliamo un tacco grosso o una scarpa stabile. I tacchi a spillo tendono ad affondare.",
+    icon: "shoes",
   },
   {
-    title: "Estate",
+    title: "Una giacca per la sera",
     description:
-      "Preferisci tessuti leggeri e colori luminosi.",
-    icon: "summer",
-  },
-  {
-    title: "Dettagli",
-    description:
-      "Un accessorio raffinato completa il look.",
-    icon: "details",
-  },
-  {
-    title: "Relax",
-    description:
-      "Scarpe comode per ballare fino a tarda sera.",
-    icon: "relax",
+      "Quando il sole tramonta, in riva al mare si rinfresca: portate una giacca o uno scialle per la sera.",
+    icon: "jacket",
   },
 ];
