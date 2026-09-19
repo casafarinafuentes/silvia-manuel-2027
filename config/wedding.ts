@@ -20,7 +20,7 @@ export const wedding = {
 
   dates: {
     wedding: "2027-06-12",
-    rsvpDeadline: "2027-04-30",
+    rsvpDeadline: "2027-01-31",
 
     /**
      * Istante d'inizio con fuso orario esplicito (CEST, UTC+2 a giugno).
@@ -103,8 +103,19 @@ export const wedding = {
     reference: "Regalo di nozze",
   },
 
-  rsvpDeadline: "2027-04-30",
+  rsvpDeadline: "2027-01-31",
 };
+
+/**
+ * True se l'IBAN in config è quello vero. Il valore segnaposto
+ * (IT00 0000 …) non deve mai comparire agli ospiti: un bonifico verso
+ * un IBAN inventato è peggio di nessun bonifico.
+ */
+export function hasRealIban(): boolean {
+  const iban = wedding.gift.iban.replace(/\s+/g, "").toUpperCase();
+
+  return /^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(iban) && !/^[A-Z]{2}00/.test(iban) && !/^[A-Z]{2}\d{2}0{10,}/.test(iban);
+}
 
 /** URL WhatsApp, o null se il numero non è ancora stato configurato. */
 export function whatsappUrl(): string | null {

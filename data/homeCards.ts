@@ -18,7 +18,7 @@ export const homeCards = [
   {
     title: "RSVP",
     description:
-      "Conferma la tua presenza entro il 30 aprile 2027.",
+      "Conferma la tua presenza entro il 31 gennaio 2027.",
     image: "/cards/rsvp.jpg",
     icon: Mail,
     href: "/rsvp",
@@ -26,7 +26,7 @@ export const homeCards = [
   {
     title: "Hotel",
     description:
-      "Convenzioni e suggerimenti per il vostro soggiorno.",
+      "Gli alberghi di Cannigione e come organizzare il soggiorno.",
     image: "/cards/hotel.jpg",
     icon: BedDouble,
     href: "/hotel",

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import Hero from "@/components/hotel/Hero";
 import Intro from "@/components/hotel/Intro";
-import Navetta from "@/components/hotel/Navetta";
+import HowItWorks from "@/components/hotel/HowItWorks";
 import Hotels from "@/components/hotel/Hotels";
 
 import Contact from "@/components/hotel/Contact";
@@ -13,7 +13,7 @@ import Footer from "@/components/matrimonio/Footer";
 export const metadata: Metadata = {
   title: "Dove dormire",
   description:
-    "Strutture consigliate vicino alla location e informazioni sul servizio navetta.",
+    "Alberghi consigliati a Cannigione e come funziona la prenotazione per gli ospiti.",
   alternates: { canonical: "/hotel" },
 };
 
@@ -24,8 +24,7 @@ export default function HotelPage() {
 
       <Intro />
 
-      <Navetta />
-
+      <HowItWorks />
       <Hotels />
 
       <InfoSection />

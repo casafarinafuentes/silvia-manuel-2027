@@ -13,6 +13,7 @@ export type RsvpRecord = {
   attending: boolean;
   party_size: number;
   dietary: string | null;
+  hotel: string | null;
   message: string | null;
   created_at: Date;
   updated_at: Date;
@@ -45,8 +46,8 @@ export async function insertRsvp(input: RsvpInput): Promise<RsvpRecord> {
   try {
     const rows = await query<RsvpRecord>(
       `insert into rsvp
-         (first_name, last_name, email, attending, party_size, dietary, message)
-       values ($1, $2, $3, $4, $5, $6, $7)
+         (first_name, last_name, email, attending, party_size, dietary, hotel, message)
+       values ($1, $2, $3, $4, $5, $6, $7, $8)
        returning *`,
       [
         input.firstName,
@@ -55,6 +56,7 @@ export async function insertRsvp(input: RsvpInput): Promise<RsvpRecord> {
         input.attending,
         input.partySize,
         emptyToNull(input.dietary),
+        emptyToNull(input.hotel),
         emptyToNull(input.message),
       ],
     );
@@ -125,6 +127,36 @@ export async function getTotals(): Promise<RsvpTotals> {
     attendingPeople,
     companions: attendingPeople - attendingSubmissions,
   };
+}
+
+export type HotelBreakdownRow = {
+  /** id dell'hotel, "self", oppure "" se non indicato. */
+  hotel: string;
+  submissions: number;
+  people: number;
+};
+
+/** Persone attese per alloggio: il numero da comunicare agli hotel. */
+export async function getHotelBreakdown(): Promise<HotelBreakdownRow[]> {
+  const rows = await query<{
+    hotel: string;
+    submissions: string;
+    people: string;
+  }>(
+    `select coalesce(hotel, '')      as hotel,
+            count(*)                  as submissions,
+            coalesce(sum(party_size), 0) as people
+       from rsvp
+      where attending
+      group by 1
+      order by people desc`,
+  );
+
+  return rows.map((row) => ({
+    hotel: row.hotel,
+    submissions: Number(row.submissions),
+    people: Number(row.people),
+  }));
 }
 
 /* ------------------------------------------------------------------

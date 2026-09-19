@@ -1,6 +1,7 @@
 "use server";
 
 import { clientIp } from "@/lib/request";
+import { isPastRsvpDeadline } from "./deadline";
 import { parseRsvp, type RsvpFieldErrors } from "./schema";
 import {
   DuplicateRsvpError,
@@ -18,15 +19,19 @@ export async function submitRsvp(
   _previous: RsvpState,
   formData: FormData,
 ): Promise<RsvpState> {
-  const parsed = parseRsvp({
+  const parsed = parseRsvp(
+    {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
     email: formData.get("email"),
     attending: formData.get("attending"),
     partySize: formData.get("partySize"),
     dietary: formData.get("dietary"),
+    hotel: formData.get("hotel"),
     message: formData.get("message"),
-  });
+    },
+    { hotelRequired: !isPastRsvpDeadline() },
+  );
 
   if (!parsed.ok) {
     return { status: "error", errors: parsed.errors };

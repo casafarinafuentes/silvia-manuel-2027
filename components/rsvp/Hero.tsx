@@ -46,7 +46,7 @@ export default function Hero() {
           <p className="mt-6 font-heading text-[25px] italic leading-[1.35] md:text-[28px]">
             Conferma la tua presenza
             <br />
-            entro il 30 aprile 2027.
+            entro il 31 gennaio 2027.
           </p>
         </div>
       </motion.div>

@@ -5,11 +5,6 @@ export const practicalInfoLeft = [
       "È disponibile un parcheggio gratuito all'ingresso della location.",
   },
   {
-    title: "Bus navetta",
-    content:
-      "Sarà disponibile una navetta da e per gli hotel convenzionati.",
-  },
-  {
     title: "Accessibilità",
     content:
       "La location è accessibile anche agli ospiti con mobilità ridotta.",

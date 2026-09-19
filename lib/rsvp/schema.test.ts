@@ -85,4 +85,48 @@ describe("parseRsvp", () => {
     assert.equal(parseRsvp(undefined).ok, false);
     assert.equal(parseRsvp("testo").ok, false);
   });
+
+  describe("alloggio", () => {
+    it("prima della scadenza è obbligatorio per chi partecipa", () => {
+      const result = parseRsvp(valid, { hotelRequired: true });
+
+      assert.equal(result.ok, false);
+      if (!result.ok) assert.ok(result.errors.hotel);
+    });
+
+    it("accetta un hotel della lista e 'mi organizzo da solo'", () => {
+      for (const hotel of ["moma", "self"]) {
+        const result = parseRsvp({ ...valid, hotel }, { hotelRequired: true });
+
+        assert.equal(result.ok, true, hotel);
+        if (result.ok) assert.equal(result.data.hotel, hotel);
+      }
+    });
+
+    it("rifiuta un valore che non è nella lista", () => {
+      const result = parseRsvp(
+        { ...valid, hotel: "hotel-inventato" },
+        { hotelRequired: true },
+      );
+
+      assert.equal(result.ok, false);
+    });
+
+    it("chi non partecipa non ha alloggio, anche se lo invia", () => {
+      const result = parseRsvp(
+        { ...valid, attending: "false", hotel: "moma" },
+        { hotelRequired: true },
+      );
+
+      assert.equal(result.ok, true);
+      if (result.ok) assert.equal(result.data.hotel, "");
+    });
+
+    it("dopo la scadenza (non richiesto) l'alloggio viene ignorato", () => {
+      const result = parseRsvp({ ...valid, hotel: "moma" });
+
+      assert.equal(result.ok, true);
+      if (result.ok) assert.equal(result.data.hotel, "");
+    });
+  });
 });

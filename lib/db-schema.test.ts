@@ -1,19 +1,23 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 
 import { SCHEMA_SQL } from "./db-schema.ts";
 
-const migration = readFileSync("db/migrations/001_create_rsvp.sql", "utf8");
+const migration = readdirSync("db/migrations")
+  .filter((name) => name.endsWith(".sql"))
+  .sort()
+  .map((name) => readFileSync(`db/migrations/${name}`, "utf8"))
+  .join("\n");
 
 /** Nomi di tabelle, indici, funzioni e trigger dichiarati in un file SQL. */
 function objectNames(sql: string): string[] {
   const names = new Set<string>();
   const pattern =
-    /create\s+(?:or\s+replace\s+)?(?:unique\s+)?(?:table|index|function|trigger)\s+(?:if\s+not\s+exists\s+)?([a-z_]+)/gi;
+    /create\s+(?:or\s+replace\s+)?(?:unique\s+)?(?:table|index|function|trigger)\s+(?:if\s+not\s+exists\s+)?([a-z_]+)|add\s+(?:column|constraint)\s+(?:if\s+not\s+exists\s+)?([a-z_]+)/gi;
 
   for (const match of sql.matchAll(pattern)) {
-    names.add(match[1].toLowerCase());
+    names.add((match[1] ?? match[2]).toLowerCase());
   }
 
   return [...names].sort();
@@ -26,7 +30,7 @@ describe("SCHEMA_SQL", () => {
 
   it("è idempotente: nessun create senza if not exists / or replace", () => {
     for (const line of SCHEMA_SQL.split("\n")) {
-      if (/^\s*create\s+(table|index|unique)/i.test(line)) {
+      if (/^\s*(create\s+(table|index|unique)|alter\s+table\s+\w+\s+add\s+column)/i.test(line)) {
         assert.match(line, /if\s+not\s+exists/i, line);
       }
     }

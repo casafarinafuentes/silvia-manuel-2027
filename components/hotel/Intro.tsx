@@ -43,23 +43,16 @@ export default function Intro() {
             <div className="h-px w-16 bg-border" />
           </div>
 
-          <div className="mt-8 space-y-0 text-lg leading-8 text-secondary">
+          <div className="mt-8 space-y-4 text-lg leading-8 text-secondary">
             <p>
-              Per rendere il vostro soggiorno il più piacevole possibile, abbiamo raccolto alcune strutture
-            </p>
-
-            <p>
-              selezionate
-              nelle vicinanze della location.
-            
-              Alcune potrebbero offrire condizioni dedicate
-              ai nostri ospiti.
+              Abbiamo raccolto alcune strutture a Cannigione, a pochi
+              minuti dalla location. Gli hotel non ci hanno dato una
+              convenzione, ma applicano una tariffa dedicata ai gruppi:
+              per questo vi chiediamo di indicare la vostra preferenza
+              già nella conferma di presenza.
             </p>
           </div>
 
-        
-
-      
         </div>
       </div>
     </Section>

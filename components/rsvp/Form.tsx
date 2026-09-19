@@ -12,6 +12,12 @@ import GuestCounter from "@/components/ui/GuestCounter";
 import SubmitButton from "@/components/ui/SubmitButton";
 
 import { submitRsvp, type RsvpState } from "@/lib/rsvp/actions";
+import { isPastRsvpDeadline } from "@/lib/rsvp/deadline";
+import {
+  HOTEL_SELF_ARRANGED,
+  HOTEL_SELF_ARRANGED_LABEL,
+  hotels,
+} from "@/data/hotels";
 
 const INITIAL: RsvpState = { status: "idle" };
 
@@ -51,6 +57,11 @@ export default function Form() {
 
   const [attending, setAttending] = useState<boolean | null>(null);
   const [guests, setGuests] = useState(1);
+  const [hotel, setHotel] = useState<string>("");
+
+  // Calcolato lato client: chi apre la pagina dopo la scadenza non vede
+  // la scelta dell'hotel (il server la ignora comunque).
+  const [pastDeadline] = useState(() => isPastRsvpDeadline());
 
   const errorRef = useRef<HTMLParagraphElement>(null);
 
@@ -199,6 +210,101 @@ export default function Form() {
                           error={errors.dietary}
                         />
                       </div>
+
+                      {/* Alloggio */}
+
+                      <fieldset className="mt-12 border-0 p-0">
+                        <legend className="mb-2 text-xs uppercase tracking-[0.34em] text-secondary">
+                          Dove dormirai?
+                        </legend>
+
+                        {pastDeadline ? (
+                          <p className="mt-4 border border-border bg-panel-photo px-6 py-5 text-sm leading-7 text-secondary">
+                            Il termine per segnalare l&apos;alloggio (31 gennaio)
+                            è passato: gli hotel sono già stati contattati.
+                            Scrivici e vediamo insieme cosa è ancora
+                            disponibile.
+                          </p>
+                        ) : (
+                          <>
+                            <input type="hidden" name="hotel" value={hotel} />
+
+                            <p className="mb-6 text-[13px] leading-6 text-secondary">
+                              Non c&apos;è una convenzione: il 31 gennaio{" "}
+                              diremo agli hotel quante persone siamo e vi
+                              gireremo le indicazioni per prenotare.{" "}
+                              <a
+                                href="/hotel"
+                                className="underline underline-offset-4"
+                              >
+                                Vedi gli hotel
+                              </a>
+                              .
+                            </p>
+
+                            <div
+                              role="radiogroup"
+                              aria-label="Alloggio"
+                              className="grid gap-3"
+                            >
+                              {[
+                                ...hotels.map((h) => ({
+                                  id: h.id,
+                                  title: h.name,
+                                  subtitle: [h.category, h.priceRange]
+                                    .filter(Boolean)
+                                    .join(" · "),
+                                })),
+                                {
+                                  id: HOTEL_SELF_ARRANGED,
+                                  title: HOTEL_SELF_ARRANGED_LABEL,
+                                  subtitle: "Prenoto per conto mio, dove preferisco.",
+                                },
+                              ].map((option) => (
+                                <button
+                                  key={option.id}
+                                  type="button"
+                                  role="radio"
+                                  aria-checked={hotel === option.id}
+                                  onClick={() => setHotel(option.id)}
+                                  className={`flex items-center justify-between gap-4 rounded-tile border px-6 py-4 text-left transition-colors duration-300 ${
+                                    hotel === option.id
+                                      ? "border-primary bg-[#faf8f3]"
+                                      : "border-border bg-white hover:border-primary/50"
+                                  }`}
+                                >
+                                  <span>
+                                    <span className="block font-heading text-xl text-primary">
+                                      {option.title}
+                                    </span>
+                                    <span className="mt-1 block text-[13px] text-secondary">
+                                      {option.subtitle}
+                                    </span>
+                                  </span>
+
+                                  <span
+                                    aria-hidden="true"
+                                    className={`h-4 w-4 shrink-0 rounded-full border ${
+                                      hotel === option.id
+                                        ? "border-primary bg-primary"
+                                        : "border-border"
+                                    }`}
+                                  />
+                                </button>
+                              ))}
+                            </div>
+
+                            {errors.hotel && (
+                              <p
+                                role="alert"
+                                className="mt-4 text-[13px] text-[#a4553f]"
+                              >
+                                {errors.hotel}
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </fieldset>
                     </motion.div>
                   )}
                 </AnimatePresence>

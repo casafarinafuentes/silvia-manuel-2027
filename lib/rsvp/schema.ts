@@ -6,6 +6,8 @@
  * non è una garanzia.
  */
 
+import { isValidHotelChoice } from "../../data/hotels.ts";
+
 export type RsvpInput = {
   firstName: string;
   lastName: string;
@@ -13,6 +15,7 @@ export type RsvpInput = {
   attending: boolean;
   partySize: number;
   dietary: string;
+  hotel: string;
   message: string;
 };
 
@@ -43,7 +46,19 @@ export type ParseResult =
   | { ok: true; data: RsvpInput }
   | { ok: false; errors: RsvpFieldErrors };
 
-export function parseRsvp(raw: unknown): ParseResult {
+export type ParseOptions = {
+  /**
+   * Prima della scadenza chi partecipa deve indicare l'alloggio (anche
+   * "mi organizzo da solo"): serve per comunicare il numero agli hotel.
+   * Dopo la scadenza la scelta non viene più richiesta né salvata.
+   */
+  hotelRequired?: boolean;
+};
+
+export function parseRsvp(
+  raw: unknown,
+  options: ParseOptions = {},
+): ParseResult {
   const errors: RsvpFieldErrors = {};
 
   const source = (raw ?? {}) as Record<string, unknown>;
@@ -53,6 +68,7 @@ export function parseRsvp(raw: unknown): ParseResult {
   const email = clean(source.email);
   const dietary = clean(source.dietary);
   const message = clean(source.message);
+  let hotel = clean(source.hotel);
 
   if (!firstName) {
     errors.firstName = "Inserisci il tuo nome.";
@@ -105,6 +121,14 @@ export function parseRsvp(raw: unknown): ParseResult {
     partySize = 1;
   }
 
+  if (!attending || !options.hotelRequired) {
+    hotel = "";
+  } else if (!hotel) {
+    errors.hotel = "Facci sapere dove pensi di dormire.";
+  } else if (!isValidHotelChoice(hotel)) {
+    errors.hotel = "Scegli una delle opzioni indicate.";
+  }
+
   if (dietary.length > LIMITS.dietary) {
     errors.dietary = `Massimo ${LIMITS.dietary} caratteri.`;
   }
@@ -126,6 +150,7 @@ export function parseRsvp(raw: unknown): ParseResult {
       attending,
       partySize,
       dietary,
+      hotel,
       message,
     },
   };

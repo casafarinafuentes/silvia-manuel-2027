@@ -5,24 +5,29 @@ import { Minus, Plus } from "lucide-react";
 
 const faqs = [
   {
-    question: "Posso prenotare autonomamente?",
+    question: "C'è una convenzione con gli hotel?",
     answer:
-      "Sì. Potete prenotare direttamente tramite il sito dell'hotel oppure contattare la struttura. Se sarà disponibile una convenzione dedicata agli ospiti, troverete tutte le informazioni aggiornate su questa pagina.",
+      "No. Gli hotel non ci hanno dato una convenzione: hanno una tariffa dedicata solo per i gruppi. Per questo raccogliamo le preferenze con la conferma di presenza e il 31 gennaio comunichiamo loro il numero certo di persone.",
   },
   {
-    question: "È prevista una convenzione?",
+    question: "Posso prenotare per conto mio?",
     answer:
-      "Stiamo definendo eventuali tariffe dedicate con alcune strutture. Se confermate, saranno indicate chiaramente insieme ai relativi hotel.",
+      "Certo. Nel modulo RSVP puoi scegliere \"Mi organizzo autonomamente\" e prenotare dove preferisci, anche direttamente sul sito dell'hotel.",
   },
   {
-    question: "Quanto distano gli hotel dalla location?",
+    question: "Quanto costano gli hotel?",
     answer:
-      "Tutti gli hotel consigliati si trovano a pochi minuti dalla location del matrimonio e saranno serviti dalla navetta dedicata.",
+      "Sotto ogni struttura trovi una fascia di prezzo indicativa per camera doppia. Il prezzo definitivo dipende dalla tariffa che ci verrà proposta per il gruppo.",
+  },
+  {
+    question: "Dove sono rispetto alla location?",
+    answer:
+      "Tutte le strutture sono a Cannigione, la stessa località di Li Capanni. Nella mappa qui accanto vedi la zona.",
   },
   {
     question: "Posso cancellare o modificare la prenotazione?",
     answer:
-      "Le condizioni di modifica e cancellazione dipendono dalla struttura scelta. Vi consigliamo di verificarle direttamente al momento della prenotazione.",
+      "Le condizioni di modifica e cancellazione dipendono dalla struttura scelta. Vi consigliamo di verificarle al momento della prenotazione.",
   },
 ];
 

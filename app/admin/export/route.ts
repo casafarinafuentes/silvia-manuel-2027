@@ -2,6 +2,8 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { isAuthenticated } from "@/lib/admin/session";
 import { listRsvp } from "@/lib/rsvp/repository";
+import { isPastRsvpDeadline } from "@/lib/rsvp/deadline";
+import { hotelLabel } from "@/data/hotels";
 
 export const dynamic = "force-dynamic";
 
@@ -34,8 +36,10 @@ const COLUMNS = [
   "persone_totali",
   "accompagnatori",
   "allergie_intolleranze",
+  "alloggio",
   "messaggio",
   "inviato_il",
+  "dopo_la_scadenza",
 ] as const;
 
 export async function GET(request: NextRequest) {
@@ -60,8 +64,10 @@ export async function GET(request: NextRequest) {
         csvCell(entry.attending ? entry.party_size : 0),
         csvCell(entry.attending ? entry.party_size - 1 : 0),
         csvCell(entry.dietary),
+        csvCell(entry.attending ? hotelLabel(entry.hotel) : null),
         csvCell(entry.message),
         csvCell(entry.created_at),
+        csvCell(isPastRsvpDeadline(entry.created_at) ? "sì" : "no"),
       ].join(","),
     ),
   ];

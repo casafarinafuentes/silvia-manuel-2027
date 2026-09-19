@@ -32,7 +32,7 @@ export default function Contact() {
         </h2>
 
         <p className="mx-auto mt-6 max-w-2xl leading-8 text-secondary">
-          Se avete dubbi riguardo agli hotel, alla navetta
+          Se avete dubbi riguardo agli hotel
           o al vostro soggiorno, non esitate a contattarci.
           Saremo felici di darvi tutte le informazioni
           necessarie.

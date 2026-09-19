@@ -3,7 +3,13 @@ import { redirect } from "next/navigation";
 
 import { logout } from "@/lib/admin/actions";
 import { isAuthenticated } from "@/lib/admin/session";
-import { getTotals, listRsvp } from "@/lib/rsvp/repository";
+import {
+  getHotelBreakdown,
+  getTotals,
+  listRsvp,
+} from "@/lib/rsvp/repository";
+import { isPastRsvpDeadline } from "@/lib/rsvp/deadline";
+import { hotelLabel } from "@/data/hotels";
 import { isDatabaseConfigured } from "@/lib/db";
 
 export const metadata: Metadata = {
@@ -66,9 +72,14 @@ export default async function AdminPage({
 
   let entries: Awaited<ReturnType<typeof listRsvp>>;
   let totals: Awaited<ReturnType<typeof getTotals>>;
+  let breakdown: Awaited<ReturnType<typeof getHotelBreakdown>>;
 
   try {
-    [entries, totals] = await Promise.all([listRsvp(q), getTotals()]);
+    [entries, totals, breakdown] = await Promise.all([
+      listRsvp(q),
+      getTotals(),
+      getHotelBreakdown(),
+    ]);
   } catch (error) {
     // Pagina riservata all'admin: qui il messaggio tecnico aiuta a
     // capire cosa non va (password, host, permessi) senza aprire i log.
@@ -149,6 +160,44 @@ export default async function AdminPage({
         {totals.companions === 1 ? "accompagnatore" : "accompagnatori"}.
       </p>
 
+      {/* Alloggio: il numero da comunicare agli hotel alla scadenza */}
+
+      <section className="mt-12" aria-labelledby="alloggio-titolo">
+        <h2
+          id="alloggio-titolo"
+          className="text-xs uppercase tracking-[0.34em] text-secondary"
+        >
+          Alloggio (persone che partecipano)
+        </h2>
+
+        {breakdown.length === 0 ? (
+          <p className="mt-4 text-sm text-secondary">
+            Nessuna preferenza ancora.
+          </p>
+        ) : (
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {breakdown.map((row) => (
+              <li
+                key={row.hotel || "non-indicato"}
+                className="flex items-baseline justify-between border border-border bg-white px-5 py-4"
+              >
+                <span className="text-sm text-primary">
+                  {row.hotel ? hotelLabel(row.hotel) : "Non indicato"}
+                </span>
+
+                <span className="font-heading text-2xl text-primary">
+                  {row.people}
+                  <span className="ml-2 text-xs text-secondary">
+                    ({row.submissions}{" "}
+                    {row.submissions === 1 ? "risposta" : "risposte"})
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
       {/* Ricerca */}
 
       <form className="mt-12 flex gap-3" role="search">
@@ -195,7 +244,7 @@ export default async function AdminPage({
         </p>
       ) : (
         <div className="mt-8 overflow-x-auto">
-          <table className="w-full min-w-[820px] border-collapse text-left text-sm">
+          <table className="w-full min-w-[980px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-border">
                 {[
@@ -204,6 +253,7 @@ export default async function AdminPage({
                   "Presenza",
                   "Persone",
                   "Allergie / intolleranze",
+                  "Alloggio",
                   "Messaggio",
                   "Inviato",
                 ].map((heading) => (
@@ -247,12 +297,22 @@ export default async function AdminPage({
                     {entry.dietary ?? "—"}
                   </td>
 
+                  <td className="py-4 pr-4 text-secondary">
+                    {entry.attending ? hotelLabel(entry.hotel) : "—"}
+                  </td>
+
                   <td className="max-w-xs py-4 pr-4 text-secondary">
                     {entry.message ?? "—"}
                   </td>
 
                   <td className="py-4 pr-4 whitespace-nowrap text-secondary">
                     {dateFormat.format(entry.created_at)}
+
+                    {isPastRsvpDeadline(entry.created_at) && (
+                      <span className="ml-2 border border-[#e2c4ba] px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-[#a4553f]">
+                        Dopo la scadenza
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
