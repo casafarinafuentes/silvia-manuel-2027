@@ -150,6 +150,15 @@ video {
   transform: none;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Le ancore non devono finire sotto la nav sticky. */
 .anchor-offset {
   scroll-margin-top: calc(var(--sticky-nav-height) + 1.5rem);

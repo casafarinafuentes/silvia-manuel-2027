@@ -1,42 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
+import { ArrowUpRight, Lightbulb } from "lucide-react";
 
-const adventures = [
-  {
-    number: "01",
-    title: "Roccia dell'Orso",
-    description:
-      "Una delle viste più iconiche della costa gallurese. Una passeggiata semplice che porta fino alla grande roccia scolpita dal vento, con una vista spettacolare sul mare.",
-  },
-  {
-    number: "02",
-    title: "Tour della Maddalena",
-    description:
-      "Una giornata in barca tra calette, acqua cristallina e alcune delle isole più belle dell'arcipelago.",
-  },
-  {
-    number: "03",
-    title: "Golfo di Orosei",
-    description:
-      "Cale selvagge, pareti di roccia e mare trasparente. Una delle escursioni da mettere in cima alla lista se avete qualche giorno in più.",
-  },
-  {
-    number: "04",
-    title: "Delfini in canoa",
-    description:
-      "Un'esperienza sul mare di Golfo Aranci per provare ad avvistare i delfini direttamente dall'acqua.",
-  },
-  {
-    number: "05",
-    title: "Ferrata a Tavolara",
-    description:
-      "Per chi cerca qualcosa di più avventuroso: una ferrata spettacolare con il mare della Sardegna come panorama.",
-  },
-];
+import { adventures } from "@/data/adventures";
 
 export default function Adventures() {
-  const [open, setOpen] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section
@@ -69,14 +40,24 @@ export default function Adventures() {
                     onClick={() => setOpen(isOpen ? null : index)}
                     aria-expanded={isOpen}
                     aria-controls={`avventura-${adventure.number}`}
-                    className="flex w-full items-center gap-6 py-7 text-left"
+                    className="group flex w-full items-center gap-6 py-7 text-left"
                   >
                     <span className="w-8 text-xs tracking-[0.2em] text-secondary">
                       {adventure.number}
                     </span>
 
-                    <span className="flex-1 font-heading text-2xl font-light text-primary md:text-3xl">
-                      {adventure.title}
+                    <span className="flex-1">
+                      <span className="block font-heading text-2xl font-light text-primary transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none md:text-3xl">
+                        {adventure.title}
+                      </span>
+
+                      <span
+                        className={`mt-1 block text-[13px] text-secondary transition-opacity duration-300 ${
+                          isOpen ? "opacity-0" : "opacity-100"
+                        }`}
+                      >
+                        {adventure.tagline}
+                      </span>
                     </span>
 
                     <span
@@ -98,13 +79,73 @@ export default function Adventures() {
                   // senza usare `hidden`, che azzererebbe la transizione.
                   inert={!isOpen}
                   className={`grid transition-all duration-500 motion-reduce:transition-none ${
-                    isOpen ? "grid-rows-[1fr] pb-7" : "grid-rows-[0fr]"
+                    isOpen ? "grid-rows-[1fr] pb-10" : "grid-rows-[0fr]"
                   }`}
                 >
-                  <div className="overflow-hidden pl-14">
-                    <p className="max-w-2xl text-[15px] leading-7 text-secondary">
-                      {adventure.description}
-                    </p>
+                  <div className="overflow-hidden">
+                    <div className="grid gap-8 md:grid-cols-[1fr_1.1fr] md:gap-10 md:pl-14">
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-photo bg-panel-photo md:aspect-auto md:min-h-[360px]">
+                        <Image
+                          src={adventure.image}
+                          alt={adventure.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 40vw"
+                          className="object-cover"
+                        />
+                      </div>
+
+                      <div>
+                        <p className="font-heading text-2xl font-light leading-snug text-primary">
+                          {adventure.tagline}
+                        </p>
+
+                        <div className="mt-5 space-y-4 text-[15px] leading-7 text-secondary">
+                          {adventure.paragraphs.map((text) => (
+                            <p key={text}>{text}</p>
+                          ))}
+                        </div>
+
+                        <dl className="mt-7 grid gap-x-8 gap-y-4 border-t border-border pt-6 sm:grid-cols-2">
+                          {adventure.facts.map((fact) => (
+                            <div key={fact.label}>
+                              <dt className="text-xs uppercase tracking-[0.24em] text-secondary">
+                                {fact.label}
+                              </dt>
+
+                              <dd className="mt-1 text-sm leading-6 text-primary">
+                                {fact.value}
+                              </dd>
+                            </div>
+                          ))}
+                        </dl>
+
+                        <ul className="mt-6 space-y-2">
+                          {adventure.tips.map((tip) => (
+                            <li
+                              key={tip}
+                              className="flex gap-3 text-[13px] leading-6 text-secondary"
+                            >
+                              <Lightbulb
+                                size={15}
+                                aria-hidden="true"
+                                className="mt-1 shrink-0 text-accent"
+                              />
+                              {tip}
+                            </li>
+                          ))}
+                        </ul>
+
+                        <a
+                          href={adventure.link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-8 inline-flex items-center gap-2 border-b border-primary pb-1 text-xs uppercase tracking-[0.24em] text-primary transition hover:text-accent"
+                        >
+                          {adventure.link.label}
+                          <ArrowUpRight size={14} aria-hidden="true" />
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

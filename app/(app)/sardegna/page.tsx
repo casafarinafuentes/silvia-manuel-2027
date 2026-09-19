@@ -9,6 +9,7 @@ import Beaches from "@/components/sardegna/Beaches";
 import Villages from "@/components/sardegna/Villages";
 import Favorite from "@/components/sardegna/Favorite";
 import QuickGuide from "@/components/sardegna/QuickGuide";
+import PhotoCredits from "@/components/sardegna/PhotoCredits";
 import NextStep from "@/components/ui/NextStep";
 import Footer from "@/components/matrimonio/Footer";
 
@@ -32,6 +33,7 @@ export default function SardegnaPage() {
       <Villages />
       <Favorite />
       <QuickGuide />
+      <PhotoCredits />
 
       <NextStep
         eyebrow="Ci vediamo presto"

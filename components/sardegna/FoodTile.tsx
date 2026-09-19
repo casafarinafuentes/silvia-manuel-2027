@@ -44,34 +44,70 @@ export default function FoodTile({
       <Wrapper href={href}>
         <div
           className={`
-            group relative flex w-full flex-col justify-end
+            group relative w-full
             ${ASPECT[aspect]}
             overflow-hidden rounded-tile
-            border border-border bg-panel-photo
-            p-6 md:p-7
-            transition-colors duration-500
-            ${hasLink ? "hover:border-primary/40" : ""}
+            bg-gradient-to-br from-[#efe9de] via-panel-photo to-[#e4ddd0]
           `}
         >
-          {location && (
-            <p className="text-[8px] uppercase tracking-[0.35em] text-secondary">
-              {location}
+          {/* Al posto della foto: il ramo botanico, che reagisce all'hover
+              come la fotografia delle altre schede (zoom lento). */}
+          <Image
+            src="/decorations/branch.webp"
+            alt=""
+            aria-hidden="true"
+            width={260}
+            height={325}
+            className="
+              pointer-events-none absolute -right-6 -top-6 h-[120%] w-auto
+              object-contain opacity-30
+              transition-transform duration-700
+              ease-[cubic-bezier(.22,1,.36,1)]
+              group-hover:scale-[1.06] group-hover:rotate-2
+              motion-reduce:transition-none
+              motion-reduce:group-hover:scale-100
+              motion-reduce:group-hover:rotate-0
+            "
+          />
+
+          {/* Stesso velo e stessa comparsa del testo delle schede con foto. */}
+          <div
+            className="
+              absolute inset-0 bg-gradient-to-t from-black/10 to-transparent
+              transition-colors duration-500
+              md:group-hover:bg-black/10
+            "
+          />
+
+          <div
+            className="
+              absolute inset-x-0 bottom-0 p-6 md:p-7
+              transition-transform duration-500 ease-out
+              md:group-hover:-translate-y-1
+              motion-reduce:transition-none
+              motion-reduce:md:group-hover:translate-y-0
+            "
+          >
+            {location && (
+              <p className="text-xs uppercase tracking-[0.3em] text-secondary">
+                {location}
+              </p>
+            )}
+
+            <h3 className="mt-2 font-heading text-2xl font-light leading-tight text-primary md:text-3xl">
+              {name}
+            </h3>
+
+            <p className="mt-2 text-[13px] leading-5 text-secondary">
+              {subtitle}
             </p>
-          )}
 
-          <h3 className="mt-2 font-heading text-2xl font-light leading-tight text-primary md:text-3xl">
-            {name}
-          </h3>
-
-          <p className="mt-2 text-[13px] leading-5 text-secondary">
-            {subtitle}
-          </p>
-
-          {hasLink && (
-            <span className="mt-4 inline-block w-fit border-b border-border pb-1 text-[8px] uppercase tracking-[0.3em] text-secondary">
-              Scopri →
-            </span>
-          )}
+            {hasLink && (
+              <span className="mt-4 inline-block border-b border-primary/50 pb-1 text-xs uppercase tracking-[0.3em] text-primary">
+                Scopri →
+              </span>
+            )}
+          </div>
         </div>
       </Wrapper>
     );

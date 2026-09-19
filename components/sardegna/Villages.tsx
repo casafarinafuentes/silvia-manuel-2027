@@ -12,6 +12,20 @@ const nearby = [
 
 const further = ["Alghero", "Castelsardo"];
 
+/**
+ * Mappa incorporata di Google, senza chiave API: cerca il nome del
+ * paese, così il punto è sempre quello giusto e non dipende da
+ * coordinate scritte a mano.
+ */
+function mapSrc(place: string): string {
+  const query = encodeURIComponent(`${place}, Sardegna, Italia`);
+  return `https://www.google.com/maps?q=${query}&z=13&output=embed`;
+}
+
+/** Vista d'insieme mostrata quando nessun paese è selezionato. */
+const OVERVIEW_SRC =
+  "https://www.google.com/maps?q=Gallura%2C%20Sardegna&z=9&output=embed";
+
 function VillageList({
   items,
   active,
@@ -28,9 +42,10 @@ function VillageList({
           <button
             type="button"
             onMouseEnter={() => onHover(place)}
-            onMouseLeave={() => onHover(null)}
             onFocus={() => onHover(place)}
-            onBlur={() => onHover(null)}
+            // Sui dispositivi touch non esiste l'hover: il tocco seleziona.
+            onClick={() => onHover(place)}
+            aria-pressed={active === place}
             className={`
               flex w-full items-center gap-5 border-b border-border py-5
               text-left transition-colors duration-300
@@ -99,46 +114,33 @@ export default function Villages() {
             </div>
           </div>
 
-          {/*
-            Pannello di accompagnamento alla lista.
-
-            La mappa vera arriverà quando avremo coordinate verificate
-            per ogni paese: inventarle significherebbe mandare gli
-            invitati nel posto sbagliato. Nel frattempo il pannello
-            reagisce comunque alla lista, così l'interazione è già
-            quella definitiva.
-          */}
+          {/* Mappa: mostra il paese sul quale passa il mouse (o che è
+              stato toccato). Senza selezione, la Gallura intera. */}
           <div
             className="
               relative min-h-[420px] overflow-hidden rounded-photo
               border border-border bg-panel-photo
               lg:sticky lg:top-28 lg:min-h-[560px]
             "
-            aria-hidden="true"
           >
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-10 text-center">
-              <p
-                className={`
-                  font-heading text-4xl font-light leading-tight text-primary
-                  transition-opacity duration-500 md:text-5xl
-                  motion-reduce:transition-none
-                  ${active ? "opacity-100" : "opacity-0"}
-                `}
-              >
-                {active ?? ""}
+            <iframe
+              key={active ?? "panoramica"}
+              title={active ? `Mappa di ${active}` : "Mappa della Gallura"}
+              src={active ? mapSrc(active) : OVERVIEW_SRC}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 h-full w-full border-0 animate-[fadeIn_600ms_ease-out] motion-reduce:animate-none"
+            />
+
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-white/95 via-white/70 to-transparent px-6 pb-5 pt-14">
+              <p className="font-heading text-3xl font-light leading-none text-primary">
+                {active ?? "Gallura"}
               </p>
 
-              <p
-                className={`
-                  mt-6 max-w-xs text-[13px] leading-6 text-secondary
-                  transition-opacity duration-500
-                  motion-reduce:transition-none
-                  ${active ? "opacity-0" : "opacity-100"}
-                `}
-              >
-                Passate il mouse sui nomi per scoprirli.
-                <br />
-                La mappa arriverà presto.
+              <p className="mt-2 text-xs uppercase tracking-[0.28em] text-secondary">
+                {active
+                  ? "Sulla mappa"
+                  : "Passate il mouse sui nomi (o toccateli) per vederli"}
               </p>
             </div>
           </div>
