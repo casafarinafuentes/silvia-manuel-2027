@@ -15,7 +15,7 @@ export const timeline: TimelineItem[] = [
     icon: "car",
   },
   {
-    time: "17:30",
+    time: "17:00",
     title: "Cerimonia",
     description: "",
     icon: "gem",

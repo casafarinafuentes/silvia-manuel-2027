@@ -45,9 +45,11 @@ export CSV. Il login ha un limite di 5 tentativi sbagliati ogni 15 minuti.
      `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
    - `RSVP_IP_SALT` — una stringa casuale qualsiasi
    - `NEXT_PUBLIC_SITE_URL` — `https://silviaemanuel.it`
-3. Crea le tabelle (una volta): `vercel env pull .env.local` e poi
-   `npm run db:migrate`. Le migration sono idempotenti.
+3. Le tabelle si creano da sole alla prima richiesta (`lib/db-schema.ts`,
+   idempotente): non serve lanciare nessuna migration. `npm run db:migrate`
+   resta disponibile per applicarle a mano.
 4. Rifai il deploy perché le variabili vengano lette.
+5. Controllo: apri `/admin`, accedi e verifica che compaiano i totali (0).
 
 Senza database il form mostra un errore generico e non salva nulla.
 

@@ -19,9 +19,9 @@ const INITIAL_STATE: CountdownValues = {
 };
 
 const calculate = (): CountdownValues => {
-  const target = new Date(
-    `${wedding.dates.wedding}T17:30:00`
-  ).getTime();
+  // startsAt ha il fuso orario esplicito: il conto alla rovescia è
+  // lo stesso ovunque si trovi chi guarda.
+  const target = new Date(wedding.dates.startsAt).getTime();
 
   const now = Date.now();
 

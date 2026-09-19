@@ -2,6 +2,8 @@ import "server-only";
 
 import { Pool } from "pg";
 
+import { SCHEMA_SQL } from "./db-schema";
+
 /**
  * Pool Postgres condiviso.
  *
@@ -46,10 +48,32 @@ export function getPool(): Pool {
   return globalForDb.rsvpPool;
 }
 
+/**
+ * Crea le tabelle se mancano, una sola volta per istanza del server.
+ * Se fallisce (database irraggiungibile) si riprova alla richiesta dopo.
+ */
+let schemaReady: Promise<void> | undefined;
+
+function ensureSchema(): Promise<void> {
+  if (!schemaReady) {
+    schemaReady = getPool()
+      .query(SCHEMA_SQL)
+      .then(() => undefined)
+      .catch((error) => {
+        schemaReady = undefined;
+        throw error;
+      });
+  }
+
+  return schemaReady;
+}
+
 export async function query<T extends Record<string, unknown>>(
   text: string,
   params: readonly unknown[] = [],
 ): Promise<T[]> {
+  await ensureSchema();
+
   const result = await getPool().query<T>(text, params as unknown[]);
   return result.rows;
 }

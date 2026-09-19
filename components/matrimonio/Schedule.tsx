@@ -6,7 +6,7 @@ const events = [
     title: "Arrivo degli ospiti",
   },
   {
-    time: "17:30",
+    time: "17:00",
     title: "Cerimonia",
   },
   {

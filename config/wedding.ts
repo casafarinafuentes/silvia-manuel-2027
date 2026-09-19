@@ -28,22 +28,22 @@ export const wedding = {
      * visitatore e il countdown mostrerebbe valori diversi a seconda
      * di dove si trova chi guarda.
      */
-    startsAt: "2027-06-12T17:30:00+02:00",
+    startsAt: "2027-06-12T17:00:00+02:00",
   },
 
   ceremony: {
+    // Il rito si svolge nella stessa location del ricevimento.
     time: "17:00",
-    venue: "Chiesa di San Giovanni Battista",
-    address: "Arzachena",
-    // DA VERIFICARE: link Google Maps della chiesa.
-    maps: null as string | null,
+    venue: "Li Capanni",
+    address: "Cannigione",
+    maps: "https://maps.app.goo.gl/hSrCvH41MyM8MJkDA",
   },
 
   reception: {
     time: "18:30",
     venue: "Li Capanni",
     address: "Cannigione",
-    maps: "https://www.google.com/maps?q=41.1550237,9.4201348",
+    maps: "https://maps.app.goo.gl/hSrCvH41MyM8MJkDA",
   },
 
   location: {
@@ -58,11 +58,11 @@ export const wedding = {
     },
 
     coordinates: {
-      lat: 41.1550237,
-      lng: 9.4201348,
+      lat: 41.1545954,
+      lng: 9.4222925,
     },
 
-    maps: "https://www.google.com/maps?q=41.1550237,9.4201348",
+    maps: "https://maps.app.goo.gl/hSrCvH41MyM8MJkDA",
   },
 
   /**
