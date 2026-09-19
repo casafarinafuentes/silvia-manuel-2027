@@ -58,8 +58,16 @@ async function main() {
     return;
   }
 
+  // sslmode nell'URL prevale sull'opzione ssl qui sotto: lo togliamo
+  // (stessa logica di lib/db-url.ts) per non fallire su certificati
+  // self-signed dei Postgres gestiti.
+  const url = new URL(connectionString);
+  for (const name of ["sslmode", "ssl", "sslrootcert", "sslcert", "sslkey", "sslcrl", "uselibpqcompat"]) {
+    url.searchParams.delete(name);
+  }
+
   const client = new pg.Client({
-    connectionString,
+    connectionString: url.toString(),
     ssl: { rejectUnauthorized: false },
   });
 

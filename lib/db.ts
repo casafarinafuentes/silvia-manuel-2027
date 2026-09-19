@@ -3,6 +3,7 @@ import "server-only";
 import { Pool } from "pg";
 
 import { SCHEMA_SQL } from "./db-schema";
+import { stripTlsParams } from "./db-url";
 
 /**
  * Pool Postgres condiviso.
@@ -64,7 +65,7 @@ function connectionString(): string {
 export function getPool(): Pool {
   if (!globalForDb.rsvpPool) {
     globalForDb.rsvpPool = new Pool({
-      connectionString: connectionString(),
+      connectionString: stripTlsParams(connectionString()),
       // I Postgres gestiti (Neon, Supabase, Vercel) richiedono TLS ma
       // presentano certificati che Node non verifica di default.
       ssl: { rejectUnauthorized: false },
