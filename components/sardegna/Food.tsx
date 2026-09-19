@@ -52,6 +52,7 @@ const restaurant = [
     name: "Sushi Mio",
     subtitle: "Sushi à la carte",
     location: "Olbia",
+    image: "/sardegna/sushi-mio.jpg",
   },
 ];
 
