@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Menu, X, ArrowRight } from "lucide-react";
 
@@ -13,6 +14,13 @@ type SiteMenuProps = {
 
 export default function SiteMenu({ variant = "light" }: SiteMenuProps) {
   const [open, setOpen] = useState(false);
+
+  // Il portal esiste solo nel browser: sul server non c'è un body.
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -76,6 +84,12 @@ export default function SiteMenu({ variant = "light" }: SiteMenuProps) {
           `inert` da chiuso: senza, i link resterebbero raggiungibili
           con Tab pur essendo invisibili. */}
 
+      {/* Il menu viene montato direttamente nel <body>: così nessun
+          elemento della pagina (trasformazioni, animazioni, filtri) può
+          cambiarne il riferimento di posizione, e resta sempre ancorato
+          alla finestra, in cima o in fondo alla pagina. */}
+      {mounted &&
+        createPortal(
       <div
         inert={!open}
         className={`
@@ -176,7 +190,9 @@ export default function SiteMenu({ variant = "light" }: SiteMenuProps) {
             </p>
           </div>
         </div>
-      </div>
+      </div>,
+          document.body,
+        )}
     </>
   );
 }
