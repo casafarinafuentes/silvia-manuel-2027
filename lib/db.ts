@@ -16,11 +16,40 @@ const globalForDb = globalThis as unknown as {
   rsvpPool: Pool | undefined;
 };
 
-function connectionString(): string {
-  const url =
+/**
+ * Trova la stringa di connessione.
+ *
+ * Prima i nomi standard. Poi, se il database è stato creato da Vercel
+ * con un prefisso personalizzato (es. STORAGE_DATABASE_URL,
+ * STORAGE_POSTGRES_URL), cerca una variabile con quel suffisso o il
+ * cui valore è un URL postgres, escludendo le varianti "non pooling".
+ */
+function findConnectionString(): string | undefined {
+  const standard =
     process.env.DATABASE_URL ??
     process.env.POSTGRES_URL ??
     process.env.POSTGRES_PRISMA_URL;
+
+  if (standard) {
+    return standard;
+  }
+
+  const candidates = Object.entries(process.env).filter(
+    ([name, value]) =>
+      typeof value === "string" &&
+      /^postgres(ql)?:\/\//.test(value) &&
+      !/NON_POOLING|UNPOOLED|NO_SSL/i.test(name),
+  );
+
+  const preferred =
+    candidates.find(([name]) => /(DATABASE_URL|POSTGRES_URL)$/.test(name)) ??
+    candidates[0];
+
+  return preferred?.[1];
+}
+
+function connectionString(): string {
+  const url = findConnectionString();
 
   if (!url) {
     throw new Error(
@@ -80,9 +109,5 @@ export async function query<T extends Record<string, unknown>>(
 
 /** True se è configurata una connessione al database. */
 export function isDatabaseConfigured(): boolean {
-  return Boolean(
-    process.env.DATABASE_URL ??
-      process.env.POSTGRES_URL ??
-      process.env.POSTGRES_PRISMA_URL,
-  );
+  return Boolean(findConnectionString());
 }

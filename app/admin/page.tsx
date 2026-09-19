@@ -64,7 +64,35 @@ export default async function AdminPage({
 
   const { q = "" } = await searchParams;
 
-  const [entries, totals] = await Promise.all([listRsvp(q), getTotals()]);
+  let entries: Awaited<ReturnType<typeof listRsvp>>;
+  let totals: Awaited<ReturnType<typeof getTotals>>;
+
+  try {
+    [entries, totals] = await Promise.all([listRsvp(q), getTotals()]);
+  } catch (error) {
+    // Pagina riservata all'admin: qui il messaggio tecnico aiuta a
+    // capire cosa non va (password, host, permessi) senza aprire i log.
+    console.error("[admin] lettura database fallita", error);
+
+    const detail = error instanceof Error ? error.message : String(error);
+
+    return (
+      <main className="mx-auto max-w-2xl px-6 py-24">
+        <h1 className="font-heading text-4xl font-light text-primary">
+          Database non raggiungibile
+        </h1>
+
+        <p className="mt-6 text-sm leading-7 text-secondary">
+          Il database è configurato ma la lettura è fallita. Dettaglio
+          tecnico:
+        </p>
+
+        <pre className="mt-4 overflow-x-auto border border-border bg-white p-4 text-xs leading-6 text-primary">
+          {detail}
+        </pre>
+      </main>
+    );
+  }
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-14">
