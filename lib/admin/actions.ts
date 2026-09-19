@@ -2,6 +2,12 @@
 
 import { redirect } from "next/navigation";
 
+import { clientIp } from "@/lib/request";
+import {
+  isAdminLoginLimited,
+  recordAdminLoginFailure,
+} from "@/lib/rsvp/repository";
+
 import { endSession, startSession, verifyPassword } from "./session";
 
 export type LoginState = { error?: string };
@@ -16,6 +22,21 @@ export async function login(
     return { error: "Inserisci la password." };
   }
 
+  const ip = await clientIp();
+
+  // Se il database non risponde non chiudiamo fuori l'admin: il
+  // limite è una protezione in più, non l'unica difesa (la password
+  // resta comunque obbligatoria).
+  try {
+    if (await isAdminLoginLimited(ip)) {
+      return {
+        error: "Troppi tentativi. Riprova tra qualche minuto.",
+      };
+    }
+  } catch (error) {
+    console.error("[admin] rate limit non disponibile", error);
+  }
+
   let ok = false;
 
   try {
@@ -26,6 +47,12 @@ export async function login(
   }
 
   if (!ok) {
+    try {
+      await recordAdminLoginFailure(ip);
+    } catch (error) {
+      console.error("[admin] tentativo non registrato", error);
+    }
+
     return { error: "Password non corretta." };
   }
 

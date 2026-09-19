@@ -140,7 +140,13 @@ const RATE_LIMIT_WINDOW_MINUTES = 60;
  * alla provenienza.
  */
 function hashIp(ip: string): string {
-  const salt = process.env.RSVP_IP_SALT ?? "silvia-manuel-2027";
+  // Se RSVP_IP_SALT manca ripieghiamo su un segreto che esiste già
+  // (la chiave di sessione admin) invece di una costante nel codice:
+  // una costante pubblica renderebbe gli hash prevedibili.
+  const salt =
+    process.env.RSVP_IP_SALT ??
+    process.env.ADMIN_SESSION_SECRET ??
+    "silvia-manuel-2027";
   return createHash("sha256").update(`${salt}:${ip}`).digest("hex");
 }
 
@@ -159,5 +165,35 @@ export async function isRateLimited(ip: string): Promise<boolean> {
 export async function recordAttempt(ip: string): Promise<void> {
   await query(`insert into rsvp_submission_log (ip_hash) values ($1)`, [
     hashIp(ip),
+  ]);
+}
+
+/* ------------------------------------------------------------------
+   Rate limiting del login admin
+
+   Riusa la stessa tabella dell'RSVP con una chiave separata
+   ("admin:<ip>"), così non servono migration nuove. Conta solo i
+   tentativi falliti: chi sbaglia password 5 volte in 15 minuti viene
+   bloccato per il resto della finestra.
+------------------------------------------------------------------ */
+
+const ADMIN_LOGIN_MAX_FAILURES = 5;
+const ADMIN_LOGIN_WINDOW_MINUTES = 15;
+
+export async function isAdminLoginLimited(ip: string): Promise<boolean> {
+  const rows = await query<{ count: string }>(
+    `select count(*) as count
+       from rsvp_submission_log
+      where ip_hash = $1
+        and created_at > now() - ($2 || ' minutes')::interval`,
+    [hashIp(`admin:${ip}`), String(ADMIN_LOGIN_WINDOW_MINUTES)],
+  );
+
+  return Number(rows[0]?.count ?? 0) >= ADMIN_LOGIN_MAX_FAILURES;
+}
+
+export async function recordAdminLoginFailure(ip: string): Promise<void> {
+  await query(`insert into rsvp_submission_log (ip_hash) values ($1)`, [
+    hashIp(`admin:${ip}`),
   ]);
 }

@@ -1,7 +1,6 @@
 "use server";
 
-import { headers } from "next/headers";
-
+import { clientIp } from "@/lib/request";
 import { parseRsvp, type RsvpFieldErrors } from "./schema";
 import {
   DuplicateRsvpError,
@@ -14,19 +13,6 @@ export type RsvpState =
   | { status: "idle" }
   | { status: "success"; attending: boolean; firstName: string }
   | { status: "error"; errors: RsvpFieldErrors };
-
-async function clientIp(): Promise<string> {
-  const headerList = await headers();
-
-  // Vercel valorizza x-forwarded-for; il primo valore è il client.
-  const forwarded = headerList.get("x-forwarded-for");
-
-  if (forwarded) {
-    return forwarded.split(",")[0].trim();
-  }
-
-  return headerList.get("x-real-ip") ?? "unknown";
-}
 
 export async function submitRsvp(
   _previous: RsvpState,
