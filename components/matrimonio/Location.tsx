@@ -58,11 +58,11 @@ export default function Location() {
             </div>
 
             <Image
-              src="/decorations/branch.svg"
+              src="/decorations/branch.webp"
               alt=""
               width={120}
               height={120}
-              className="pointer-events-none absolute bottom-8 right-8 opacity-10"
+              className="object-contain pointer-events-none absolute bottom-8 right-8 opacity-10"
             />
 
           </div>

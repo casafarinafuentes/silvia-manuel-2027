@@ -25,7 +25,7 @@ const dateFormat = new Intl.DateTimeFormat("it-IT", {
 function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div className="border border-border bg-white px-6 py-5">
-      <p className="text-[10px] uppercase tracking-[0.28em] text-secondary">
+      <p className="text-xs uppercase tracking-[0.28em] text-secondary">
         {label}
       </p>
 
@@ -72,7 +72,7 @@ export default async function AdminPage({
 
       <div className="flex flex-wrap items-start justify-between gap-6">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.38em] text-secondary">
+          <p className="text-xs uppercase tracking-[0.38em] text-secondary">
             Silvia &amp; Manuel 2027
           </p>
 
@@ -85,7 +85,7 @@ export default async function AdminPage({
           <a
             href={`/admin/export${q ? `?q=${encodeURIComponent(q)}` : ""}`}
             className="
-              border border-primary px-6 py-3 text-[10px] uppercase
+              border border-primary px-6 py-3 text-xs uppercase
               tracking-[0.26em] text-primary transition
               hover:bg-primary hover:text-white
             "
@@ -97,7 +97,7 @@ export default async function AdminPage({
             <button
               type="submit"
               className="
-                px-4 py-3 text-[10px] uppercase tracking-[0.26em]
+                px-4 py-3 text-xs uppercase tracking-[0.26em]
                 text-secondary transition hover:text-primary
               "
             >
@@ -140,7 +140,7 @@ export default async function AdminPage({
         <button
           type="submit"
           className="
-            border border-border px-6 py-3 text-[10px] uppercase
+            border border-border px-6 py-3 text-xs uppercase
             tracking-[0.26em] text-primary transition hover:border-primary
           "
         >
@@ -150,7 +150,7 @@ export default async function AdminPage({
         {q && (
           <a
             href="/admin"
-            className="self-center text-[10px] uppercase tracking-[0.26em] text-secondary hover:text-primary"
+            className="self-center text-xs uppercase tracking-[0.26em] text-secondary hover:text-primary"
           >
             Azzera
           </a>
@@ -182,7 +182,7 @@ export default async function AdminPage({
                   <th
                     key={heading}
                     scope="col"
-                    className="py-3 pr-4 text-[10px] uppercase tracking-[0.24em] font-normal text-secondary"
+                    className="py-3 pr-4 text-xs uppercase tracking-[0.24em] font-normal text-secondary"
                   >
                     {heading}
                   </th>

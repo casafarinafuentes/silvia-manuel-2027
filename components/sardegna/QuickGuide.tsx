@@ -34,7 +34,7 @@ export default function QuickGuide() {
     <section className="bg-panel px-6 py-24 md:py-32">
       <div className="mx-auto max-w-5xl">
         <Reveal className="mb-16 max-w-2xl md:mb-20">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-secondary">
+          <p className="text-xs uppercase tracking-[0.4em] text-secondary">
             Piccoli itinerari
           </p>
 
@@ -62,7 +62,7 @@ export default function QuickGuide() {
                     {itinerary.duration}
                   </p>
 
-                  <p className="mt-3 text-[10px] uppercase tracking-[0.28em] text-secondary">
+                  <p className="mt-3 text-xs uppercase tracking-[0.28em] text-secondary">
                     {itinerary.lead}
                   </p>
                 </div>

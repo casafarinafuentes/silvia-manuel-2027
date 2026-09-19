@@ -36,7 +36,7 @@ export default function SubmitButton({
         bg-primary
         px-12
         py-4
-        text-[11px]
+        text-xs
         uppercase
         tracking-[0.32em]
         text-white

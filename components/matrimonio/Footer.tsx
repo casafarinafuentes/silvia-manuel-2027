@@ -25,7 +25,7 @@ export default function Footer() {
         {/* Countdown */}
 
         <div className="w-full text-center lg:border-l lg:border-border lg:pl-10 lg:text-left">
-          <p className="mb-6 text-[11px] uppercase tracking-[0.35em] text-secondary">
+          <p className="mb-6 text-xs uppercase tracking-[0.35em] text-secondary">
             Countdown
           </p>
 
@@ -37,7 +37,7 @@ export default function Footer() {
         {/* FAQ */}
 
         <div className="w-full text-center lg:border-l lg:border-border lg:pl-10 lg:text-left">
-          <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">
+          <p className="text-xs uppercase tracking-[0.35em] text-secondary">
             Domande frequenti
           </p>
 
@@ -51,7 +51,7 @@ export default function Footer() {
 
           <Link
             href="/matrimonio#faq"
-            className="mt-5 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary transition hover:text-accent"
+            className="mt-5 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-primary transition hover:text-accent"
           >
             Scopri di più →
           </Link>
@@ -60,7 +60,7 @@ export default function Footer() {
         {/* Contatti */}
 
         <div className="w-full text-center lg:border-l lg:border-border lg:pl-10 lg:text-left">
-          <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">
+          <p className="text-xs uppercase tracking-[0.35em] text-secondary">
             Contatti
           </p>
 
@@ -72,17 +72,17 @@ export default function Footer() {
 
           <Link
             href="/rsvp#contatti"
-            className="mt-5 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary transition hover:text-accent"
+            className="mt-5 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-primary transition hover:text-accent"
           >
             Scrivici →
           </Link>
 
           <Image
-            src="/decorations/branch.svg"
+            src="/decorations/branch.webp"
             alt=""
             width={120}
             height={120}
-            className="pointer-events-none absolute bottom-0 right-0 hidden opacity-15 lg:block"
+            className="object-contain pointer-events-none absolute bottom-0 right-0 hidden opacity-15 lg:block"
           />
         </div>
       </div>

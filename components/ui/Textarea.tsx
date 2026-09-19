@@ -50,8 +50,8 @@ export default function Textarea({
         aria-describedby={error ? errorId : undefined}
         className={`
           form-textarea
-          placeholder:text-secondary/45
-          focus:placeholder:text-secondary/20
+          placeholder:italic placeholder:text-secondary/70
+          focus:placeholder:text-secondary/40
           ${error ? "border-[#a4553f]" : "focus:border-primary"}
           ${className}
         `}

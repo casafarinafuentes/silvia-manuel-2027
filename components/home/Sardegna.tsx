@@ -22,11 +22,11 @@ export default function Sardegna() {
         <div className="relative flex min-h-[350px] items-center bg-[#faf7f2] px-14">
 
           <Image
-            src="/decorations/branch.svg"
+            src="/decorations/branch.webp"
             alt=""
             width={170}
             height={170}
-            className="pointer-events-none absolute right-6 top-1/2 -translate-y-1/2 opacity-15"
+            className="object-contain pointer-events-none absolute right-6 top-1/2 -translate-y-1/2 opacity-15"
           />
 
           <div className="relative z-10 max-w-sm">

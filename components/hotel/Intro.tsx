@@ -9,12 +9,12 @@ export default function Intro() {
         {/* Decorazione */}
 
         <Image
-          src="/decorations/branch.svg"
+          src="/decorations/branch.webp"
           alt=""
           width={470}
           height={470}
           className="
-            pointer-events-none
+            object-contain pointer-events-none
             absolute
             -left-28
             -top-8

@@ -4,6 +4,8 @@ import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
+import Link from "next/link";
+
 import Countdown from "@/components/ui/Countdown";
 import { wedding } from "@/config/wedding";
 import SiteMenu from "@/components/layout/Menu";
@@ -26,7 +28,9 @@ export default function Hero() {
 
       {/* Overlay */}
 
-      <div className="absolute inset-0 bg-black/30" />
+      {/* Velo a gradiente: scurisce di più dove sta il testo (titolo al
+          centro, countdown in basso) e lascia respirare la foto sopra. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/25 to-black/55" />
 
       {/* Top Bar */}
 
@@ -70,6 +74,13 @@ export default function Hero() {
         <div className="mt-12">
           <Countdown variant="hero" />
         </div>
+
+        <Link
+          href="/rsvp"
+          className="mt-10 inline-flex items-center gap-3 border border-white bg-white px-8 py-3.5 text-xs uppercase tracking-[0.28em] text-[#2f2b28] transition hover:bg-transparent hover:text-white"
+        >
+          Conferma la tua presenza
+        </Link>
       </motion.div>
 
       {/* Scroll */}
@@ -84,7 +95,7 @@ export default function Hero() {
         }}
         className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-center text-white"
       >
-        <p className="mb-2 text-[11px] uppercase tracking-[0.35em]">
+        <p className="mb-2 text-xs uppercase tracking-[0.35em]">
           Scorri
         </p>
 

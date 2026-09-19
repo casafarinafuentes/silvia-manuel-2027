@@ -4,6 +4,7 @@ import Hero from "@/components/rsvp/Hero";
 import Intro from "@/components/rsvp/Intro";
 import Form from "@/components/rsvp/Form";
 import Contact from "@/components/rsvp/Contact";
+import NextStep from "@/components/ui/NextStep";
 import Footer from "@/components/matrimonio/Footer";
 
 export const metadata: Metadata = {
@@ -20,6 +21,14 @@ export default function RSVPPage() {
       <Intro />
       <Form />
       <Contact />
+
+      <NextStep
+        title="Dove dormire"
+        description="Strutture consigliate vicino alla location e informazioni sulla navetta."
+        href="/hotel"
+        cta="Scopri gli hotel"
+      />
+
       <Footer />
     </>
   );

@@ -128,7 +128,7 @@ export default function CategoryNav() {
                       whitespace-nowrap
                       px-4
                       py-1
-                      text-[10px]
+                      text-xs
                       uppercase
                       tracking-[0.32em]
                       transition-colors

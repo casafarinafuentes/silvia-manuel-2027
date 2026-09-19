@@ -32,7 +32,7 @@ export default function CTA() {
 
             <Link
               href="/rsvp"
-              className="mt-6 inline-flex items-center gap-3 bg-[#3F5643] px-7 py-3 text-[10px] uppercase tracking-[0.24em] text-white transition hover:bg-[#334637] sm:px-8 sm:text-[11px] sm:tracking-[0.28em]"
+              className="mt-6 inline-flex items-center gap-3 bg-[#3F5643] px-7 py-3 text-xs uppercase tracking-[0.24em] text-white transition hover:bg-[#334637] sm:px-8 sm:text-xs sm:tracking-[0.28em]"
             >
               Conferma la tua presenza
               <span className="text-base">→</span>

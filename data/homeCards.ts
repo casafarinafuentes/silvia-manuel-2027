@@ -3,6 +3,7 @@ import {
   Mail,
   BedDouble,
   MapPinned,
+  Gift,
 } from "lucide-react";
 
 export const homeCards = [
@@ -37,5 +38,14 @@ export const homeCards = [
     image: "/cards/sardinia.jpg",
     icon: MapPinned,
     href: "/sardegna",
+  },
+  {
+    title: "Lista nozze",
+    description:
+      "La vostra presenza è il regalo più grande. Per chi desidera lasciarci un pensiero.",
+    // Nessuna foto: la scheda usa il ramo botanico al posto dell'immagine.
+    image: null,
+    icon: Gift,
+    href: "/lista-nozze",
   },
 ];

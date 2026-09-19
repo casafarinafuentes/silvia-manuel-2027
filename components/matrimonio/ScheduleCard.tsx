@@ -32,7 +32,7 @@ const events = [
 export default function ScheduleCard() {
   return (
     <aside className="border border-border bg-panel px-9 py-10">
-      <p className="mb-12 text-center text-[11px] uppercase tracking-[0.35em] text-secondary">
+      <p className="mb-12 text-center text-xs uppercase tracking-[0.35em] text-secondary">
   La giornata in breve
 </p>
 

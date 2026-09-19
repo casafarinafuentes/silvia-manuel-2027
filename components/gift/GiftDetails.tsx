@@ -47,7 +47,7 @@ export default function GiftDetails({
         onClick={() => setOpen(true)}
         aria-expanded={false}
         className="
-          border-b border-border pb-1 text-[11px] uppercase
+          border-b border-border pb-1 text-xs uppercase
           tracking-[0.28em] text-secondary transition-colors
           duration-300 hover:border-primary hover:text-primary
           motion-reduce:transition-none
@@ -62,7 +62,7 @@ export default function GiftDetails({
     <div className="w-full max-w-md text-left">
       <dl className="border-t border-border/70">
         <div className="border-b border-border/70 py-5">
-          <dt className="text-[10px] uppercase tracking-[0.28em] text-secondary">
+          <dt className="text-xs uppercase tracking-[0.28em] text-secondary">
             Intestato a
           </dt>
 
@@ -72,7 +72,7 @@ export default function GiftDetails({
         </div>
 
         <div className="border-b border-border/70 py-5">
-          <dt className="text-[10px] uppercase tracking-[0.28em] text-secondary">
+          <dt className="text-xs uppercase tracking-[0.28em] text-secondary">
             IBAN
           </dt>
 
@@ -87,7 +87,7 @@ export default function GiftDetails({
               type="button"
               onClick={copy}
               className="
-                inline-flex shrink-0 items-center gap-2 text-[10px]
+                inline-flex shrink-0 items-center gap-2 text-xs
                 uppercase tracking-[0.24em] text-secondary
                 transition-colors duration-300 hover:text-primary
                 motion-reduce:transition-none
@@ -105,7 +105,7 @@ export default function GiftDetails({
         </div>
 
         <div className="border-b border-border/70 py-5">
-          <dt className="text-[10px] uppercase tracking-[0.28em] text-secondary">
+          <dt className="text-xs uppercase tracking-[0.28em] text-secondary">
             Causale
           </dt>
 

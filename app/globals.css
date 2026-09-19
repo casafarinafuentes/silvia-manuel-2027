@@ -131,6 +131,25 @@ video {
   border: 1px solid var(--border);
 }
 
+/* Skip-link: nascosto finché non riceve il focus da tastiera. */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  background: var(--text);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  transition: transform 150ms ease;
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
 /* Le ancore non devono finire sotto la nav sticky. */
 .anchor-offset {
   scroll-margin-top: calc(var(--sticky-nav-height) + 1.5rem);
@@ -142,7 +161,7 @@ video {
 
 .form-label {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.32em;
   color: var(--text-muted);

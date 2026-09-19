@@ -7,6 +7,7 @@ import Hotels from "@/components/hotel/Hotels";
 
 import Contact from "@/components/hotel/Contact";
 import InfoSection from "@/components/hotel/InfoSection";
+import NextStep from "@/components/ui/NextStep";
 import Footer from "@/components/matrimonio/Footer";
 
 export const metadata: Metadata = {
@@ -30,6 +31,13 @@ export default function HotelPage() {
       <InfoSection />
 
       <Contact />
+
+      <NextStep
+        title="Se vi fermate qualche giorno in più"
+        description="I posti del cuore di Silvia e Manuel in Gallura: dove mangiare, spiagge e paesini."
+        href="/sardegna"
+        cta="La nostra Sardegna"
+      />
 
       <Footer />
     </>

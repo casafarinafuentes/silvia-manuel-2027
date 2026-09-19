@@ -5,7 +5,7 @@ export default function Favorite() {
     <section className="bg-panel-photo px-6 py-20 md:py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-secondary">
+          <p className="text-xs uppercase tracking-[0.4em] text-secondary">
             Il nostro posto del cuore
           </p>
 

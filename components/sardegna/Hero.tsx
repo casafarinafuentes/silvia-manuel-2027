@@ -21,7 +21,7 @@ export default function Hero() {
 
       <div className="relative z-10 flex h-full items-center justify-center px-6 text-center">
         <div className="max-w-4xl">
-          <p className="text-[11px] uppercase tracking-[0.45em] text-white/80">
+          <p className="text-xs uppercase tracking-[0.45em] text-white/80">
             La nostra
           </p>
 
@@ -39,7 +39,7 @@ export default function Hero() {
       {/* Scroll */}
 
       <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 text-center">
-        <p className="text-[10px] uppercase tracking-[0.45em] text-white/80">
+        <p className="text-xs uppercase tracking-[0.45em] text-white/80">
           Scorri
         </p>
 

@@ -20,7 +20,7 @@ function Submit() {
         bg-primary
         px-8
         py-3.5
-        text-[11px]
+        text-xs
         uppercase
         tracking-[0.3em]
         text-white
@@ -42,7 +42,7 @@ export default function LoginForm() {
     <form action={formAction} className="mt-10">
       <label
         htmlFor="password"
-        className="block text-[10px] uppercase tracking-[0.32em] text-secondary"
+        className="block text-xs uppercase tracking-[0.32em] text-secondary"
       >
         Password
       </label>

@@ -7,7 +7,8 @@ type FeatureCardProps = {
   title: string;
   description: string;
   href: string;
-  image: string;
+  /** Senza immagine la scheda mostra un riquadro con il ramo botanico. */
+  image: string | null;
   icon: LucideIcon;
 };
 
@@ -26,13 +27,26 @@ export default function FeatureCard({
       {/* Immagine */}
 
       <div className="relative aspect-[1.7] overflow-hidden">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
-          className="object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none"
-        />
+        {image ? (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 256px"
+            className="object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-panel">
+            <Image
+              src="/decorations/branch.webp"
+              alt=""
+              aria-hidden="true"
+              width={140}
+              height={175}
+              className="h-full w-auto object-contain py-3 opacity-60 transition duration-700 group-hover:scale-105 motion-reduce:transition-none"
+            />
+          </div>
+        )}
       </div>
 
       {/* Contenuto */}

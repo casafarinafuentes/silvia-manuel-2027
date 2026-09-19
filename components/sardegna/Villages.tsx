@@ -38,7 +38,7 @@ function VillageList({
               ${active === place ? "text-primary" : ""}
             `}
           >
-            <span className="text-[10px] text-secondary">
+            <span className="text-xs text-secondary">
               {String(index + 1).padStart(2, "0")}
             </span>
 
@@ -65,7 +65,7 @@ export default function Villages() {
     <section id="paesini" className="anchor-offset px-6 py-24 md:py-32">
       <div className="mx-auto max-w-6xl">
         <div className="mb-16 max-w-2xl">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-secondary">
+          <p className="text-xs uppercase tracking-[0.4em] text-secondary">
             Da scoprire
           </p>
 
@@ -76,7 +76,7 @@ export default function Villages() {
 
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.35em] text-secondary">
+            <p className="text-xs uppercase tracking-[0.35em] text-secondary">
               In zona
             </p>
 
@@ -87,7 +87,7 @@ export default function Villages() {
             />
 
             <div className="mt-16">
-              <p className="text-[10px] uppercase tracking-[0.35em] text-secondary">
+              <p className="text-xs uppercase tracking-[0.35em] text-secondary">
                 Se avete più tempo
               </p>
 

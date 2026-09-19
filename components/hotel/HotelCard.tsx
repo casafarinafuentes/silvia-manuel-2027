@@ -175,7 +175,7 @@ export default function HotelCard({
                 border-border
                 px-7
                 py-3
-                text-[11px]
+                text-xs
                 uppercase
                 tracking-[0.30em]
                 text-primary

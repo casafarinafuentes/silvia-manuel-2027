@@ -96,7 +96,7 @@ export default function Countdown({ variant = "footer" }: CountdownProps) {
             </p>
 
             <p
-              className={`mt-2 text-[9px] uppercase tracking-[0.22em] sm:mt-3 sm:text-[10px] sm:tracking-[0.32em] ${
+              className={`mt-2 text-[9px] uppercase tracking-[0.22em] sm:mt-3 sm:text-xs sm:tracking-[0.32em] ${
                 dark ? "text-secondary" : "text-white/80"
               }`}
             >

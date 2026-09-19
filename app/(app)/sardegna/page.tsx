@@ -9,6 +9,8 @@ import Beaches from "@/components/sardegna/Beaches";
 import Villages from "@/components/sardegna/Villages";
 import Favorite from "@/components/sardegna/Favorite";
 import QuickGuide from "@/components/sardegna/QuickGuide";
+import NextStep from "@/components/ui/NextStep";
+import Footer from "@/components/matrimonio/Footer";
 
 export const metadata: Metadata = {
   title: "La nostra Sardegna",
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function SardegnaPage() {
   return (
-    <main>
+    <div>
       <Hero />
       <Intro />
       <CategoryNav />
@@ -30,6 +32,16 @@ export default function SardegnaPage() {
       <Villages />
       <Favorite />
       <QuickGuide />
-    </main>
+
+      <NextStep
+        eyebrow="Ci vediamo presto"
+        title="Manca solo la tua conferma"
+        description="Fateci sapere se ci sarete: bastano un minuto e qualche informazione."
+        href="/rsvp"
+        cta="Conferma la tua presenza"
+      />
+
+      <Footer />
+    </div>
   );
 }

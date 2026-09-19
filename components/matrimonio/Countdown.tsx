@@ -88,7 +88,7 @@ export default function Countdown() {
               {String(item.value).padStart(2, "0")}
             </p>
 
-            <p className="mt-2 text-[9px] uppercase tracking-[0.28em] text-secondary sm:mt-3 sm:text-[10px]">
+            <p className="mt-2 text-[9px] uppercase tracking-[0.28em] text-secondary sm:mt-3 sm:text-xs">
               {item.label}
             </p>
           </div>

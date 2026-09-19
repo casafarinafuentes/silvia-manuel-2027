@@ -5,7 +5,7 @@ import Footer from "@/components/matrimonio/Footer";
 
 export default function HomePage() {
   return (
-    <>
+    <main id="main" tabIndex={-1} className="focus:outline-none">
       {/* Il countdown vive dentro l'Hero e, in chiusura, nel Footer. */}
       <Hero />
 
@@ -14,6 +14,6 @@ export default function HomePage() {
       <Sardegna />
 
       <Footer />
-    </>
+    </main>
   );
 }

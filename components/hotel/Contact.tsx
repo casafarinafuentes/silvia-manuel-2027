@@ -6,12 +6,12 @@ export default function Contact() {
   return (
     <section className="relative border-y border-border bg-white py-24">
       <Image
-        src="/decorations/branch.svg"
+        src="/decorations/branch.webp"
         alt=""
         width={240}
         height={240}
         className="
-          pointer-events-none
+          object-contain pointer-events-none
           absolute
           bottom-0
           right-0
@@ -23,7 +23,7 @@ export default function Contact() {
 
       <div className="relative mx-auto max-w-3xl px-6 text-center">
 
-        <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">
+        <p className="text-xs uppercase tracking-[0.35em] text-secondary">
           Hai bisogno di aiuto?
         </p>
 

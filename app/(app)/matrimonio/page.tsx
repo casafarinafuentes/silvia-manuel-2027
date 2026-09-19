@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function MatrimonioPage() {
   return (
-   <main className="bg-background">
+   <div className="bg-background">
       <Hero />
 
       <Intro />
@@ -37,6 +37,6 @@ export default function MatrimonioPage() {
       <CTA />
 
       <Footer />
-    </main>
+    </div>
   );
 }

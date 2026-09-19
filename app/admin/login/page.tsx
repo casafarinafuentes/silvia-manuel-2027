@@ -11,7 +11,7 @@ export default function AdminLoginPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="w-full max-w-sm">
-        <p className="text-[10px] uppercase tracking-[0.38em] text-secondary">
+        <p className="text-xs uppercase tracking-[0.38em] text-secondary">
           Silvia &amp; Manuel
         </p>
 

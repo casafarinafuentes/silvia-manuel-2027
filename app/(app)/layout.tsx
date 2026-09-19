@@ -11,7 +11,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
     <>
       <PageHeader />
 
-      <main className="min-h-[calc(100vh-5rem)]">
+      <main id="main" className="min-h-[calc(100vh-5rem)] focus:outline-none" tabIndex={-1}>
         {children}
       </main>
     </>

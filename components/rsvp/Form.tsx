@@ -80,7 +80,7 @@ export default function Form() {
             ) : (
               <form action={formAction} noValidate>
                 <div className="text-center">
-                  <p className="text-[11px] uppercase tracking-[0.34em] text-secondary">
+                  <p className="text-xs uppercase tracking-[0.34em] text-secondary">
                     RSVP
                   </p>
 
@@ -150,7 +150,7 @@ export default function Form() {
                 {/* Presenza */}
 
                 <fieldset className="mt-14 border-0 p-0">
-                  <legend className="mb-6 text-[11px] uppercase tracking-[0.34em] text-secondary">
+                  <legend className="mb-6 text-xs uppercase tracking-[0.34em] text-secondary">
                     Parteciperai?
                   </legend>
 

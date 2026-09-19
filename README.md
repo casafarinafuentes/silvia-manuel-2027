@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Silvia & Manuel — 12 giugno 2027
 
-## Getting Started
+Sito del matrimonio: informazioni, RSVP con database, hotel, guida alla
+Sardegna e lista nozze. Online su <https://silviaemanuel.it>.
 
-First, run the development server:
+Stack: Next.js 16 (App Router), React 19, Tailwind 4, Postgres.
+
+## Sviluppo in locale
 
 ```bash
+npm install
+cp .env.example .env.local   # poi compila i valori
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Comandi utili: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Dove si modificano i contenuti
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Cosa | Dove |
+| --- | --- |
+| Data, luogo, orari, coordinate | `config/wedding.ts` (solo dati verificati: i campi incerti restano `null` e non vengono mostrati) |
+| Programma della giornata | `data/timeline.ts` |
+| Schede della home | `data/homeCards.ts` |
+| Voci del menu | `data/navigation.ts` |
+| Hotel, FAQ, dress code, Sardegna | `data/` |
+| Colori, font, raggi | `app/globals.css` (token in `:root`) |
 
-## Learn More
+## RSVP e area admin
 
-To learn more about Next.js, take a look at the following resources:
+Il form `/rsvp` salva le conferme in Postgres tramite una Server Action
+(`lib/rsvp/actions.ts`): validazione lato server, controllo duplicati per
+nome+cognome, limite di 5 invii/ora per IP (hash con sale, mai l'IP in chiaro).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+L'elenco delle conferme è su `/admin` (password), con ricerca, totali ed
+export CSV. Il login ha un limite di 5 tentativi sbagliati ogni 15 minuti.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Configurare il database (una tantum)
 
-## Deploy on Vercel
+1. Vercel → progetto → **Storage** → **Create Database** → Postgres (Neon).
+   Vercel aggiunge da solo `DATABASE_URL`/`POSTGRES_URL` al progetto.
+2. Vercel → **Settings → Environment Variables**, aggiungi (per Production):
+   - `ADMIN_PASSWORD` — la password per `/admin`
+   - `ADMIN_SESSION_SECRET` — stringa casuale lunga, per esempio
+     `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+   - `RSVP_IP_SALT` — una stringa casuale qualsiasi
+   - `NEXT_PUBLIC_SITE_URL` — `https://silviaemanuel.it`
+3. Crea le tabelle (una volta): `vercel env pull .env.local` e poi
+   `npm run db:migrate`. Le migration sono idempotenti.
+4. Rifai il deploy perché le variabili vengano lette.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Senza database il form mostra un errore generico e non salva nulla.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Ogni push su `main` fa partire il deploy su Vercel. La CI di GitHub
+(`.github/workflows/ci.yml`) esegue lint, typecheck, test e build.
+
+## Immagini
+
+Foto in `public/`, già ottimizzate (max 2000 px, JPEG ~76%). Prima di
+aggiungerne di nuove ridimensionale e comprimile: Next le serve poi in
+WebP/AVIF, ma parte sempre dall'originale.

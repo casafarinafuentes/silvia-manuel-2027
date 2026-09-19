@@ -28,7 +28,7 @@ export default function Hero() {
             <p
               className="
                 mb-6
-                text-[11px]
+                text-xs
                 uppercase
                 tracking-[0.45em]
                 text-white/80
@@ -83,7 +83,7 @@ export default function Hero() {
       >
         <p
           className="
-            text-[10px]
+            text-xs
             uppercase
             tracking-[0.45em]
             text-white/80

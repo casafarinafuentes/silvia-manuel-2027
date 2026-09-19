@@ -12,12 +12,12 @@ export default function Welcome() {
         {/* Decorazione */}
 
         <Image
-  src="/decorations/branch.svg"
+  src="/decorations/branch.webp"
   alt=""
   width={430}
   height={430}
   className="
-    pointer-events-none
+    object-contain pointer-events-none
     absolute
     -left-24
     -top-15
@@ -53,11 +53,17 @@ export default function Welcome() {
 
         {/* Card */}
 
-        {/* Griglia responsive: quattro card da 300px fisse su una riga
-            sola facevano sbordare la pagina in orizzontale su mobile. */}
-        <div className="relative z-20 mx-auto mt-10 grid max-w-[1280px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Cinque schede: con una griglia a colonne fisse l'ultima riga
+            resterebbe allineata a sinistra. Flex con wrap le centra e
+            mantiene la stessa larghezza a ogni breakpoint. */}
+        <div className="relative z-20 mx-auto mt-10 flex max-w-[1280px] flex-wrap justify-center gap-4">
           {homeCards.map((card) => (
-            <FeatureCard key={card.title} {...card} />
+            <div
+              key={card.title}
+              className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)] xl:w-[calc(20%-0.8rem)]"
+            >
+              <FeatureCard {...card} />
+            </div>
           ))}
         </div>
       </div>

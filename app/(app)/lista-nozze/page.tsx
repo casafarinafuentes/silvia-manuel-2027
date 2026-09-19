@@ -19,18 +19,18 @@ export default function ListaNozzePage() {
 
   return (
     <>
-      <main className="relative overflow-hidden px-6 py-24 md:py-32">
+      <div className="relative overflow-hidden px-6 py-24 md:py-32">
         <Image
-          src="/decorations/branch.svg"
+          src="/decorations/branch.webp"
           alt=""
           width={280}
           height={280}
           aria-hidden="true"
-          className="pointer-events-none absolute -left-16 bottom-0 hidden opacity-10 lg:block"
+          className="object-contain pointer-events-none absolute -left-16 bottom-0 hidden opacity-10 lg:block"
         />
 
         <div className="relative mx-auto flex max-w-2xl flex-col items-center text-center">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-secondary">
+          <p className="text-xs uppercase tracking-[0.4em] text-secondary">
             Un pensiero
           </p>
 
@@ -87,7 +87,7 @@ export default function ListaNozzePage() {
             )}
           </div>
         </div>
-      </main>
+      </div>
 
       <Footer />
     </>

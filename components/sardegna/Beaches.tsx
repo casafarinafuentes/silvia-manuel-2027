@@ -55,7 +55,7 @@ function Photo({
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[10px] uppercase tracking-[0.35em] text-secondary">
+    <p className="text-xs uppercase tracking-[0.35em] text-secondary">
       {children}
     </p>
   );

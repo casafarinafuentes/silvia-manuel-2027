@@ -39,7 +39,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="mt-5 text-[10px] uppercase tracking-[0.32em] sm:text-xs sm:tracking-[0.45em]"
+            className="mt-5 text-xs uppercase tracking-[0.32em] sm:text-xs sm:tracking-[0.45em]"
           >
             TUTTI I DETTAGLI DELLA GIORNATA
           </motion.p>
@@ -52,7 +52,7 @@ export default function Hero() {
             transition={{ delay: 0.6 }}
             className="mt-8 flex flex-col items-center"
           >
-            <p className="text-[10px] uppercase tracking-[0.35em] sm:text-[11px] sm:tracking-[0.45em]">
+            <p className="text-xs uppercase tracking-[0.35em] sm:text-xs sm:tracking-[0.45em]">
               Scorri
             </p>
 

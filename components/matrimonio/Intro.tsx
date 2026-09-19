@@ -38,11 +38,11 @@ export default function Intro() {
           </p>
 
           <Image
-            src="/decorations/branch.svg"
+            src="/decorations/branch.webp"
             alt=""
             width={140}
             height={140}
-            className="pointer-events-none absolute -right-6 top-0 hidden h-auto opacity-15 lg:block"
+            className="object-contain pointer-events-none absolute -right-6 top-0 hidden h-auto opacity-15 lg:block"
           />
         </div>
       </div>

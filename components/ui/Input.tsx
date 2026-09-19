@@ -41,8 +41,8 @@ export default function Input({
           outline-none
           transition-all
           duration-300
-          placeholder:text-secondary/45
-          focus:placeholder:text-secondary/20
+          placeholder:italic placeholder:text-secondary/70
+          focus:placeholder:text-secondary/40
           ${error ? "border-[#a4553f]" : "border-border focus:border-primary"}
           ${className}
         `}

@@ -11,7 +11,7 @@ const PILL = `
   border-border
   px-10
   py-4
-  text-[11px]
+  text-xs
   uppercase
   tracking-[0.32em]
   text-primary

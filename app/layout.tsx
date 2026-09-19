@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 import { wedding } from "@/config/wedding";
@@ -93,7 +94,18 @@ export default function RootLayout({
         />
       </head>
 
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* Primo elemento raggiungibile da tastiera: salta menu e hero. */}
+        <a href="#main" className="skip-link">
+          Vai al contenuto
+        </a>
+
+        {children}
+
+        {/* Statistiche di visita senza cookie. Si attivano dalla dashboard
+            Vercel (Analytics → Enable); finché non sono attive non fanno nulla. */}
+        <Analytics />
+      </body>
     </html>
   );
 }

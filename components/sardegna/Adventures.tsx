@@ -45,7 +45,7 @@ export default function Adventures() {
     >
       <div className="mx-auto max-w-5xl">
         <div className="mb-16">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-secondary">
+          <p className="text-xs uppercase tracking-[0.4em] text-secondary">
             Da vivere
           </p>
 
@@ -71,7 +71,7 @@ export default function Adventures() {
                     aria-controls={`avventura-${adventure.number}`}
                     className="flex w-full items-center gap-6 py-7 text-left"
                   >
-                    <span className="w-8 text-[10px] tracking-[0.2em] text-secondary">
+                    <span className="w-8 text-xs tracking-[0.2em] text-secondary">
                       {adventure.number}
                     </span>
 
