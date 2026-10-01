@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Countdown from "@/components/ui/Countdown";
+import Logo from "@/components/ui/Logo";
 
 export default function Footer() {
   return (
@@ -9,17 +10,7 @@ export default function Footer() {
         {/* Logo */}
 
         <div className="flex w-full justify-center lg:w-auto lg:justify-start">
-          <div className="relative h-16 w-16">
-            <span className="absolute left-0 top-0 font-heading text-5xl font-light text-primary">
-              S
-            </span>
-
-            <span className="absolute bottom-0 right-0 font-heading text-5xl font-light text-primary">
-              M
-            </span>
-
-            <div className="absolute left-1/2 top-1/2 h-[72px] w-px -translate-x-1/2 -translate-y-1/2 rotate-45 bg-border" />
-          </div>
+          <Logo className="h-16 w-16 text-primary" />
         </div>
 
         {/* Countdown */}

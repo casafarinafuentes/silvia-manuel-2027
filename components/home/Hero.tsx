@@ -9,6 +9,7 @@ import Link from "next/link";
 
 import SplitTitle from "@/components/ui/SplitTitle";
 import Magnetic from "@/components/ui/Magnetic";
+import Logo from "@/components/ui/Logo";
 import Countdown from "@/components/ui/Countdown";
 import { wedding } from "@/config/wedding";
 import SiteMenu from "@/components/layout/Menu";
@@ -47,9 +48,7 @@ export default function Hero() {
       {/* Top Bar */}
 
       <div className="absolute left-0 top-0 z-20 flex w-full items-center justify-between p-6 text-white">
-        <div className="font-heading text-3xl tracking-[0.25em]">
-          SM
-        </div>
+        <Logo className="h-7 w-auto" />
 
         <SiteMenu variant="light" />
       </div>

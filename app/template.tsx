@@ -1,3 +1,5 @@
+import Logo from "@/components/ui/Logo";
+
 /**
  * Transizione tra le pagine, solo CSS.
  *
@@ -11,9 +13,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className="page-wipe" aria-hidden="true">
-        <span className="page-wipe-mark font-heading text-5xl font-light tracking-[0.35em] text-primary">
-          SM
-        </span>
+        <Logo title={null} className="page-wipe-mark h-14 w-auto text-primary" />
       </div>
 
       <div className="page-enter">{children}</div>
