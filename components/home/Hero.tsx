@@ -1,6 +1,7 @@
 "use client";
 
 import ParallaxImage from "@/components/ui/ParallaxImage";
+import BackgroundVideo from "@/components/ui/BackgroundVideo";
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -17,7 +18,8 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Background */}
+      {/* Background: la foto c'è sempre (anche senza JS); il video, dove
+          ha senso, le compare sopra in dissolvenza. */}
 
       <ParallaxImage
         src="/hero.jpg"
@@ -25,6 +27,12 @@ export default function Hero() {
         priority
         sizes="100vw"
         className="object-cover"
+      />
+
+      <BackgroundVideo
+        mp4="/video/home-embrace.mp4"
+        webm="/video/home-embrace.webm"
+        poster="/video/home-embrace-poster.jpg"
       />
 
       {/* Overlay */}

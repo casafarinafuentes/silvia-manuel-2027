@@ -43,8 +43,7 @@ export const homeCards = [
     title: "Lista nozze",
     description:
       "La vostra presenza è il regalo più grande. Per chi desidera lasciarci un pensiero.",
-    // Nessuna foto: la scheda usa il ramo botanico al posto dell'immagine.
-    image: null,
+    image: "/cards/gift.jpg",
     icon: Gift,
     href: "/lista-nozze",
   },
