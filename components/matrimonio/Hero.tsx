@@ -10,8 +10,8 @@ export default function Hero() {
       {/* Background */}
 
       <ParallaxImage
-        src="/matrimonio/hero.jpg"
-        alt="Cerimonia"
+        src="/hero.jpg"
+        alt="Li Capanni"
         priority
         sizes="100vw"
         className="object-cover"

@@ -1,14 +1,14 @@
 export const inspirations = [
   {
-    image: "/gallery/gallery-1.jpg",
-    alt: "Dettaglio della Sardegna",
+    image: "/matrimonio/marquee-cover.jpg",
+    alt: "Il marquee di Li Capanni al tramonto",
   },
   {
-    image: "/gallery/gallery-2.jpg",
-    alt: "Dettaglio del matrimonio",
+    image: "/matrimonio/marquee-day.jpg",
+    alt: "La cerimonia vista dall'alto",
   },
   {
-    image: "/gallery/gallery-3.jpg",
-    alt: "Atmosfera della location",
+    image: "/matrimonio/marquee-sunset.jpg",
+    alt: "L'atmosfera della location al calar del sole",
   },
 ];

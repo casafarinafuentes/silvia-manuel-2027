@@ -14,7 +14,7 @@ export default function Location() {
 
           <Reveal variant="zoom" className="relative aspect-[16/10]">
             <ParallaxImage
-              src="/hero.jpg"
+              src="/matrimonio/marquee-sunset.jpg"
               alt={wedding.location.venue}
               sizes="(max-width:1024px) 100vw, 60vw"
               className="object-cover"
