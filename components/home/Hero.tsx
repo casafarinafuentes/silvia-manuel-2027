@@ -33,6 +33,8 @@ export default function Hero() {
       <BackgroundVideo
         mp4="/video/home-embrace.mp4"
         webm="/video/home-embrace.webm"
+        mobileMp4="/video/home-embrace-mobile.mp4"
+        mobileWebm="/video/home-embrace-mobile.webm"
         poster="/video/home-embrace-poster.jpg"
       />
 
@@ -48,7 +50,7 @@ export default function Hero() {
       {/* Top Bar */}
 
       <div className="absolute left-0 top-0 z-20 flex w-full items-center justify-between p-6 text-white">
-        <Logo className="h-7 w-auto" />
+        <Logo className="h-16 w-auto" />
 
         <SiteMenu variant="light" />
       </div>

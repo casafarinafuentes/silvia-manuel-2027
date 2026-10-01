@@ -10,7 +10,7 @@ export default function Footer() {
         {/* Logo */}
 
         <div className="flex w-full justify-center lg:w-auto lg:justify-start">
-          <Logo className="h-16 w-16 text-primary" />
+          <Logo className="h-32 w-auto text-primary" />
         </div>
 
         {/* Countdown */}

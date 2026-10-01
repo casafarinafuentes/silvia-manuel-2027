@@ -13,7 +13,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className="page-wipe" aria-hidden="true">
-        <Logo title={null} className="page-wipe-mark h-14 w-auto text-primary" />
+        <Logo title={null} className="page-wipe-mark h-28 w-auto text-primary" />
       </div>
 
       <div className="page-enter">{children}</div>

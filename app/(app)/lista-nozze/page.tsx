@@ -28,7 +28,7 @@ export default function ListaNozzePage() {
 
       <section className="relative flex min-h-[46vh] items-center justify-center overflow-hidden">
         <Image
-          src="/matrimonio/cta.jpg"
+          src="/lista-nozze/hero.jpg"
           alt=""
           fill
           priority

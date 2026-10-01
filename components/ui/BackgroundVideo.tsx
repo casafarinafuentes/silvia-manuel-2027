@@ -5,20 +5,26 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 type BackgroundVideoProps = {
   mp4: string;
   webm?: string;
+  /** Versioni più leggere, servite sotto i 768px (vedi <source media>). */
+  mobileMp4?: string;
+  mobileWebm?: string;
   /** Fotogramma mostrato finché il video non è pronto a partire. */
   poster: string;
   className?: string;
 };
 
 /**
- * True se il video ha senso acceso: niente "riduci movimento", niente
- * schermi stretti (il guadagno visivo non vale il peso dei dati su
- * mobile) e niente connessioni a risparmio dati.
+ * True se il video ha senso acceso: niente "riduci movimento" e niente
+ * connessioni a risparmio dati. Sotto i 768px parte comunque, ma con i
+ * file più leggeri (vedi `mobileMp4`/`mobileWebm`): è così che la
+ * maggior parte degli ospiti vedrà il sito, quindi non ha senso
+ * escluderli a priori — il peso si tiene basso scegliendo il file
+ * giusto, non disattivando il video.
  *
  * Modellato come store esterno, come il countdown: il risultato dipende
  * da `window`/`navigator`, quindi non esiste prima del mount, e risponde
- * da solo se il visitatore ruota lo schermo o cambia le preferenze di
- * sistema mentre la pagina è aperta.
+ * da solo se il visitatore cambia le preferenze di sistema mentre la
+ * pagina è aperta.
  */
 function shouldPlay(): boolean {
   if (typeof window === "undefined") return false;
@@ -26,7 +32,6 @@ function shouldPlay(): boolean {
   const reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
-  const narrow = window.matchMedia("(max-width: 767px)").matches;
 
   // API non standard, supportata solo da alcuni browser: assente altrove,
   // quindi la assumiamo "false" quando non è disponibile.
@@ -34,20 +39,14 @@ function shouldPlay(): boolean {
     navigator as unknown as { connection?: { saveData?: boolean } }
   ).connection;
 
-  return !reduceMotion && !narrow && !connection?.saveData;
+  return !reduceMotion && !connection?.saveData;
 }
 
 function subscribe(onChange: () => void): () => void {
-  const queries = [
-    window.matchMedia("(prefers-reduced-motion: reduce)"),
-    window.matchMedia("(max-width: 767px)"),
-  ];
+  const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+  query.addEventListener("change", onChange);
 
-  for (const query of queries) query.addEventListener("change", onChange);
-
-  return () => {
-    for (const query of queries) query.removeEventListener("change", onChange);
-  };
+  return () => query.removeEventListener("change", onChange);
 }
 
 function getServerSnapshot(): boolean {
@@ -57,6 +56,8 @@ function getServerSnapshot(): boolean {
 export default function BackgroundVideo({
   mp4,
   webm,
+  mobileMp4,
+  mobileWebm,
   poster,
   className = "",
 }: BackgroundVideoProps) {
@@ -90,6 +91,14 @@ export default function BackgroundVideo({
       poster={poster}
       onCanPlay={() => setReady(true)}
     >
+      {/* Il browser sceglie la prima sorgente la cui `media` combacia,
+          una volta sola al caricamento: niente da ricalcolare noi. */}
+      {mobileWebm && (
+        <source media="(max-width: 767px)" src={mobileWebm} type="video/webm" />
+      )}
+      {mobileMp4 && (
+        <source media="(max-width: 767px)" src={mobileMp4} type="video/mp4" />
+      )}
       {webm && <source src={webm} type="video/webm" />}
       <source src={mp4} type="video/mp4" />
     </video>
