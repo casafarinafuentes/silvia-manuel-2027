@@ -104,15 +104,16 @@ export const wedding = {
   },
 
   /**
-   * Album condiviso (cartella Drive) dove gli ospiti caricano foto e
-   * video della giornata.
+   * Raccolta di foto e video degli ospiti.
    *
-   * DA FORNIRE: il link alla cartella, condivisa con permesso di
-   * caricamento. Finché resta `null` il pulsante non compare e al suo
-   * posto c'è un avviso che il link arriverà.
+   * DA FORNIRE: il link di caricamento (una "richiesta file": chi
+   * carica non vede né può cancellare i file degli altri, e arrivano
+   * solo a noi). Nei testi il servizio non viene mai nominato. Finché
+   * resta `null` il pulsante non compare e al suo posto c'è un avviso
+   * che il link arriverà.
    */
   photos: {
-    sharedAlbumUrl: null as string | null,
+    uploadUrl: null as string | null,
   },
 
   rsvpDeadline: "2027-03-12",

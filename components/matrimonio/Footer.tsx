@@ -49,7 +49,7 @@ export default function Footer() {
 
         <div className="w-full text-center lg:border-l lg:border-border lg:pl-10 lg:text-left">
           {/* A matrimonio passato le FAQ non ci sono più: al loro posto
-              l'album delle foto. */}
+              l'invio delle foto. */}
           <p className="text-xs uppercase tracking-[0.35em] text-secondary">
             {after ? "Le vostre foto" : "Domande frequenti"}
           </p>
@@ -58,9 +58,9 @@ export default function Footer() {
             <p className="mt-5 text-sm leading-7 text-secondary">
               Avete foto e video
               <br />
-              della giornata? Caricateli
+              della giornata?
               <br />
-              nel nostro album condiviso.
+              Inviateceli da qui.
             </p>
           ) : (
             <p className="mt-5 text-sm leading-7 text-secondary">
@@ -76,7 +76,7 @@ export default function Footer() {
             href={after ? "/matrimonio#foto" : "/matrimonio#faq"}
             className="mt-5 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-primary transition hover:text-accent"
           >
-            {after ? "Vai all'album →" : "Scopri di più →"}
+            {after ? "Invia le tue foto →" : "Scopri di più →"}
           </Link>
         </div>
 

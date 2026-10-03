@@ -17,7 +17,7 @@ export function getPracticalInfo(phase: WeddingPhase): {
   left: FaqItem[];
   right: FaqItem[];
 } {
-  const { sharedAlbumUrl } = wedding.photos;
+  const { uploadUrl } = wedding.photos;
 
   return {
     left: [
@@ -47,11 +47,11 @@ export function getPracticalInfo(phase: WeddingPhase): {
       },
       {
         title: "Fotografie",
-        content: sharedAlbumUrl
-          ? "Scattate pure tutte le foto e i video che volete. Ci farebbe piacere vederli: potete caricarli nel nostro album condiviso su Drive."
-          : "Scattate pure tutte le foto e i video che volete. Ci farebbe piacere vederli: in questa pagina troverete il link a un album condiviso su Drive dove caricarli.",
-        action: sharedAlbumUrl
-          ? { label: "Carica le tue foto", href: sharedAlbumUrl }
+        content: uploadUrl
+          ? "Scattate pure tutte le foto e i video che volete. Ci farebbe piacere vederli: potete inviarceli dal pulsante qui sotto. Arrivano solo a noi."
+          : "Scattate pure tutte le foto e i video che volete. Ci farebbe piacere vederli: in questa pagina troverete il link per inviarceli.",
+        action: uploadUrl
+          ? { label: "Carica le tue foto", href: uploadUrl }
           : undefined,
       },
     ],

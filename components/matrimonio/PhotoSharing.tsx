@@ -5,9 +5,10 @@ import Reveal from "@/components/ui/Reveal";
 import { wedding } from "@/config/wedding";
 
 /**
- * Album condiviso: striscia a tutta larghezza con foto di sfondo. Gli
- * ospiti caricano qui foto e video della giornata; il pulsante compare
- * solo quando in config c'è il link alla cartella.
+ * Raccolta delle foto degli ospiti: striscia a tutta larghezza con foto
+ * di sfondo. Il pulsante porta al link di caricamento e compare solo
+ * quando in config c'è; quello che gli ospiti caricano arriva solo agli
+ * sposi (nessuno vede i file degli altri).
  *
  * La foto di sfondo è un segnaposto: basta cambiare `src`.
  */
@@ -20,7 +21,7 @@ export default function PhotoSharing({
   /** A matrimonio passato: si parla della giornata al passato. */
   after?: boolean;
 }) {
-  const { sharedAlbumUrl } = wedding.photos;
+  const { uploadUrl } = wedding.photos;
 
   return (
     <section
@@ -56,13 +57,13 @@ export default function PhotoSharing({
 
           <p className="mt-6 max-w-md leading-8 text-white/90">
             {after
-              ? "Avete foto e video della giornata? Caricateli nel nostro album condiviso su Drive: così li raccogliamo tutti in un posto solo."
-              : "Scattate pure tutte le foto e i video che volete, poi caricateli nel nostro album condiviso su Drive: così li raccogliamo tutti in un posto solo."}
+              ? "Avete foto e video della giornata? Inviateceli da qui: li raccogliamo tutti in un posto solo, e arrivano solo a noi."
+              : "Scattate pure tutte le foto e i video che volete, poi inviateceli da qui: li raccogliamo tutti in un posto solo, e arrivano solo a noi."}
           </p>
 
-          {sharedAlbumUrl ? (
+          {uploadUrl ? (
             <a
-              href={sharedAlbumUrl}
+              href={uploadUrl}
               target="_blank"
               rel="noreferrer"
               className="mt-9 inline-flex items-center justify-center border border-white bg-white px-8 py-3.5 text-xs uppercase tracking-[0.28em] text-[#2f2b28] transition hover:bg-transparent hover:text-white"
