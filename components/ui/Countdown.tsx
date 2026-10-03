@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { wedding } from "@/config/wedding";
+import { usePhase } from "@/components/layout/PhaseProvider";
 
 type CountdownProps = {
   variant?: "hero" | "footer";
@@ -89,10 +90,15 @@ export default function Countdown({ variant = "footer" }: CountdownProps) {
     getServerSnapshot,
   );
 
+  const phase = usePhase();
+
   const dark = variant === "footer";
 
+  // Dopo il matrimonio non c'è più niente da contare.
+  if (phase === "after") return null;
+
   // Il giorno è arrivato: al posto dei numeri, un saluto che pulsa piano.
-  if (seconds === 0) {
+  if (seconds === 0 || phase === "wedding") {
     return (
       <p
         className={`font-heading text-3xl font-light sm:text-4xl ${

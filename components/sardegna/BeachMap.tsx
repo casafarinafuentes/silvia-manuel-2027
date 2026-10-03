@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { wedding } from "@/config/wedding";
+import { usePhase } from "@/components/layout/PhaseProvider";
 
 /**
  * Mappa stilizzata della costa nord-est, disegnata a mano: la linea di
@@ -200,7 +201,7 @@ const groups: { title: string; beaches: Beach[] }[] = [
     ],
   },
   {
-    title: "Se avete qualche giorno in più",
+    title: "Un po' più lontano",
     beaches: [
       {
         name: "Cala Moresca",
@@ -269,6 +270,15 @@ export default function BeachMap() {
   const [hovered, setHovered] = useState<string | null>(null);
 
   const beaches = groups.flatMap((group) => group.beaches);
+
+  // L'etichetta della location segue la fase: prima, il giorno, dopo.
+  const phase = usePhase();
+  const venueLabel =
+    phase === "after"
+      ? "Ci siamo sposati qui"
+      : phase === "wedding"
+        ? "Noi siamo qui"
+        : "Noi saremo qui";
 
   /* Dalla mappa: apre la foto e, se il riquadro è fuori schermo (su
      telefono l'elenco sta sotto la mappa), ci porta la pagina. */
@@ -366,7 +376,7 @@ export default function BeachMap() {
 
           <span className="absolute right-4 whitespace-nowrap rounded-tile bg-[var(--primary-dark)] px-3 py-2 text-right text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] sm:right-5 sm:px-4">
             <span className="block text-[8px] uppercase tracking-[0.22em] text-white/85 sm:text-[10px] sm:tracking-[0.28em]">
-              Noi saremo qui
+              {venueLabel}
             </span>
             <span className="block font-heading text-base italic leading-tight sm:text-xl">
               {wedding.location.venue}

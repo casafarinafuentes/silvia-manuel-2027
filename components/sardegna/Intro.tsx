@@ -1,11 +1,11 @@
-export default function Intro() {
+export default function Intro({ after = false }: { after?: boolean }) {
   return (
     <section className="px-6 py-20 md:py-24">
       <div className="mx-auto max-w-3xl text-center">
 
         <p className="font-heading text-[30px] font-light leading-tight text-primary md:text-[38px]">
           La Sardegna è molto più
-          del posto in cui ci sposiamo.
+          del posto in cui {after ? "ci siamo sposati" : "ci sposiamo"}.
         </p>
 
         <div className="my-8 flex items-center justify-center gap-5">
@@ -40,9 +40,9 @@ export default function Intro() {
         </div>
 
         <p className="mx-auto max-w-2xl text-[17px] leading-8 text-secondary">
-          Se avete voglia di fermarvi qualche giorno in più,
-          abbiamo raccolto per voi alcuni dei nostri posti
-          del cuore.
+          {after
+            ? "Se avete voglia di tornarci, abbiamo raccolto per voi alcuni dei nostri posti del cuore."
+            : "Se avete voglia di fermarvi qualche giorno in più, abbiamo raccolto per voi alcuni dei nostri posti del cuore."}
         </p>
 
       </div>

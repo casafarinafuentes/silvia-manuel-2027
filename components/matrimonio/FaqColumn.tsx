@@ -4,14 +4,14 @@ import { useState } from "react";
 
 import Divider from "@/components/ui/Divider";
 import Accordion from "@/components/ui/Accordion";
+import { usePhase } from "@/components/layout/PhaseProvider";
 
-import {
-  practicalInfoLeft,
-  practicalInfoRight,
-} from "@/data/faq";
+import { getPracticalInfo } from "@/data/faq";
 
 export default function FaqColumn() {
   const [openItem, setOpenItem] = useState<string | null>(null);
+
+  const { left, right } = getPracticalInfo(usePhase());
 
   return (
     <div>
@@ -21,10 +21,7 @@ export default function FaqColumn() {
       />
 
       <div className="grid gap-y-6 gap-x-12 lg:grid-cols-2">
-        {[
-          practicalInfoLeft,
-          practicalInfoRight,
-        ].map((column, columnIndex) => (
+        {[left, right].map((column, columnIndex) => (
           <div className="space-y-0" key={columnIndex}>
             {column.map((item) => (
               <Accordion

@@ -45,13 +45,13 @@ const itineraries: {
     stops: [
       { name: "Golfo di Orosei", href: "#avventure" },
       { name: "Cala Moresca", href: "#spiagge" },
-      { name: "Stintino", href: "#spiagge" },
+      { name: "Castelsardo", href: "#paesini" },
       { name: "Alghero", href: "#paesini" },
     ],
   },
 ];
 
-export default function QuickGuide() {
+export default function QuickGuide({ after = false }: { after?: boolean }) {
   return (
     <section className="relative overflow-hidden bg-panel px-6 py-24 md:py-32">
       {/* Ramo botanico dietro il titolo, come nelle altre pagine. */}
@@ -71,7 +71,15 @@ export default function QuickGuide() {
           </p>
 
           <h2 className="mt-4 font-heading text-4xl font-light leading-tight text-primary md:text-6xl">
-            Se avete <em className="font-light italic">qualche giorno</em> in più
+            {after ? (
+              <>
+                Per quando <em className="font-light italic">tornerete</em>
+              </>
+            ) : (
+              <>
+                Se avete <em className="font-light italic">qualche giorno</em> in più
+              </>
+            )}
           </h2>
 
           <p className="mt-6 text-[17px] leading-8 text-secondary">

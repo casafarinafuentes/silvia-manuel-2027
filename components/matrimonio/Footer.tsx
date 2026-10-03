@@ -2,8 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import Countdown from "@/components/ui/Countdown";
 import Logo from "@/components/ui/Logo";
+import { googleCalendarUrl } from "@/lib/calendar";
+import { currentTemporalContext } from "@/lib/temporal-now";
 
 export default function Footer() {
+  const { phase } = currentTemporalContext();
+  const after = phase === "after";
+  const weddingDay = phase === "wedding";
+
   return (
     <footer className="relative overflow-hidden border-t border-border bg-background">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 px-6 py-12 lg:grid lg:grid-cols-[120px_2.2fr_1fr_1fr] lg:items-start lg:gap-10 lg:px-10">
@@ -16,35 +22,61 @@ export default function Footer() {
         {/* Countdown */}
 
         <div className="w-full text-center lg:border-l lg:border-border lg:pl-10 lg:text-left">
-          <p className="mb-6 text-xs uppercase tracking-[0.35em] text-secondary">
-            Countdown
-          </p>
+          {after ? (
+            <>
+              <p className="mb-6 text-xs uppercase tracking-[0.35em] text-secondary">
+                12 giugno 2027
+              </p>
 
-          <div className="flex justify-center lg:justify-start">
-            <Countdown />
-          </div>
+              <p className="font-heading text-3xl font-light text-primary sm:text-4xl">
+                Grazie per aver festeggiato con noi.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="mb-6 text-xs uppercase tracking-[0.35em] text-secondary">
+                {weddingDay ? "12 giugno 2027" : "Countdown"}
+              </p>
+
+              <div className="flex justify-center lg:justify-start">
+                <Countdown />
+              </div>
+            </>
+          )}
         </div>
 
         {/* FAQ */}
 
         <div className="w-full text-center lg:border-l lg:border-border lg:pl-10 lg:text-left">
+          {/* A matrimonio passato le FAQ non ci sono più: al loro posto
+              l'album delle foto. */}
           <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-            Domande frequenti
+            {after ? "Le vostre foto" : "Domande frequenti"}
           </p>
 
-          <p className="mt-5 text-sm leading-7 text-secondary">
-            Hai qualche dubbio?
-            <br />
-            Trova qui le risposte
-            <br />
-            alle domande più comuni.
-          </p>
+          {after ? (
+            <p className="mt-5 text-sm leading-7 text-secondary">
+              Avete foto e video
+              <br />
+              della giornata? Caricateli
+              <br />
+              nel nostro album condiviso.
+            </p>
+          ) : (
+            <p className="mt-5 text-sm leading-7 text-secondary">
+              Hai qualche dubbio?
+              <br />
+              Trova qui le risposte
+              <br />
+              alle domande più comuni.
+            </p>
+          )}
 
           <Link
-            href="/matrimonio#faq"
+            href={after ? "/matrimonio#foto" : "/matrimonio#faq"}
             className="mt-5 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-primary transition hover:text-accent"
           >
-            Scopri di più →
+            {after ? "Vai all'album →" : "Scopri di più →"}
           </Link>
         </div>
 
@@ -88,20 +120,37 @@ export default function Footer() {
             ♡
           </p>
 
-          <span
-            aria-hidden="true"
-            className="hidden h-3 w-px bg-border sm:block"
-          />
+          {/* Dal giorno del matrimonio non serve più segnarselo. */}
+          {!after && !weddingDay && (
+            <>
+              <span
+                aria-hidden="true"
+                className="hidden h-3 w-px bg-border sm:block"
+              />
 
-          {/* Secondo punto d'accesso al regalo di nozze, dove di solito
-              si cercano le cose di servizio. Nessuna enfasi. */}
-          <a
-            href="/calendario"
-            download
-            className="text-xs text-secondary transition hover:text-primary"
-          >
-            Aggiungi al calendario
-          </a>
+              <a
+                href="/calendario"
+                className="text-xs text-secondary transition hover:text-primary"
+              >
+                Aggiungi al calendario
+              </a>
+
+              <span
+                aria-hidden="true"
+                className="hidden h-3 w-px bg-border sm:block"
+              />
+
+              {/* Per Android: apre l'evento già compilato, senza file. */}
+              <a
+                href={googleCalendarUrl()}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs text-secondary transition hover:text-primary"
+              >
+                Google Calendar
+              </a>
+            </>
+          )}
 
           <span
             aria-hidden="true"

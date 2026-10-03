@@ -2,6 +2,8 @@
 
 import { clientIp } from "@/lib/request";
 import { HOTEL_SECTION_ENABLED } from "@/data/hotels";
+import { isRsvpClosed } from "@/lib/temporal";
+import { currentTemporalContext } from "@/lib/temporal-now";
 import { isPastRsvpDeadline } from "./deadline";
 import { parseRsvp, type RsvpFieldErrors } from "./schema";
 import {
@@ -20,6 +22,15 @@ export async function submitRsvp(
   _previous: RsvpState,
   formData: FormData,
 ): Promise<RsvpState> {
+  // Dal giorno del matrimonio il modulo non è più in pagina: questo
+  // ferma anche chi lo inviasse da una scheda rimasta aperta.
+  if (isRsvpClosed(currentTemporalContext().phase)) {
+    return {
+      status: "error",
+      errors: { form: "Le conferme sono chiuse." },
+    };
+  }
+
   const parsed = parseRsvp(
     {
     firstName: formData.get("firstName"),

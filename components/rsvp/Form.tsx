@@ -11,6 +11,7 @@ import RadioCard from "@/components/ui/RadioCard";
 import GuestCounter from "@/components/ui/GuestCounter";
 import SubmitButton from "@/components/ui/SubmitButton";
 import Magnetic from "@/components/ui/Magnetic";
+import { usePhase } from "@/components/layout/PhaseProvider";
 
 import { submitRsvp, type RsvpState } from "@/lib/rsvp/actions";
 import { isPastRsvpDeadline, rsvpDeadlineLabel } from "@/lib/rsvp/deadline";
@@ -56,6 +57,10 @@ function Success({
 
 export default function Form() {
   const [state, formAction] = useActionState(submitRsvp, INITIAL);
+
+  // Scadenza passata ma matrimonio non ancora arrivato: il modulo
+  // resta aperto, con un invito a fare presto.
+  const late = usePhase() !== "rsvp";
 
   const [attending, setAttending] = useState<boolean | null>(null);
   const [guests, setGuests] = useState(1);
@@ -105,6 +110,14 @@ export default function Form() {
                     Compila il modulo qui sotto. Ti richiederà meno di un
                     minuto.
                   </p>
+
+                  {late && (
+                    <p className="mx-auto mt-8 max-w-xl border border-border bg-panel-photo px-6 py-4 text-sm leading-7 text-secondary">
+                      La scadenza del {rsvpDeadlineLabel()} è passata: se
+                      non hai ancora risposto, fallo al più presto, così
+                      possiamo organizzarci.
+                    </p>
+                  )}
                 </div>
 
                 {/* Anagrafica */}

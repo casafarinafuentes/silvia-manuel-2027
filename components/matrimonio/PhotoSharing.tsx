@@ -11,7 +11,15 @@ import { wedding } from "@/config/wedding";
  *
  * La foto di sfondo è un segnaposto: basta cambiare `src`.
  */
-export default function PhotoSharing() {
+export default function PhotoSharing({
+  started = false,
+  after = false,
+}: {
+  /** Dal giorno del matrimonio: il link non può più "arrivare prima". */
+  started?: boolean;
+  /** A matrimonio passato: si parla della giornata al passato. */
+  after?: boolean;
+}) {
   const { sharedAlbumUrl } = wedding.photos;
 
   return (
@@ -47,9 +55,9 @@ export default function PhotoSharing() {
           </h2>
 
           <p className="mt-6 max-w-md leading-8 text-white/90">
-            Scattate pure tutte le foto e i video che volete, poi
-            caricateli nel nostro album condiviso su Drive: così li
-            raccogliamo tutti in un posto solo.
+            {after
+              ? "Avete foto e video della giornata? Caricateli nel nostro album condiviso su Drive: così li raccogliamo tutti in un posto solo."
+              : "Scattate pure tutte le foto e i video che volete, poi caricateli nel nostro album condiviso su Drive: così li raccogliamo tutti in un posto solo."}
           </p>
 
           {sharedAlbumUrl ? (
@@ -63,7 +71,9 @@ export default function PhotoSharing() {
             </a>
           ) : (
             <p className="mt-9 inline-block border border-white/50 px-6 py-3 text-xs uppercase tracking-[0.24em] text-white/90">
-              Il link arriverà qui prima del matrimonio
+              {started || after
+                ? "Il link arriverà qui a breve"
+                : "Il link arriverà qui prima del matrimonio"}
             </p>
           )}
         </Reveal>

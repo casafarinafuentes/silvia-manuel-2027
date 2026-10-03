@@ -6,6 +6,7 @@ import GiftDetails from "@/components/gift/GiftDetails";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
 import { hasRealIban, wedding } from "@/config/wedding";
+import { currentTemporalContext } from "@/lib/temporal-now";
 
 export const metadata: Metadata = {
   title: "Regalo di nozze",
@@ -18,6 +19,8 @@ export const metadata: Metadata = {
 
 export default function ListaNozzePage() {
   const { gift } = wedding;
+
+  const after = currentTemporalContext().phase === "after";
 
   // Senza IBAN vero e intestatario non mostriamo nulla di bancario.
   const ready = Boolean(gift.holder) && hasRealIban();
@@ -55,8 +58,8 @@ export default function ListaNozzePage() {
 
           <Reveal delay={100}>
             <p className="mx-auto mt-8 max-w-xl text-[17px] leading-8 text-secondary">
-              Con il matrimonio iniziamo a costruire i progetti della
-              nostra famiglia. Se desiderate farci un regalo, potete
+              Con il matrimonio {after ? "abbiamo iniziato" : "iniziamo"} a
+              costruire i progetti della nostra famiglia. Se desiderate farci un regalo, potete
               aiutarci a trasformarli in realtà: qui sotto trovate le
               coordinate per il bonifico.
             </p>

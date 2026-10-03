@@ -12,36 +12,58 @@ import QuickGuide from "@/components/sardegna/QuickGuide";
 import PhotoCredits from "@/components/sardegna/PhotoCredits";
 import NextStep from "@/components/ui/NextStep";
 import Footer from "@/components/matrimonio/Footer";
+import { currentTemporalContext } from "@/lib/temporal-now";
 
 export const metadata: Metadata = {
   title: "La Sardegna che amiamo",
   description:
-    "I posti che Silvia e Manuel consigliano in Gallura e dintorni: dove mangiare, spiagge, paesini e qualche avventura per chi si ferma qualche giorno in più.",
+    "I posti che Silvia e Manuel consigliano in Gallura e dintorni: dove mangiare, spiagge, paesini e qualche avventura.",
   alternates: { canonical: "/sardegna" },
 };
 
 export default function SardegnaPage() {
+  const { phase } = currentTemporalContext();
+  const after = phase === "after";
+
   return (
     <div>
       <Hero />
-      <Intro />
+      <Intro after={after} />
       <CategoryNav />
 
-      <Food />
+      <Food showComingSoon={phase === "rsvp" || phase === "waiting"} />
       <Adventures />
       <Beaches />
       <Villages />
       <Favorite />
-      <QuickGuide />
+      <QuickGuide after={after} />
       <PhotoCredits />
 
-      <NextStep
-        eyebrow="Ci vediamo presto"
-        title="Manca solo la tua conferma"
-        description="Fateci sapere se ci sarete: bastano un minuto e qualche informazione."
-        href="/rsvp"
-        cta="Conferma la tua presenza"
-      />
+      {/* L'invito a fine pagina segue la fase; a matrimonio passato
+          non c'è un passo successivo. */}
+      {phase === "rsvp" && (
+        <NextStep
+          eyebrow="Ci vediamo presto"
+          title="Manca solo la tua conferma"
+          description="Fateci sapere se ci sarete: bastano un minuto e qualche informazione."
+          href="/rsvp"
+          cta="Conferma la tua presenza"
+        />
+      )}
+
+      {phase !== "rsvp" && phase !== "after" && (
+        <NextStep
+          eyebrow={phase === "wedding" ? "È il giorno" : "Ci vediamo presto"}
+          title="Tutti i dettagli della giornata"
+          description={
+            phase === "wedding"
+              ? "Programma, location e informazioni pratiche."
+              : "Programma, location e informazioni pratiche per il 12 giugno."
+          }
+          href="/matrimonio"
+          cta="Il matrimonio"
+        />
+      )}
 
       <Footer />
     </div>

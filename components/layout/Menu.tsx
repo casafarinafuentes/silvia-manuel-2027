@@ -7,6 +7,8 @@ import { Menu, X, ArrowRight } from "lucide-react";
 
 import { navigation } from "@/data/navigation";
 import { wedding } from "@/config/wedding";
+import { isRsvpClosed } from "@/lib/temporal";
+import { usePhase } from "./PhaseProvider";
 
 type SiteMenuProps = {
   variant?: "light" | "dark";
@@ -19,6 +21,13 @@ export default function SiteMenu({
   compact = false,
 }: SiteMenuProps) {
   const [open, setOpen] = useState(false);
+
+  // Dal giorno del matrimonio le conferme sono chiuse: la voce RSVP
+  // sparisce dal menu.
+  const phase = usePhase();
+  const items = navigation.filter(
+    (item) => !isRsvpClosed(phase) || item.href !== "/rsvp",
+  );
 
   // Il portal esiste solo nel browser: sul server non c'è un body.
   const mounted = useSyncExternalStore(
@@ -163,7 +172,7 @@ export default function SiteMenu({
           {/* Navigazione */}
 
           <nav className="flex flex-col gap-8">
-            {navigation.map((item) => (
+            {items.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

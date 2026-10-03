@@ -63,3 +63,25 @@ Ogni push su `main` fa partire il deploy su Vercel. La CI di GitHub
 Foto in `public/`, già ottimizzate (max 2000 px, JPEG ~76%). Prima di
 aggiungerne di nuove ridimensionale e comprimile: Next le serve poi in
 WebP/AVIF, ma parte sempre dall'originale.
+
+## Fasi del matrimonio
+
+Il sito cambia da solo man mano che il matrimonio si avvicina. La logica
+sta tutta in `lib/temporal.ts` (`getTemporalContext`): i componenti
+chiedono la fase, non guardano mai la data.
+
+| Fase | Quando | Cosa cambia |
+|---|---|---|
+| `rsvp` | fino alla scadenza delle conferme | l'RSVP è in evidenza |
+| `waiting` | dalla scadenza a 22 giorni prima | in evidenza i dettagli della giornata |
+| `final-weeks` | ultimi 21 giorni | prima le informazioni pratiche |
+| `wedding` | il giorno del matrimonio, fino alle 6 del mattino dopo | l'essenziale, pulsante "Come arrivare"; RSVP chiuso |
+| `after` | da lì in poi | ringraziamento e foto, tutto al passato |
+
+Le date vengono da `config/wedding.ts`; il pulsante principale di ogni
+fase è in `lib/phase-content.ts`.
+
+**Anteprima (solo in sviluppo).** In basso a destra c'è una barra per
+saltare da una fase all'altra; oppure `/anteprima?data=2027-06-20` per
+una data precisa e `/anteprima` per tornare a oggi. In produzione
+l'anteprima non esiste.

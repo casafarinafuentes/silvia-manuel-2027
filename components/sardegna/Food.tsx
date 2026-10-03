@@ -68,7 +68,12 @@ function CategoryTitle({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function Food() {
+export default function Food({
+  showComingSoon = true,
+}: {
+  /** Il riquadro "stiamo ancora scegliendo" della categoria Aperitivi. */
+  showComingSoon?: boolean;
+}) {
   return (
     <section id="cibo" className="anchor-offset px-6 py-24 md:py-32">
       <div className="mx-auto max-w-6xl">
@@ -146,6 +151,9 @@ export default function Food() {
             APERITIVI
         ========================== */}
 
+        {/* "Stiamo ancora scegliendo": ha senso finché il matrimonio è
+            lontano; a ridosso e dopo sembrerebbe una dimenticanza. */}
+        {showComingSoon && (
         <div className="mt-12">
           <CategoryTitle>
             Aperitivi
@@ -171,6 +179,7 @@ export default function Food() {
             </p>
           </div>
         </div>
+        )}
 
       </div>
     </section>

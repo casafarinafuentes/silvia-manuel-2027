@@ -1,10 +1,10 @@
 import PageHero from "@/components/ui/PageHero";
 
-export default function Hero() {
+export default function Hero({ after = false }: { after?: boolean }) {
   return (
     <PageHero
       title="Il Matrimonio"
-      subtitle="Tutti i dettagli della giornata"
+      subtitle={after ? "Il nostro giorno" : "Tutti i dettagli della giornata"}
       image="/hero.jpg"
       alt="Li Capanni"
     />

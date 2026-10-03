@@ -3,9 +3,13 @@ import Image from "next/image";
 import Section from "@/components/ui/Section";
 import FeatureCard from "./FeatureCard";
 
-import { homeCards } from "@/data/homeCards";
+import { getHomeCards } from "@/data/homeCards";
+import { currentTemporalContext } from "@/lib/temporal-now";
 
 export default function Welcome() {
+  const { phase } = currentTemporalContext();
+  const homeCards = getHomeCards(phase);
+
   return (
     <Section>
       <div className="relative z-10 ">
@@ -35,7 +39,9 @@ export default function Welcome() {
           {/* Il ritorno a capo manuale spezza male le righe su schermi
               stretti: lo lasciamo solo da md in su. */}
           <p className="font-heading text-[26px] leading-[1.2] text-primary sm:text-[30px] md:text-[34px]">
-            Siamo felici di condividere con voi
+            {phase === "after"
+              ? "Grazie per aver condiviso con noi"
+              : "Siamo felici di condividere con voi"}
             <br className="hidden md:inline" />{" "}
             uno dei giorni più importanti della nostra vita.
           </p>

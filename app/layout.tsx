@@ -6,6 +6,15 @@ import "./globals.css";
 import { wedding } from "@/config/wedding";
 import { siteUrl } from "@/config/site";
 import CustomCursor from "@/components/ui/CustomCursor";
+import { PhaseProvider } from "@/components/layout/PhaseProvider";
+import PreviewBar from "@/components/layout/PreviewBar";
+import { isRsvpClosed } from "@/lib/temporal";
+import { currentTemporalContext, getPreviewDate } from "@/lib/temporal-now";
+
+/* Le pagine sono statiche ma dipendono dalla fase del matrimonio
+   (lib/temporal.ts): rigenerarle ogni ora basta a farle cambiare da
+   sole quando si passa da una fase all'altra. */
+export const revalidate = 3600;
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -23,45 +32,59 @@ const inter = Inter({
 
 const title = `${wedding.branding.title} — ${wedding.branding.subtitle}`;
 
-const description = `${wedding.branding.title} si sposano il ${wedding.branding.subtitle} a ${wedding.location.venue}, ${wedding.location.address.locality} (${wedding.location.address.region}). Programma, informazioni pratiche e conferma di presenza.`;
+const place = `${wedding.location.venue}, ${wedding.location.address.locality} (${wedding.location.address.region})`;
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl()),
+/* Anche la descrizione che compare su Google e nelle anteprime dei
+   link segue la fase: dopo il matrimonio non si può più dire "si
+   sposano" né invitare a confermare. */
+export function generateMetadata(): Metadata {
+  const { phase } = currentTemporalContext();
 
-  title: {
-    default: title,
-    // Le pagine interne aggiungono solo il proprio nome.
-    template: `%s — ${wedding.branding.title}`,
-  },
+  const description =
+    phase === "after"
+      ? `${wedding.branding.title} si sono sposati il ${wedding.branding.subtitle} a ${place}. Il luogo, le foto e i ricordi della giornata.`
+      : isRsvpClosed(phase)
+        ? `${wedding.branding.title} si sposano il ${wedding.branding.subtitle} a ${place}. Programma e informazioni pratiche.`
+        : `${wedding.branding.title} si sposano il ${wedding.branding.subtitle} a ${place}. Programma, informazioni pratiche e conferma di presenza.`;
 
-  description,
+  return {
+    metadataBase: new URL(siteUrl()),
 
-  applicationName: wedding.branding.title,
+    title: {
+      default: title,
+      // Le pagine interne aggiungono solo il proprio nome.
+      template: `%s — ${wedding.branding.title}`,
+    },
 
-  alternates: {
-    canonical: "/",
-  },
-
-  openGraph: {
-    type: "website",
-    locale: "it_IT",
-    url: "/",
-    siteName: wedding.branding.title,
-    title,
     description,
-  },
 
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-  },
+    applicationName: wedding.branding.title,
 
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+    alternates: {
+      canonical: "/",
+    },
+
+    openGraph: {
+      type: "website",
+      locale: "it_IT",
+      url: "/",
+      siteName: wedding.branding.title,
+      title,
+      description,
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#fcfbf8",
@@ -74,6 +97,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const temporal = currentTemporalContext();
+
   return (
     <html
       lang="it"
@@ -102,7 +127,11 @@ export default function RootLayout({
           Vai al contenuto
         </a>
 
-        {children}
+        <PhaseProvider phase={temporal.phase}>{children}</PhaseProvider>
+
+        {process.env.NODE_ENV !== "production" && (
+          <PreviewBar context={temporal} previewDate={getPreviewDate()} />
+        )}
 
         <CustomCursor />
 

@@ -13,9 +13,15 @@ import Logo from "@/components/ui/Logo";
 import Countdown from "@/components/ui/Countdown";
 import { wedding } from "@/config/wedding";
 import SiteMenu from "@/components/layout/Menu";
+import { usePhase } from "@/components/layout/PhaseProvider";
+import { primaryAction } from "@/lib/phase-content";
 
 export default function Hero() {
   const reduceMotion = useReducedMotion();
+
+  // Countdown e pulsante seguono la fase del matrimonio.
+  const phase = usePhase();
+  const action = primaryAction(phase);
 
   return (
     <section className="relative min-h-screen overflow-hidden">
@@ -87,15 +93,24 @@ export default function Hero() {
         {/* Countdown */}
 
         <div className="mt-12">
-          <Countdown variant="hero" />
+          {phase === "after" ? (
+            <p className="font-heading text-3xl font-light italic sm:text-4xl">
+              Grazie per aver festeggiato con noi.
+            </p>
+          ) : (
+            <Countdown variant="hero" />
+          )}
         </div>
 
         <Magnetic className="mt-10">
-          <Link href="/rsvp"
-          className="inline-flex items-center gap-3 border border-white bg-white px-8 py-3.5 text-xs uppercase tracking-[0.28em] text-[#2f2b28] transition hover:bg-transparent hover:text-white"
-        >
-          Conferma la tua presenza
-        </Link>
+          <Link
+            href={action.href}
+            target={action.external ? "_blank" : undefined}
+            rel={action.external ? "noreferrer" : undefined}
+            className="inline-flex items-center gap-3 border border-white bg-white px-8 py-3.5 text-xs uppercase tracking-[0.28em] text-[#2f2b28] transition hover:bg-transparent hover:text-white"
+          >
+            {action.label}
+          </Link>
         </Magnetic>
       </motion.div>
 

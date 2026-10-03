@@ -2,7 +2,7 @@ import Image from "next/image";
 import ParallaxImage from "@/components/ui/ParallaxImage";
 import Reveal from "@/components/ui/Reveal";
 
-export default function Intro() {
+export default function Intro({ after = false }: { after?: boolean }) {
   return (
     <section className="bg-background py-16 lg:py-20">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-10">
@@ -25,17 +25,27 @@ export default function Intro() {
           </p>
 
           <h2 className="mt-3 font-heading text-5xl font-light leading-tight text-primary sm:text-6xl">
-            Finalmente
-            <br />
-            ci siamo.
+            {after ? (
+              <>
+                È stato
+                <br />
+                bellissimo.
+              </>
+            ) : (
+              <>
+                Finalmente
+                <br />
+                ci siamo.
+              </>
+            )}
           </h2>
 
           <div className="mx-auto my-6 h-px w-20 bg-border lg:mx-0" />
 
           <p className="text-lg leading-8 text-secondary">
-            12 giugno 2027 sarà il giorno che abbiamo sognato per tanto
-            tempo. Non vediamo l&apos;ora di festeggiare insieme a voi in uno
-            dei luoghi che più amiamo.
+            {after
+              ? "Il 12 giugno 2027 è stato il giorno che avevamo sognato per tanto tempo. Grazie per averlo festeggiato insieme a noi in uno dei luoghi che più amiamo."
+              : "Il 12 giugno 2027 sarà il giorno che abbiamo sognato per tanto tempo. Non vediamo l'ora di festeggiare insieme a voi in uno dei luoghi che più amiamo."}
           </p>
 
           <Image

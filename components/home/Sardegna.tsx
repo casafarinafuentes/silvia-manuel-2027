@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { currentTemporalContext } from "@/lib/temporal-now";
+
 export default function Sardegna() {
+  // Dopo il matrimonio nessuno "si ferma qualche giorno in più":
+  // la guida resta per chi vorrà tornare.
+  const after = currentTemporalContext().phase === "after";
+
   return (
     <section className="px-5 pb-16 lg:px-6 lg:pb-20">
       <div className="mx-auto grid max-w-[1320px] overflow-hidden lg:grid-cols-[1.15fr_0.85fr]">
@@ -33,15 +39,15 @@ export default function Sardegna() {
           <div className="relative z-10 max-w-sm">
 
             <h2 className="font-heading text-[30px] font-normal leading-[1.08] text-primary sm:text-[35px]">
-              Qualche giorno in più
+              {after ? "Per quando tornerete" : "Qualche giorno in più"}
               <br />
               in Sardegna.
             </h2>
 
             <p className="mt-6 text-[16px] leading-7 text-secondary sm:mt-7 sm:text-[18px] sm:leading-8">
-              Se decidete di fermarvi,
-              abbiamo raccolto per voi i posti
-              che vi consigliamo di non perdere.
+              {after
+                ? "Abbiamo raccolto per voi i posti che vi consigliamo di non perdere."
+                : "Se decidete di fermarvi, abbiamo raccolto per voi i posti che vi consigliamo di non perdere."}
             </p>
 
             <Link
