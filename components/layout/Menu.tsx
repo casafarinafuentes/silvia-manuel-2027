@@ -10,9 +10,14 @@ import { wedding } from "@/config/wedding";
 
 type SiteMenuProps = {
   variant?: "light" | "dark";
+  /** Pulsante più piccolo, per stare dentro la mini-nav della Sardegna. */
+  compact?: boolean;
 };
 
-export default function SiteMenu({ variant = "light" }: SiteMenuProps) {
+export default function SiteMenu({
+  variant = "light",
+  compact = false,
+}: SiteMenuProps) {
   const [open, setOpen] = useState(false);
 
   // Il portal esiste solo nel browser: sul server non c'è un body.
@@ -64,7 +69,8 @@ export default function SiteMenu({ variant = "light" }: SiteMenuProps) {
         aria-label="Apri menu"
         aria-expanded={open}
         className={`
-          rounded-full p-3 transition backdrop-blur-sm
+          rounded-full transition backdrop-blur-sm
+          ${compact ? "p-2" : "p-3"}
           ${
             variant === "light"
               ? "bg-white/10 text-white hover:bg-white/20"
@@ -72,7 +78,7 @@ export default function SiteMenu({ variant = "light" }: SiteMenuProps) {
           }
         `}
       >
-        <Menu size={22} aria-hidden="true" />
+        <Menu size={compact ? 18 : 22} aria-hidden="true" />
       </button>
 
       {/* Overlay + Menu

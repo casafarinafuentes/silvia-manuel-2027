@@ -13,8 +13,9 @@ import SubmitButton from "@/components/ui/SubmitButton";
 import Magnetic from "@/components/ui/Magnetic";
 
 import { submitRsvp, type RsvpState } from "@/lib/rsvp/actions";
-import { isPastRsvpDeadline } from "@/lib/rsvp/deadline";
+import { isPastRsvpDeadline, rsvpDeadlineLabel } from "@/lib/rsvp/deadline";
 import {
+  HOTEL_SECTION_ENABLED,
   HOTEL_SELF_ARRANGED,
   HOTEL_SELF_ARRANGED_LABEL,
   hotels,
@@ -212,8 +213,9 @@ export default function Form() {
                         />
                       </div>
 
-                      {/* Alloggio */}
+                      {/* Alloggio: nascosto finché la sezione hotel è spenta. */}
 
+                      {HOTEL_SECTION_ENABLED && (
                       <fieldset className="mt-12 border-0 p-0">
                         <legend className="mb-2 text-xs uppercase tracking-[0.34em] text-secondary">
                           Dove dormirai?
@@ -221,7 +223,7 @@ export default function Form() {
 
                         {pastDeadline ? (
                           <p className="mt-4 border border-border bg-panel-photo px-6 py-5 text-sm leading-7 text-secondary">
-                            Il termine per segnalare l&apos;alloggio (31 gennaio)
+                            Il termine per segnalare l&apos;alloggio ({rsvpDeadlineLabel()})
                             è passato: gli hotel sono già stati contattati.
                             Scrivici e vediamo insieme cosa è ancora
                             disponibile.
@@ -231,7 +233,7 @@ export default function Form() {
                             <input type="hidden" name="hotel" value={hotel} />
 
                             <p className="mb-6 text-[13px] leading-6 text-secondary">
-                              Non c&apos;è una convenzione: il 31 gennaio{" "}
+                              Non c&apos;è una convenzione: il {rsvpDeadlineLabel()}{" "}
                               diremo agli hotel quante persone siamo e vi
                               gireremo le indicazioni per prenotare.{" "}
                               <a
@@ -306,6 +308,7 @@ export default function Form() {
                           </>
                         )}
                       </fieldset>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>

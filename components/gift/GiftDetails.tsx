@@ -9,20 +9,12 @@ type GiftDetailsProps = {
   reference: string;
 };
 
-/**
- * Riferimenti per il bonifico.
- *
- * Restano chiusi finché non si chiede di vederli: chi non è
- * interessato non incontra mai un IBAN, chi lo cerca lo trova in un
- * gesto. È la differenza fra offrire una possibilità e presentare un
- * conto.
- */
+/** Coordinate per il bonifico, sempre in vista e con IBAN copiabile. */
 export default function GiftDetails({
   iban,
   holder,
   reference,
 }: GiftDetailsProps) {
-  const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   /* L'IBAN si scrive a gruppi per leggerlo, ma si incolla senza
@@ -40,46 +32,28 @@ export default function GiftDetails({
     }
   }
 
-  if (!open) {
-    return (
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-expanded={false}
-        className="
-          border-b border-border pb-1 text-xs uppercase
-          tracking-[0.28em] text-secondary transition-colors
-          duration-300 hover:border-primary hover:text-primary
-          motion-reduce:transition-none
-        "
-      >
-        Mostra i riferimenti
-      </button>
-    );
-  }
-
   return (
     <div className="w-full max-w-md text-left">
-      <dl className="border-t border-border/70">
-        <div className="border-b border-border/70 py-5">
-          <dt className="text-xs uppercase tracking-[0.28em] text-secondary">
+      <dl className="border-t border-white/30">
+        <div className="border-b border-white/30 py-5">
+          <dt className="text-xs uppercase tracking-[0.28em] text-white/75">
             Intestato a
           </dt>
 
-          <dd className="mt-2 text-[15px] leading-6 text-primary">
+          <dd className="mt-2 text-[15px] leading-6 text-white">
             {holder}
           </dd>
         </div>
 
-        <div className="border-b border-border/70 py-5">
-          <dt className="text-xs uppercase tracking-[0.28em] text-secondary">
+        <div className="border-b border-white/30 py-5">
+          <dt className="text-xs uppercase tracking-[0.28em] text-white/75">
             IBAN
           </dt>
 
           <dd className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-3">
             {/* tabular-nums tiene le cifre allineate; break-all evita
                 che un IBAN lungo sbordi su schermi stretti. */}
-            <span className="font-mono text-[15px] leading-6 tracking-wide text-primary break-all tabular-nums">
+            <span className="font-mono text-[15px] leading-6 tracking-wide text-white break-all tabular-nums">
               {iban}
             </span>
 
@@ -88,8 +62,8 @@ export default function GiftDetails({
               onClick={copy}
               className="
                 inline-flex shrink-0 items-center gap-2 text-xs
-                uppercase tracking-[0.24em] text-secondary
-                transition-colors duration-300 hover:text-primary
+                uppercase tracking-[0.24em] text-white/75
+                transition-colors duration-300 hover:text-white
                 motion-reduce:transition-none
               "
             >
@@ -104,14 +78,14 @@ export default function GiftDetails({
           </dd>
         </div>
 
-        <div className="border-b border-border/70 py-5">
-          <dt className="text-xs uppercase tracking-[0.28em] text-secondary">
+        <div className="border-b border-white/30 py-5">
+          <dt className="text-xs uppercase tracking-[0.28em] text-white/75">
             Causale
           </dt>
 
-          <dd className="mt-2 text-[15px] leading-6 text-primary">
+          <dd className="mt-2 text-[15px] leading-6 text-white">
             {reference}
-            <span className="block text-[13px] text-secondary">
+            <span className="block text-[13px] text-white/75">
               Aggiungete il vostro nome, così sappiamo chi ringraziare.
             </span>
           </dd>

@@ -14,9 +14,9 @@ import NextStep from "@/components/ui/NextStep";
 import Footer from "@/components/matrimonio/Footer";
 
 export const metadata: Metadata = {
-  title: "La nostra Sardegna",
+  title: "La Sardegna che amiamo",
   description:
-    "I posti del cuore di Silvia e Manuel in Gallura e dintorni: dove mangiare, spiagge, paesini e qualche avventura per chi si ferma qualche giorno in più.",
+    "I posti che Silvia e Manuel consigliano in Gallura e dintorni: dove mangiare, spiagge, paesini e qualche avventura per chi si ferma qualche giorno in più.",
   alternates: { canonical: "/sardegna" },
 };
 

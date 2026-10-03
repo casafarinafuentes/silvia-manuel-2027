@@ -5,6 +5,8 @@ import { Plus } from "lucide-react";
 type AccordionProps = {
   title: string;
   content: string;
+  /** Pulsante facoltativo sotto il testo (link esterno). */
+  action?: { label: string; href: string };
   open: boolean;
   onToggle: () => void;
 };
@@ -12,6 +14,7 @@ type AccordionProps = {
 export default function Accordion({
   title,
   content,
+  action,
   open,
   onToggle,
 }: AccordionProps) {
@@ -43,6 +46,18 @@ export default function Accordion({
           <p className="pb-4 pr-6 text-sm leading-7 text-secondary">
             {content}
           </p>
+
+          {action && (
+            <a
+              href={action.href}
+              target="_blank"
+              rel="noreferrer"
+              tabIndex={open ? undefined : -1}
+              className="mb-5 inline-flex items-center justify-center bg-primary px-6 py-3 text-xs uppercase tracking-[0.24em] text-white transition hover:opacity-90"
+            >
+              {action.label} →
+            </a>
+          )}
         </div>
       </div>
     </div>

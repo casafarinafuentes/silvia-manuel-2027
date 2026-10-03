@@ -34,19 +34,6 @@ const cantina = [
   },
 ];
 
-const takeaway = [
-  {
-    name: "Quirico My Bar",
-    subtitle: "Il nostro panino al polpo",
-    location: "Golfo Aranci",
-  },
-  {
-    name: "Ciclope",
-    subtitle: "Pizza al taglio",
-    location: "Olbia",
-  },
-];
-
 const restaurant = [
   {
     name: "Sushi Mio",
@@ -65,14 +52,6 @@ const breakfast = [
   {
     name: "Pistacchio",
     subtitle: "Caffetteria e pasticceria",
-    location: "Olbia",
-  },
-];
-
-const local = [
-  {
-    name: "Caseificio Verde Oro",
-    subtitle: "Formaggi e prodotti locali",
     location: "Olbia",
   },
 ];
@@ -98,7 +77,7 @@ export default function Food() {
 
         <div className="mb-16 max-w-2xl">
           <h2 className="font-heading text-5xl font-light leading-none text-primary md:text-6xl">
-            Mangiare
+            Food
           </h2>
 
           <p className="mt-7 max-w-xl text-[15px] leading-7 text-secondary">
@@ -123,26 +102,6 @@ export default function Food() {
                 key={place.name}
                 {...place}
                 aspect="square"
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* =========================
-            TAKE AWAY
-        ========================== */}
-
-        <div className="mt-12">
-          <CategoryTitle>
-            Take away
-          </CategoryTitle>
-
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {takeaway.map((place) => (
-              <FoodTile
-                key={place.name}
-                {...place}
-                aspect="wide"
               />
             ))}
           </div>
@@ -211,21 +170,6 @@ export default function Food() {
               da consigliarvi...
             </p>
           </div>
-        </div>
-
-        {/* =========================
-            DA PORTARE A CASA
-        ========================== */}
-
-        <div className="mt-12">
-          <CategoryTitle>
-            Da portare a casa
-          </CategoryTitle>
-
-          <FoodTile
-            {...local[0]}
-            aspect="hero"
-          />
         </div>
 
       </div>

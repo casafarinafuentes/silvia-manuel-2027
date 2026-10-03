@@ -22,7 +22,8 @@ function escapeText(text: string): string {
 
 export function GET() {
   const start = new Date(wedding.dates.startsAt);
-  // Dalla cerimonia ai saluti (02:00 nel programma): 9 ore.
+  // La festa non ha un orario di fine: in calendario blocchiamo 9 ore
+  // dalla cerimonia, fino a notte fonda.
   const end = new Date(start.getTime() + 9 * 60 * 60 * 1000);
 
   const place = `${wedding.location.venue}, ${wedding.location.address.locality} (${wedding.location.address.province}), ${wedding.location.address.region}`;

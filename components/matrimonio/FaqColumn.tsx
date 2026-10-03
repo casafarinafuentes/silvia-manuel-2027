@@ -31,6 +31,7 @@ export default function FaqColumn() {
                 key={item.title}
                 title={item.title}
                 content={item.content}
+                action={item.action}
                 open={openItem === item.title}
                 onToggle={() =>
                   setOpenItem(

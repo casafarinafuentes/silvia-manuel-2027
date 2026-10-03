@@ -1,22 +1,20 @@
-export const practicalInfoLeft = [
-  {
-    title: "Parcheggio",
-    content:
-      "C'è un parcheggio gratuito all'ingresso della location, ma i posti sono limitati.",
-  },
-  {
-    title: "Bus navetta",
-    content:
-      "Per chi alloggia negli hotel che vi consigliamo a Cannigione è prevista una navetta da e per la location.",
-  },
-  {
-    title: "Accessibilità",
-    content:
-      "Purtroppo la location non è accessibile a persone con mobilità ridotta.",
-  },
-];
+import { wedding } from "@/config/wedding";
 
-export const practicalInfoRight = [
+export type FaqItem = {
+  title: string;
+  content: string;
+  /** Pulsante facoltativo sotto la risposta. */
+  action?: { label: string; href: string };
+};
+
+const { sharedAlbumUrl } = wedding.photos;
+
+export const practicalInfoLeft: FaqItem[] = [
+  {
+    title: "Parcheggio e navetta",
+    content:
+      "Stiamo predisponendo un'area di parcheggio dedicata con un servizio navetta che vi porterà direttamente alla location.",
+  },
   {
     title: "Bambini",
     content:
@@ -27,6 +25,9 @@ export const practicalInfoRight = [
     content:
       "Segnalatele durante la conferma RSVP.",
   },
+];
+
+export const practicalInfoRight: FaqItem[] = [
   {
     title: "Animali",
     content:
@@ -34,7 +35,11 @@ export const practicalInfoRight = [
   },
   {
     title: "Fotografie",
-    content:
-      "Ci piacerebbe che durante la cerimonia vi godeste il momento insieme a noi.",
+    content: sharedAlbumUrl
+      ? "Scattate pure tutte le foto e i video che volete. Ci farebbe piacere vederli: potete caricarli nel nostro album condiviso su Drive."
+      : "Scattate pure tutte le foto e i video che volete. Ci farebbe piacere vederli: prima del matrimonio troverete in questa pagina il link a un album condiviso su Drive dove caricarli.",
+    action: sharedAlbumUrl
+      ? { label: "Carica le tue foto", href: sharedAlbumUrl }
+      : undefined,
   },
 ];

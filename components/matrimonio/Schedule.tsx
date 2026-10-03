@@ -2,10 +2,6 @@ import Divider from "@/components/ui/Divider";
 
 const events = [
   {
-    time: "16:30",
-    title: "Arrivo degli ospiti",
-  },
-  {
     time: "17:00",
     title: "Cerimonia",
   },
@@ -19,7 +15,7 @@ const events = [
   },
   {
     time: "22:30",
-    title: "Torta e festa",
+    title: "Taglio torta & Dance Floor",
   },
 ];
 

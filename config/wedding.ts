@@ -20,7 +20,7 @@ export const wedding = {
 
   dates: {
     wedding: "2027-06-12",
-    rsvpDeadline: "2027-01-31",
+    rsvpDeadline: "2027-03-12",
 
     /**
      * Istante d'inizio con fuso orario esplicito (CEST, UTC+2 a giugno).
@@ -82,7 +82,7 @@ export const wedding = {
   },
 
   /**
-   * Lista nozze.
+   * Regalo di nozze.
    *
    * DA FORNIRE. L'IBAN qui sotto è composto di soli zeri: non
    * corrisponde ad alcun conto e va sostituito prima di pubblicare.
@@ -103,7 +103,19 @@ export const wedding = {
     reference: "Regalo di nozze",
   },
 
-  rsvpDeadline: "2027-01-31",
+  /**
+   * Album condiviso (cartella Drive) dove gli ospiti caricano foto e
+   * video della giornata.
+   *
+   * DA FORNIRE: il link alla cartella, condivisa con permesso di
+   * caricamento. Finché resta `null` il pulsante non compare e al suo
+   * posto c'è un avviso che il link arriverà.
+   */
+  photos: {
+    sharedAlbumUrl: null as string | null,
+  },
+
+  rsvpDeadline: "2027-03-12",
 };
 
 /**

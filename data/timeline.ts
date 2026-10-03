@@ -9,12 +9,6 @@ export type TimelineItem = {
 
 export const timeline: TimelineItem[] = [
   {
-    time: "16:30",
-    title: "Arrivo degli ospiti",
-    description: "Cocktail di benvenuto e accoglienza.",
-    icon: "car",
-  },
-  {
     time: "17:00",
     title: "Cerimonia",
     description: "",
@@ -33,15 +27,11 @@ export const timeline: TimelineItem[] = [
     icon: "utensils",
   },
   {
+    // Ultima voce, volutamente senza orario di fine: nella timeline
+    // la linea prosegue tratteggiata oltre questo punto.
     time: "22:30",
-    title: "Torta e festa",
+    title: "Taglio torta & Dance Floor",
     description: "",
     icon: "cake",
-  },
-  {
-    time: "02:00",
-    title: "Saluti",
-    description: "",
-    icon: "sparkles",
   },
 ];

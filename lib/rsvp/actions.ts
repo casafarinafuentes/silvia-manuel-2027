@@ -1,6 +1,7 @@
 "use server";
 
 import { clientIp } from "@/lib/request";
+import { HOTEL_SECTION_ENABLED } from "@/data/hotels";
 import { isPastRsvpDeadline } from "./deadline";
 import { parseRsvp, type RsvpFieldErrors } from "./schema";
 import {
@@ -30,7 +31,7 @@ export async function submitRsvp(
     hotel: formData.get("hotel"),
     message: formData.get("message"),
     },
-    { hotelRequired: !isPastRsvpDeadline() },
+    { hotelRequired: HOTEL_SECTION_ENABLED && !isPastRsvpDeadline() },
   );
 
   if (!parsed.ok) {

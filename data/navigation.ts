@@ -8,16 +8,12 @@ export const navigation = [
     href: "/rsvp",
   },
   {
-    label: "Hotel",
-    href: "/hotel",
-  },
-  {
-    label: "La nostra Sardegna",
+    label: "La Sardegna che amiamo",
     href: "/sardegna",
   },
   {
     // Volutamente ultima: presente per chi la cerca, mai in evidenza.
-    label: "Lista nozze",
+    label: "Regalo di nozze",
     href: "/lista-nozze",
   },
 ];

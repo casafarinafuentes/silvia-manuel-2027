@@ -17,6 +17,8 @@
 
   /* Brand */
   --primary: #7e8d80;
+  /* Verde scuro dei pulsanti: la tonalità più profonda del salvia. */
+  --primary-dark: #3f5643;
   --accent: #b99d75;
 
   /* Borders */
@@ -25,9 +27,17 @@
   /* Feedback */
   --danger: #a4553f;
 
-  /* Altezza della mini-nav sticky della pagina Sardegna: serve a
-     calcolare lo scroll-margin delle ancore. */
-  --sticky-nav-height: 4.5rem;
+  /* Spazio occupato in alto dall'header (o dalla mini-nav sticky della
+     pagina Sardegna, che lo sostituisce): serve a calcolare lo
+     scroll-margin delle ancore. */
+  --sticky-nav-height: 5rem;
+}
+
+/* Pagina Sardegna: quando la mini-nav si aggancia, l'header esce di
+   scena e resta solo lei. */
+html[data-header-retracted] [data-site-header] {
+  transform: translateY(-100%);
+  pointer-events: none;
 }
 
 /* ==========================================

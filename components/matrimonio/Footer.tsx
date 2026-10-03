@@ -93,7 +93,7 @@ export default function Footer() {
             className="hidden h-3 w-px bg-border sm:block"
           />
 
-          {/* Secondo punto d'accesso alla lista nozze, dove di solito
+          {/* Secondo punto d'accesso al regalo di nozze, dove di solito
               si cercano le cose di servizio. Nessuna enfasi. */}
           <a
             href="/calendario"
@@ -112,7 +112,7 @@ export default function Footer() {
             href="/lista-nozze"
             className="text-xs text-secondary transition hover:text-primary"
           >
-            Lista nozze
+            Regalo di nozze
           </Link>
         </div>
       </div>

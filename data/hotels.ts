@@ -14,6 +14,14 @@
  * sono arrivate le prime risposte.
  */
 
+/**
+ * Interruttore della sezione hotel: pagina /hotel e domanda "Dove
+ * dormirai?" nel modulo RSVP. Ora è spenta perché non gestiamo noi gli
+ * alloggi; per riaccenderla basta rimetterla a `true` (e ripristinare
+ * le voci in data/navigation.ts, data/homeCards.ts e app/sitemap.ts).
+ */
+export const HOTEL_SECTION_ENABLED = false;
+
 export type HotelFeature = "sea" | "pool" | "beach" | "breakfast" | "rooms" | "garden" | "restaurant";
 
 export type Hotel = {

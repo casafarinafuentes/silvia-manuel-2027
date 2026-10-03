@@ -51,11 +51,27 @@ export const photoCredits: PhotoCredit[] = [
     source: "https://commons.wikimedia.org/wiki/File:Cala_Moresca_-_Saerdegna.jpg",
   },
   {
-    label: "La Pelosa",
-    author: "Tommie Hansen from Stockholm, Sweden",
-    license: "CC BY 2.0",
-    licenseUrl: "https://creativecommons.org/licenses/by/2.0/",
-    source: "https://commons.wikimedia.org/wiki/File:La_Pelosa_beach,_north_Sardinia_(Italy)_(24086631522).jpg",
+    label: "Spiaggia Bianca",
+    author: "Carlo Pelagalli",
+    license: "CC BY-SA 3.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+    source: "https://commons.wikimedia.org/wiki/File:Tramonto_sulla_Spiaggia_Bianca_-_panoramio.jpg",
+  },
+  {
+    label: "Nodu Pianu",
+    author: "Gianni Careddu",
+    license: "CC BY-SA 3.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+    source: "https://commons.wikimedia.org/wiki/File:Olbia_-_Nodu_Pianu_(01).JPG",
+  },
+  {
+    // La foto ritrae la spiaggia di Pittulongu, di cui Mare e Rocce
+    // è un tratto.
+    label: "Mare e Rocce (Pittulongu)",
+    author: "trolvag",
+    license: "CC BY-SA 3.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+    source: "https://commons.wikimedia.org/wiki/File:Pittulongu_Spiaggia_-_panoramio.jpg",
   },
   {
     label: "Rena Bianca",

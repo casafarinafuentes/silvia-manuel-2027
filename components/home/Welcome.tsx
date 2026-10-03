@@ -53,14 +53,14 @@ export default function Welcome() {
 
         {/* Card */}
 
-        {/* Cinque schede: con una griglia a colonne fisse l'ultima riga
+        {/* Quattro schede: con una griglia a colonne fisse l'ultima riga
             resterebbe allineata a sinistra. Flex con wrap le centra e
             mantiene la stessa larghezza a ogni breakpoint. */}
         <div className="relative z-20 mx-auto mt-10 flex max-w-[1280px] flex-wrap justify-center gap-4">
           {homeCards.map((card) => (
             <div
               key={card.title}
-              className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)] xl:w-[calc(20%-0.8rem)]"
+              className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
             >
               <FeatureCard {...card} />
             </div>

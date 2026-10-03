@@ -5,6 +5,7 @@ import Intro from "@/components/rsvp/Intro";
 import Form from "@/components/rsvp/Form";
 import Contact from "@/components/rsvp/Contact";
 import NextStep from "@/components/ui/NextStep";
+import StayTip from "@/components/ui/StayTip";
 import Footer from "@/components/matrimonio/Footer";
 
 export const metadata: Metadata = {
@@ -20,13 +21,15 @@ export default function RSVPPage() {
       <Hero />
       <Intro />
       <Form />
+      <StayTip />
+
       <Contact />
 
       <NextStep
-        title="Dove dormire"
-        description="Gli alberghi consigliati a Cannigione, con navetta per la location."
-        href="/hotel"
-        cta="Scopri gli hotel"
+        title="Se vi fermate qualche giorno in più"
+        description="Spiagge, tavole e paesi della Gallura che vi consigliamo di scoprire."
+        href="/sardegna"
+        cta="Scopri la Sardegna"
       />
 
       <Footer />

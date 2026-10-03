@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 import { siteUrl } from "@/config/site";
 
 /** Solo le pagine pubbliche: /admin resta fuori dall'indice. */
-const routes = ["", "/matrimonio", "/rsvp", "/hotel", "/sardegna"] as const;
+const routes = ["", "/matrimonio", "/rsvp", "/sardegna"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl();

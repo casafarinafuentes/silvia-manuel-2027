@@ -4,8 +4,8 @@ export default function Intro() {
       <div className="mx-auto max-w-3xl text-center">
 
         <p className="font-heading text-[30px] font-light leading-tight text-primary md:text-[38px]">
-          Abbiamo scelto di sposarci qui anche perché
-          questa terra ci ha conquistati.
+          La Sardegna è molto più
+          del posto in cui ci sposiamo.
         </p>
 
         <div className="my-8 flex items-center justify-center gap-5">

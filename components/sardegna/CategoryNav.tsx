@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import SiteMenu from "@/components/layout/Menu";
+
 const categories = [
-  { label: "Mangiare", href: "#cibo" },
+  { label: "Food", href: "#cibo" },
   { label: "Avventure", href: "#avventure" },
   { label: "Spiagge", href: "#spiagge" },
   { label: "Paesini", href: "#paesini" },
@@ -14,23 +16,54 @@ export default function CategoryNav() {
   const [active, setActive] = useState<string | null>(null);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
 
-  /* Sticky: attivo solo quando la nav ha davvero raggiunto il bordo
-     superiore, non al primo pixel di scroll. Il sentinel che la
-     precede esce dal viewport esattamente in quel momento. */
+  /* Agganciata quando il sentinel che la precede è salito oltre il
+     punto in cui la nav si ferma (il `top` dello sticky). Si misura a
+     ogni scroll invece di usare un IntersectionObserver: con uno
+     scroll veloce il sentinel salta da sopra a sotto lo schermo senza
+     mai "intersecare", e lo stato restava bloccato su agganciata anche
+     tornati in cima (l'header non ricompariva). */
   useEffect(() => {
     const sentinel = sentinelRef.current;
-    if (!sentinel) return;
+    const sticky = stickyRef.current;
+    if (!sentinel || !sticky) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsStuck(!entry.isIntersecting),
-      { threshold: 0 },
-    );
+    let frame = 0;
 
-    observer.observe(sentinel);
+    const measure = () => {
+      frame = 0;
 
-    return () => observer.disconnect();
+      const offset = parseFloat(getComputedStyle(sticky).top) || 0;
+
+      setIsStuck(sentinel.getBoundingClientRect().top < offset);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+
+    measure();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
+
+  /* Con la nav agganciata l'header del sito si ritrae: in alto resta
+     solo la pillola. Lasciando la pagina torna al suo posto. */
+  useEffect(() => {
+    document.documentElement.toggleAttribute("data-header-retracted", isStuck);
+
+    return () => {
+      document.documentElement.removeAttribute("data-header-retracted");
+    };
+  }, [isStuck]);
 
   /* Sezione corrente: evidenzia la voce di navigazione corrispondente
      a ciò che si sta guardando. */
@@ -68,10 +101,18 @@ export default function CategoryNav() {
     <>
       <div ref={sentinelRef} aria-hidden="true" className="h-px" />
 
-      <div className="sticky top-0 z-40 px-4">
+      {/* Mai attaccata al bordo superiore. Il contenitore è largo quanto
+          la pagina: senza `pointer-events-none` coprirebbe i clic su ciò
+          che gli sta accanto (era il motivo per cui il menu hamburger
+          non rispondeva a pagina scorsa). */}
+      <div
+        ref={stickyRef}
+        className="pointer-events-none sticky top-4 z-40 px-4"
+      >
         <nav
           aria-label="Esplora la Sardegna"
           className={`
+            pointer-events-auto
             mx-auto
             flex
             max-w-full
@@ -92,7 +133,6 @@ export default function CategoryNav() {
                   shadow-[0_8px_30px_rgba(0,0,0,0.06)]
                   backdrop-blur-xl
                   backdrop-saturate-150
-                  my-3
                 `
                 : `
                   rounded-none
@@ -100,7 +140,6 @@ export default function CategoryNav() {
                   bg-transparent
                   shadow-none
                   backdrop-blur-none
-                  my-0
                 `
             }
           `}
@@ -150,6 +189,14 @@ export default function CategoryNav() {
               );
             })}
           </div>
+
+          {/* Da agganciata l'header non c'è più: il menu del sito
+              si apre da qui. */}
+          {isStuck && (
+            <div className="flex shrink-0 items-center border-l border-border/80 pl-1 pr-2">
+              <SiteMenu variant="dark" compact />
+            </div>
+          )}
         </nav>
       </div>
     </>

@@ -14,7 +14,7 @@ export default function Timeline() {
       />
 
       <div className="timeline-scroll overflow-x-auto pb-4">
-  <div className="mx-auto flex min-w-[1050px]">
+  <div className="mx-auto flex min-w-[640px] max-w-5xl">
     {timeline.map((item, index) => {
       const Icon = timelineIcons[item.icon];
 
@@ -41,8 +41,15 @@ export default function Timeline() {
               <div className="tl-line absolute left-0 top-1/2 h-px w-1/2 -translate-y-1/2 bg-accent/60" />
             )}
 
-            {index !== timeline.length - 1 && (
+            {index !== timeline.length - 1 ? (
               <div className="tl-line absolute right-0 top-1/2 h-px w-1/2 -translate-y-1/2 bg-accent/60" />
+            ) : (
+              // Dopo l'ultima voce la linea continua tratteggiata e
+              // sfuma: la festa va avanti a oltranza.
+              <div
+                aria-hidden="true"
+                className="tl-line absolute right-0 top-1/2 h-px w-1/2 -translate-y-1/2 bg-[repeating-linear-gradient(to_right,transparent_0_6px,var(--accent)_6px_14px)] [mask-image:linear-gradient(to_right,black_65%,transparent)]"
+              />
             )}
 
             <div className="tl-dot absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
@@ -57,7 +64,7 @@ export default function Timeline() {
           </h3>
 
           {item.description && (
-            <p className="mx-auto mt-2 max-w-[150px] text-sm leading-6 text-secondary">
+            <p className="mx-auto mt-2 max-w-[190px] text-sm leading-6 text-secondary">
               {item.description}
             </p>
           )}

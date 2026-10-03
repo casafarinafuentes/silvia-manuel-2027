@@ -15,7 +15,7 @@ type NextStepProps = {
 
 /**
  * Invito a proseguire alla pagina successiva del percorso
- * (Matrimonio → RSVP → Hotel → Sardegna): a fine pagina l'invitato
+ * (Matrimonio → RSVP → Sardegna): a fine pagina l'invitato
  * sa sempre dove andare, senza dover riaprire il menu.
  */
 export default function NextStep({
