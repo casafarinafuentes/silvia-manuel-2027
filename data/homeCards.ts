@@ -33,7 +33,7 @@ export const homeCards = [
   {
     title: "Regalo di nozze",
     description:
-      "Se desiderate farci un regalo, qui trovate come contribuire al nostro viaggio.",
+      "Se desiderate farci un regalo, potete contribuire ai progetti della nostra famiglia.",
     image: "/cards/gift.jpg",
     icon: Gift,
     href: "/lista-nozze",

@@ -10,7 +10,7 @@ import { hasRealIban, wedding } from "@/config/wedding";
 export const metadata: Metadata = {
   title: "Regalo di nozze",
   description:
-    "Se desiderate farci un regalo, qui trovate le coordinate per contribuire al nostro viaggio di nozze.",
+    "Se desiderate farci un regalo, qui trovate le coordinate per contribuire ai progetti della nostra famiglia.",
   /* Contiene coordinate bancarie: non deve finire nei motori di
      ricerca. Per lo stesso motivo la pagina è fuori dalla sitemap. */
   robots: { index: false, follow: false },
@@ -26,7 +26,7 @@ export default function ListaNozzePage() {
     <>
       <PageHero
         title="Regalo di nozze"
-        subtitle="Il nostro viaggio"
+        subtitle="I nostri progetti"
         image="/lista-nozze/hero.jpg"
         alt=""
         overlayClassName="bg-gradient-to-b from-black/35 via-black/20 to-black/45"
@@ -47,17 +47,18 @@ export default function ListaNozzePage() {
         <div className="relative mx-auto max-w-3xl text-center">
           <Reveal>
             <p className="font-heading text-[30px] font-light leading-snug text-primary md:text-[44px]">
-              Dopo il matrimonio
+              Una famiglia,
               <br />
-              ci aspetta <em className="italic">un viaggio</em>.
+              e tanti <em className="italic">progetti da realizzare</em>.
             </p>
           </Reveal>
 
           <Reveal delay={100}>
             <p className="mx-auto mt-8 max-w-xl text-[17px] leading-8 text-secondary">
-              Se desiderate farci un regalo, il modo migliore è
-              contribuire al nostro viaggio di nozze. Qui sotto trovate
-              le coordinate per il bonifico.
+              Con il matrimonio iniziamo a costruire i progetti della
+              nostra famiglia. Se desiderate farci un regalo, potete
+              aiutarci a trasformarli in realtà: qui sotto trovate le
+              coordinate per il bonifico.
             </p>
           </Reveal>
         </div>
