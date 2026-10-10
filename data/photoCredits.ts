@@ -1,9 +1,8 @@
 /**
  * Crediti delle fotografie della pagina Sardegna.
  *
- * Le immagini vengono da Wikimedia Commons con licenza libera. Le
- * licenze CC BY / CC BY-SA richiedono di citare autore e licenza:
- * questo elenco è mostrato in fondo alla pagina.
+ * Per le immagini con licenza CC BY / CC BY-SA, che richiede di citare
+ * autore e licenza: l'elenco è mostrato in fondo alla pagina.
  */
 
 export type PhotoCredit = {
@@ -14,91 +13,7 @@ export type PhotoCredit = {
   source: string;
 };
 
-export const photoCredits: PhotoCredit[] = [
-  {
-    label: "Spiaggia del Principe",
-    author: "Ökologix",
-    license: "CC0",
-    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Spiaggia_del_Principe.jpg",
-  },
-  {
-    label: "Capriccioli",
-    author: "Vera Buhl",
-    license: "CC BY-SA 3.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Sardinia2008-02-29_(25).JPG",
-  },
-  {
-    label: "Grande Pevero",
-    author: "Luca numero 1",
-    license: "CC BY-SA 4.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Pevero.jpg",
-  },
-  {
-    label: "Cala Moresca",
-    author: "Carlo Pelagalli",
-    license: "CC BY-SA 3.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Cala_Moresca.jpg",
-  },
-  {
-    label: "Cala Moresca (posto del cuore)",
-    author: "Carlo Pelagalli",
-    license: "CC BY-SA 2.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Cala_Moresca_-_Saerdegna.jpg",
-  },
-  {
-    label: "Spiaggia Bianca",
-    author: "Carlo Pelagalli",
-    license: "CC BY-SA 3.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Tramonto_sulla_Spiaggia_Bianca_-_panoramio.jpg",
-  },
-  {
-    label: "Nodu Pianu",
-    author: "Gianni Careddu",
-    license: "CC BY-SA 3.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Olbia_-_Nodu_Pianu_(01).JPG",
-  },
-  {
-    // La foto ritrae la spiaggia di Pittulongu, di cui Mare e Rocce
-    // è un tratto.
-    label: "Mare e Rocce (Pittulongu)",
-    author: "trolvag",
-    license: "CC BY-SA 3.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Pittulongu_Spiaggia_-_panoramio.jpg",
-  },
-  {
-    label: "Rena Bianca",
-    author: "Or kriminal",
-    license: "CC BY-SA 3.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Rena_Bianca_Beach,_Santa_Teresa_Gallura.jpg",
-  },
-  {
-    label: "Cala Brandinchi",
-    author: "Ramon Espiña Fernand",
-    license: "CC BY-SA 3.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Cala_Brandinchi_-_Cerde%C3%B1a_-_panoramio.jpg",
-  },
-  {
-    label: "Lu Impostu",
-    author: "Basilicofresco",
-    license: "CC BY-SA 4.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Spiaggia_di_Lu_Impostu,_San_Teodoro,_parte_sud.jpg",
-  },
-  {
-    label: "Porto Istana",
-    author: "fadda  domenico ange",
-    license: "CC BY-SA 3.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-    source: "https://commons.wikimedia.org/wiki/File:Porto_istana_(olbia)_-_panoramio.jpg",
-  },
-];
+/* Vuoto: le foto di Wikimedia sono state tutte sostituite con quelle
+   scelte dagli sposi. Se ne torna una con licenza che chiede di citare
+   l'autore, va aggiunta qui e la sezione ricompare da sola. */
+export const photoCredits: PhotoCredit[] = [];

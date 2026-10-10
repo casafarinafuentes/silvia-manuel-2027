@@ -5,6 +5,9 @@ import { photoCredits } from "@/data/photoCredits";
  * autore e licenza: qui, in piccolo, in fondo alla pagina.
  */
 export default function PhotoCredits() {
+  // Nessuna foto da accreditare: la sezione non compare.
+  if (photoCredits.length === 0) return null;
+
   return (
     <section className="border-t border-border px-6 py-12">
       <div className="mx-auto max-w-6xl">

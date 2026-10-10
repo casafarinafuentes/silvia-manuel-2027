@@ -16,7 +16,7 @@ export default function Favorite() {
 
         <div className="relative aspect-[16/8] overflow-hidden rounded-panel">
           <Image
-            src="/sardegna/cala-moresca-cuore.jpg"
+            src="/sardegna/spiagge/cala-moresca-cuore.jpg"
             alt="Cala Moresca"
             fill
             sizes="(max-width: 1024px) 100vw, 1024px"
