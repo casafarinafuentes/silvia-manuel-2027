@@ -47,7 +47,9 @@ export default function DeleteButton({
   }
 
   return (
-    <form action={removeRsvp} className="flex items-center gap-3">
+    // In colonna: affiancati, "Annulla" usciva dal bordo destro della
+    // tabella e restava nascosto.
+    <form action={removeRsvp} className="flex flex-col items-start gap-2">
       <input type="hidden" name="id" value={id} />
 
       <span className="sr-only">Eliminare la conferma di {name}?</span>

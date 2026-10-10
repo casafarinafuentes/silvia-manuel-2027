@@ -318,7 +318,9 @@ export default async function AdminPage({
                     )}
                   </td>
 
-                  <td className="py-4 whitespace-nowrap">
+                  {/* Larghezza fissa: la riga non si sposta quando compare
+                      la richiesta di conferma. */}
+                  <td className="w-[124px] min-w-[124px] py-4 align-middle whitespace-nowrap">
                     <DeleteButton
                       id={entry.id}
                       name={`${entry.first_name} ${entry.last_name}`}
