@@ -77,7 +77,7 @@ const UUID =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /**
- * Elimina una conferma dall'elenco (prove, doppioni).
+ * Elimina le conferme spuntate nell'elenco (prove, doppioni).
  *
  * Una server action è raggiungibile da chiunque conosca il suo
  * indirizzo: la sessione va verificata qui, non basta che il pulsante
@@ -88,11 +88,11 @@ export async function removeRsvp(formData: FormData): Promise<void> {
     redirect("/admin/login");
   }
 
-  const id = formData.get("id");
+  const ids = formData
+    .getAll("id")
+    .filter((id): id is string => typeof id === "string" && UUID.test(id));
 
-  if (typeof id === "string" && UUID.test(id)) {
-    await deleteRsvp(id);
-  }
+  await deleteRsvp(ids);
 
   revalidatePath("/admin");
 }

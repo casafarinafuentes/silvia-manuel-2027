@@ -12,7 +12,8 @@ import { isPastRsvpDeadline } from "@/lib/rsvp/deadline";
 import { hotelLabel } from "@/data/hotels";
 import { isDatabaseConfigured } from "@/lib/db";
 
-import DeleteButton from "./DeleteButton";
+import BulkDelete, { SelectAll } from "./BulkDelete";
+import { DELETE_FORM_ID } from "./delete-form";
 
 export const metadata: Metadata = {
   title: "Conferme RSVP",
@@ -245,10 +246,20 @@ export default async function AdminPage({
             : "Non è ancora arrivata nessuna conferma."}
         </p>
       ) : (
-        <div className="mt-8 overflow-x-auto">
-          <table className="w-full min-w-[1080px] border-collapse text-left text-sm">
+        <>
+        {/* Si spuntano le righe e si elimina con un solo pulsante. */}
+        <div className="mt-8">
+          <BulkDelete />
+        </div>
+
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[1020px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-border">
+                <th scope="col" className="w-10 py-3 pr-4">
+                  <SelectAll />
+                </th>
+
                 {[
                   "Nome",
                   "Email",
@@ -258,10 +269,9 @@ export default async function AdminPage({
                   "Alloggio",
                   "Messaggio",
                   "Inviato",
-                  "",
                 ].map((heading) => (
                   <th
-                    key={heading || "azioni"}
+                    key={heading}
                     scope="col"
                     className="py-3 pr-4 text-xs uppercase tracking-[0.24em] font-normal text-secondary"
                   >
@@ -274,6 +284,17 @@ export default async function AdminPage({
             <tbody>
               {entries.map((entry) => (
                 <tr key={entry.id} className="border-b border-border/60">
+                  <td className="py-4 pr-4">
+                    <input
+                      type="checkbox"
+                      name="id"
+                      value={entry.id}
+                      form={DELETE_FORM_ID}
+                      aria-label={`Seleziona la conferma di ${entry.first_name} ${entry.last_name}`}
+                      className="h-4 w-4 accent-[#7e8d80]"
+                    />
+                  </td>
+
                   <td className="py-4 pr-4 text-primary">
                     {entry.first_name} {entry.last_name}
                   </td>
@@ -317,20 +338,12 @@ export default async function AdminPage({
                       </span>
                     )}
                   </td>
-
-                  {/* Larghezza fissa: la riga non si sposta quando compare
-                      la richiesta di conferma. */}
-                  <td className="w-[124px] min-w-[124px] py-4 align-middle whitespace-nowrap">
-                    <DeleteButton
-                      id={entry.id}
-                      name={`${entry.first_name} ${entry.last_name}`}
-                    />
-                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        </>
       )}
     </main>
   );

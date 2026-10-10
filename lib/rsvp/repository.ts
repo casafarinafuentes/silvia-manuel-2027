@@ -72,16 +72,18 @@ export async function insertRsvp(input: RsvpInput): Promise<RsvpRecord> {
 }
 
 /**
- * Elimina una conferma (prove, doppioni). Definitivo: non resta copia.
- * Restituisce false se l'id non corrisponde a nessuna riga.
+ * Elimina le conferme indicate (prove, doppioni). Definitivo: non
+ * resta copia. Restituisce quante righe sono state cancellate.
  */
-export async function deleteRsvp(id: string): Promise<boolean> {
+export async function deleteRsvp(ids: string[]): Promise<number> {
+  if (ids.length === 0) return 0;
+
   const rows = await query<{ id: string }>(
-    `delete from rsvp where id = $1 returning id`,
-    [id],
+    `delete from rsvp where id = any($1::uuid[]) returning id`,
+    [ids],
   );
 
-  return rows.length > 0;
+  return rows.length;
 }
 
 export async function listRsvp(search = ""): Promise<RsvpRecord[]> {
