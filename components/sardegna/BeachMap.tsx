@@ -219,7 +219,7 @@ const groups: { title: string; beaches: Beach[] }[] = [
         image: "/sardegna/spiagge/nodu-pianu.jpg",
       },
       {
-        name: "Mare e Rocce",
+        name: "Mare Rocce",
         at: [9.578, 40.956],
         image: "/sardegna/spiagge/mare-e-rocce.jpg",
       },
