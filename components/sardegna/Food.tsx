@@ -23,13 +23,14 @@ const cantina = [
     name: "Tenuta Paltusa",
     subtitle: "Vini, vigneti e degustazioni",
     location: "Gallura",
-    image: "/sardegna/tenuta-paltusa.jpg",
+    image: "/sardegna/paltusa.jpg",
     href: "https://www.paltusa.it/",
   },
   {
     name: "Podere Guardia Grande",
     subtitle: "Vini e sapori della Sardegna",
     location: "Alghero",
+    image: "/sardegna/podere-guardia-grande.jpg",
     href: "https://podereguardiagrande.com/it",
   },
 ];
@@ -48,11 +49,13 @@ const breakfast = [
     name: "Pasticceria Pace",
     subtitle: "Colazioni e dolci",
     location: "Olbia",
+    image: "/sardegna/pasticceria-pace.jpg",
   },
   {
     name: "Pistacchio",
     subtitle: "Caffetteria e pasticceria",
     location: "Olbia",
+    image: "/sardegna/pistacchio.jpg",
   },
 ];
 

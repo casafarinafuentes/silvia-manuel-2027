@@ -102,7 +102,7 @@ export default function Adventures() {
                           alt={adventure.title}
                           fill
                           sizes="(max-width: 768px) 100vw, 40vw"
-                          className="object-cover"
+                          className={`object-cover ${adventure.imagePosition ?? ""}`}
                         />
                       </div>
 

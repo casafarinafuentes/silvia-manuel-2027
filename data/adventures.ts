@@ -11,6 +11,11 @@ export type Adventure = {
   number: string;
   title: string;
   image: string;
+  /**
+   * Punto di messa a fuoco, quando il ritaglio al centro taglierebbe il
+   * soggetto (su telefono il riquadro è più basso della foto).
+   */
+  imagePosition?: string;
   /** Riga breve sotto il titolo, visibile anche da chiuso. */
   tagline: string;
   paragraphs: string[];
@@ -26,7 +31,8 @@ export const adventures: Adventure[] = [
   {
     number: "01",
     title: "Roccia dell'Orso",
-    image: "/sardegna/avventure/roccia-dellorso.jpg",
+    image: "/sardegna/avventure/roccia-orso.jpg",
+    imagePosition: "object-[center_35%]",
     tagline: "Una passeggiata breve, una vista che vale la giornata",
     paragraphs: [
       "Una delle viste più iconiche della costa gallurese: a Capo d'Orso, vicino a Palau, il vento ha scolpito nel granito una roccia che ricorda un orso seduto, con l'arcipelago della Maddalena e la Corsica sullo sfondo.",
@@ -50,7 +56,8 @@ export const adventures: Adventure[] = [
   {
     number: "02",
     title: "Tour della Maddalena",
-    image: "/sardegna/avventure/maddalena.jpg",
+    image: "/sardegna/avventure/arcipelago-maddalena.jpg",
+    imagePosition: "object-[center_30%]",
     tagline: "Una giornata in barca tra calette e isole",
     paragraphs: [
       "L'arcipelago della Maddalena è un parco nazionale: isole di granito rosa, calette dall'acqua trasparente e fondali che cambiano colore a ogni curva. Il modo migliore per vederlo è una giornata in barca, con soste per il bagno.",
@@ -74,7 +81,7 @@ export const adventures: Adventure[] = [
   {
     number: "03",
     title: "Golfo di Orosei",
-    image: "/sardegna/avventure/golfo-di-orosei.jpg",
+    image: "/sardegna/avventure/orosei.jpg",
     tagline: "Cale selvagge e pareti di roccia sul mare",
     paragraphs: [
       "Sulla costa orientale, tra Cala Gonone e Baunei, le montagne cadono a picco sul mare e si aprono in cale famose, raggiungibili soprattutto in barca o a piedi. È una Sardegna diversa da quella della Costa Smeralda: più selvaggia e più verticale.",
@@ -98,7 +105,8 @@ export const adventures: Adventure[] = [
   {
     number: "04",
     title: "Delfini in canoa",
-    image: "/sardegna/avventure/golfo-aranci.jpg",
+    image: "/sardegna/avventure/delfini-golfo-aranci.jpg",
+    imagePosition: "object-[center_15%]",
     tagline: "Il mare di Golfo Aranci visto dall'acqua",
     paragraphs: [
       "Nella riserva marina di Capo Figari, a Golfo Aranci, vive da anni un gruppo di delfini. Con un'escursione in kayak, guidata, si pagaia lungo la costa fino a Cala Moresca, con soste per fare snorkeling e per un aperitivo in spiaggia.",
@@ -122,7 +130,7 @@ export const adventures: Adventure[] = [
   {
     number: "05",
     title: "Ferrata a Tavolara",
-    image: "/sardegna/avventure/tavolara.jpg",
+    image: "/sardegna/avventure/ferrata-tavolara.jpg",
     tagline: "Per chi cerca qualcosa di più avventuroso",
     paragraphs: [
       "L'isola di Tavolara è una montagna di roccia che esce dal mare, alta 565 metri. Sull'isola ci sono vie ferrate con vista sul mare: la Ferrata Classica, meno tecnica e adatta anche a chi non ha esperienza, e la Ferrata degli Angeli, più impegnativa.",
