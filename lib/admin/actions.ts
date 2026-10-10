@@ -1,14 +1,21 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { clientIp } from "@/lib/request";
 import {
+  deleteRsvp,
   isAdminLoginLimited,
   recordAdminLoginFailure,
 } from "@/lib/rsvp/repository";
 
-import { endSession, startSession, verifyPassword } from "./session";
+import {
+  endSession,
+  isAuthenticated,
+  startSession,
+  verifyPassword,
+} from "./session";
 
 export type LoginState = { error?: string };
 
@@ -64,4 +71,28 @@ export async function login(
 export async function logout(): Promise<void> {
   await endSession();
   redirect("/admin/login");
+}
+
+const UUID =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * Elimina una conferma dall'elenco (prove, doppioni).
+ *
+ * Una server action è raggiungibile da chiunque conosca il suo
+ * indirizzo: la sessione va verificata qui, non basta che il pulsante
+ * stia in una pagina protetta.
+ */
+export async function removeRsvp(formData: FormData): Promise<void> {
+  if (!(await isAuthenticated())) {
+    redirect("/admin/login");
+  }
+
+  const id = formData.get("id");
+
+  if (typeof id === "string" && UUID.test(id)) {
+    await deleteRsvp(id);
+  }
+
+  revalidatePath("/admin");
 }

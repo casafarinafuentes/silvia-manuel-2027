@@ -12,6 +12,8 @@ import { isPastRsvpDeadline } from "@/lib/rsvp/deadline";
 import { hotelLabel } from "@/data/hotels";
 import { isDatabaseConfigured } from "@/lib/db";
 
+import DeleteButton from "./DeleteButton";
+
 export const metadata: Metadata = {
   title: "Conferme RSVP",
   robots: { index: false, follow: false },
@@ -244,7 +246,7 @@ export default async function AdminPage({
         </p>
       ) : (
         <div className="mt-8 overflow-x-auto">
-          <table className="w-full min-w-[980px] border-collapse text-left text-sm">
+          <table className="w-full min-w-[1080px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-border">
                 {[
@@ -256,9 +258,10 @@ export default async function AdminPage({
                   "Alloggio",
                   "Messaggio",
                   "Inviato",
+                  "",
                 ].map((heading) => (
                   <th
-                    key={heading}
+                    key={heading || "azioni"}
                     scope="col"
                     className="py-3 pr-4 text-xs uppercase tracking-[0.24em] font-normal text-secondary"
                   >
@@ -313,6 +316,13 @@ export default async function AdminPage({
                         Dopo la scadenza
                       </span>
                     )}
+                  </td>
+
+                  <td className="py-4 whitespace-nowrap">
+                    <DeleteButton
+                      id={entry.id}
+                      name={`${entry.first_name} ${entry.last_name}`}
+                    />
                   </td>
                 </tr>
               ))}
