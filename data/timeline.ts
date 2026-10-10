@@ -29,7 +29,7 @@ export const timeline: TimelineItem[] = [
   {
     // Ultima voce, volutamente senza orario di fine: nella timeline
     // la linea prosegue tratteggiata oltre questo punto.
-    time: "22:30",
+    time: "22:00",
     title: "Taglio torta & Dance Floor",
     description: "",
     icon: "cake",
