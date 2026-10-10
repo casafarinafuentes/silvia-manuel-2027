@@ -48,7 +48,7 @@ const breakfast = [
   {
     name: "Pasticceria Pace",
     subtitle: "Colazioni e dolci",
-    location: "Olbia",
+    location: "Porto Cervo",
     image: "/sardegna/pasticceria-pace.jpg",
   },
   {
