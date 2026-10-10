@@ -39,7 +39,7 @@ export function getHomeCards(phase: WeddingPhase) {
       href: "/sardegna",
     },
     {
-      title: "Regalo di nozze",
+      title: "Per tutto ciò che verrà",
       description:
         "Se desiderate farci un regalo, potete contribuire ai progetti della nostra famiglia.",
       image: "/cards/gift.jpg",

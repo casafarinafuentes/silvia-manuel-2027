@@ -84,21 +84,16 @@ export const wedding = {
   /**
    * Regalo di nozze.
    *
-   * DA FORNIRE. L'IBAN qui sotto è composto di soli zeri: non
-   * corrisponde ad alcun conto e va sostituito prima di pubblicare.
+   * IBAN e intestatario sono quelli veri, forniti dagli sposi: vanno
+   * cambiati sempre INSIEME, perché un bonifico verso un intestatario
+   * che non corrisponde al conto viene respinto.
    *
-   * `holder` è l'intestatario del conto. Ora è un segnaposto: al
-   * posto dei nomi completi c'è quello con cui il sito vi chiama.
-   * Va sostituito con i nomi come risultano in banca, INSIEME
-   * all'IBAN vero: un bonifico verso un intestatario che non
-   * corrisponde al conto viene respinto.
-   *
-   * Se lo si rimette a null, la pagina torna a nascondere i
-   * riferimenti invece di mostrarne di sbagliati.
+   * Se `holder` torna a null, la pagina nasconde i riferimenti invece
+   * di mostrarne di sbagliati.
    */
   gift: {
-    iban: "IT00 0000 0000 0000 0000 0000 000",
-    holder: "Silvia & Manuel" as string | null,
+    iban: "IT84 A032 6822 3000 EMH0 1137 787",
+    holder: "Luis Manuel San Martin Fuentes" as string | null,
     /** Causale suggerita, per capire da chi arriva il pensiero. */
     reference: "Regalo di nozze",
   },

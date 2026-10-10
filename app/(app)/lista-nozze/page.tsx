@@ -9,7 +9,7 @@ import { hasRealIban, wedding } from "@/config/wedding";
 import { currentTemporalContext } from "@/lib/temporal-now";
 
 export const metadata: Metadata = {
-  title: "Regalo di nozze",
+  title: "Per tutto ciò che verrà",
   description:
     "Se desiderate farci un regalo, qui trovate le coordinate per contribuire ai progetti della nostra famiglia.",
   /* Contiene coordinate bancarie: non deve finire nei motori di
@@ -28,7 +28,7 @@ export default function ListaNozzePage() {
   return (
     <>
       <PageHero
-        title="Regalo di nozze"
+        title="Per tutto ciò che verrà"
         subtitle="I nostri progetti"
         image="/lista-nozze/hero.jpg"
         alt=""

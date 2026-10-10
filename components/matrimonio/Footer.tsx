@@ -161,7 +161,7 @@ export default function Footer() {
             href="/lista-nozze"
             className="text-xs text-secondary transition hover:text-primary"
           >
-            Regalo di nozze
+            Per tutto ciò che verrà
           </Link>
         </div>
       </div>

@@ -13,7 +13,7 @@ export const navigation = [
   },
   {
     // Volutamente ultima: presente per chi la cerca, mai in evidenza.
-    label: "Regalo di nozze",
+    label: "Per tutto ciò che verrà",
     href: "/lista-nozze",
   },
 ];
