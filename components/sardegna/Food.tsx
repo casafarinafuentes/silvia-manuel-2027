@@ -55,7 +55,7 @@ const breakfast = [
     name: "Pistacchio",
     subtitle: "Caffetteria e pasticceria",
     location: "Olbia",
-    image: "/sardegna/pistacchio.jpg",
+    image: "/sardegna/pistacchio-colazione.jpg",
   },
 ];
 
