@@ -5,10 +5,10 @@ export default function Hero() {
     <PageHero
       title="La Sardegna che amiamo"
       subtitle="I posti che vi consigliamo"
-      image="/sardegna/sardegna-hero.jpg"
-      alt="La costa della Sardegna"
+      image="/sardegna/hero-scogliera.jpg"
+      alt="Scogliera di granito sul mare, in Sardegna"
       imageClassName="object-cover object-center"
-      overlayClassName="bg-gradient-to-b from-black/35 via-black/25 to-black/45"
+      overlayClassName="bg-gradient-to-b from-black/40 via-black/35 to-black/50"
     />
   );
 }
