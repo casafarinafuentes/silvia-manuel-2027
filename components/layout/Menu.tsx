@@ -2,10 +2,13 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 import { navigation } from "@/data/navigation";
+import { useM } from "@/i18n/use-messages";
+import { uiMessages } from "@/i18n/messages/ui";
+import LanguageSwitcher from "./LanguageSwitcher";
 import { wedding } from "@/config/wedding";
 import { isRsvpClosed } from "@/lib/temporal";
 import { usePhase } from "./PhaseProvider";
@@ -21,11 +24,12 @@ export default function SiteMenu({
   compact = false,
 }: SiteMenuProps) {
   const [open, setOpen] = useState(false);
+  const m = useM(uiMessages);
 
   // Dal giorno del matrimonio le conferme sono chiuse: la voce RSVP
   // sparisce dal menu.
   const phase = usePhase();
-  const items = navigation.filter(
+  const items = useM(navigation).filter(
     (item) => !isRsvpClosed(phase) || item.href !== "/rsvp",
   );
 
@@ -75,7 +79,7 @@ export default function SiteMenu({
       <button
         ref={triggerRef}
         onClick={() => setOpen(true)}
-        aria-label="Apri menu"
+        aria-label={m.menu.open}
         aria-expanded={open}
         className={`
           rounded-full transition backdrop-blur-sm
@@ -118,7 +122,7 @@ export default function SiteMenu({
         <button
           type="button"
           tabIndex={-1}
-          aria-label="Chiudi menu"
+          aria-label={m.menu.close}
           onClick={() => setOpen(false)}
           className={`
             absolute inset-0 h-full w-full cursor-default bg-black/40
@@ -133,7 +137,7 @@ export default function SiteMenu({
           ref={panelRef}
           role="dialog"
           aria-modal="true"
-          aria-label="Menu di navigazione"
+          aria-label={m.menu.dialog}
           className={`
             relative flex h-full w-96 max-w-[calc(100vw-2.5rem)] flex-col
             bg-background p-8 shadow-2xl
@@ -151,7 +155,7 @@ export default function SiteMenu({
               </p>
 
               <h2 className="mt-3 font-heading text-4xl font-light text-primary">
-                Menu
+                {m.menu.title}
               </h2>
             </div>
 
@@ -160,7 +164,7 @@ export default function SiteMenu({
                 setOpen(false);
                 triggerRef.current?.focus();
               }}
-              aria-label="Chiudi menu"
+              aria-label={m.menu.close}
               className="shrink-0 text-primary transition hover:text-accent"
             >
               <X size={28} aria-hidden="true" />
@@ -193,6 +197,8 @@ export default function SiteMenu({
           {/* Footer */}
 
           <div className="mt-auto">
+            <LanguageSwitcher variant="dark" className="mb-8" />
+
             <div className="mb-8 h-px bg-border" />
 
             <p className="text-sm uppercase tracking-[0.35em] text-secondary">

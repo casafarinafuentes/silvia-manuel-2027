@@ -3,15 +3,22 @@
 import { useEffect, useRef, useState } from "react";
 
 import SiteMenu from "@/components/layout/Menu";
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
 
-const categories = [
-  { label: "Food", href: "#cibo" },
-  { label: "Avventure", href: "#avventure" },
-  { label: "Spiagge", href: "#spiagge" },
-  { label: "Paesini", href: "#paesini" },
-];
+
+const anchors = ["#cibo", "#avventure", "#spiagge", "#paesini"] as const;
 
 export default function CategoryNav() {
+  const { nav } = useM(sardegnaMessages);
+
+  const categories = [
+    { label: nav.food, href: anchors[0] },
+    { label: nav.adventures, href: anchors[1] },
+    { label: nav.beaches, href: anchors[2] },
+    { label: nav.villages, href: anchors[3] },
+  ];
+
   const [isStuck, setIsStuck] = useState(false);
   const [active, setActive] = useState<string | null>(null);
 
@@ -68,8 +75,8 @@ export default function CategoryNav() {
   /* Sezione corrente: evidenzia la voce di navigazione corrispondente
      a ciò che si sta guardando. */
   useEffect(() => {
-    const sections = categories
-      .map(({ href }) => document.querySelector(href))
+    const sections = anchors
+      .map((href) => document.querySelector(href))
       .filter((element): element is Element => element !== null);
 
     if (sections.length === 0) return;
@@ -110,7 +117,7 @@ export default function CategoryNav() {
         className="pointer-events-none sticky top-4 z-40 px-4"
       >
         <nav
-          aria-label="Esplora la Sardegna"
+          aria-label={nav.label}
           className={`
             pointer-events-auto
             mx-auto

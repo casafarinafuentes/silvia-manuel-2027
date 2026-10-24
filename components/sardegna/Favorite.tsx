@@ -1,12 +1,19 @@
 import Image from "next/image";
 
+import Lines from "@/components/ui/Lines";
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
+
+
 export default function Favorite() {
+  const { favorite: t } = useM(sardegnaMessages);
+
   return (
     <section className="bg-panel-photo px-6 py-20 md:py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
           <p className="text-xs uppercase tracking-[0.4em] text-secondary">
-            Il nostro posto del cuore
+            {t.eyebrow}
           </p>
 
           <h2 className="mt-4 font-heading text-4xl font-light text-primary md:text-5xl">
@@ -25,8 +32,7 @@ export default function Favorite() {
         </div>
 
         <p className="mx-auto mt-8 max-w-2xl text-center font-heading text-2xl font-light leading-relaxed text-primary">
-          “Se dovessimo sceglierne una sola,
-          probabilmente sarebbe questa.”
+          <Lines text={t.quote} />
         </p>
       </div>
     </section>

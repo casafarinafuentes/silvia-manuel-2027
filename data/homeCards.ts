@@ -5,43 +5,40 @@ import {
   Gift,
 } from "lucide-react";
 
+import { homeMessages } from "@/i18n/messages/home";
+import { resolve } from "@/i18n/pair";
+import type { Locale } from "@/i18n/locales";
 import { isRsvpClosed, type WeddingPhase } from "@/lib/temporal";
 
 /** Le schede della home, adattate alla fase del matrimonio. */
-export function getHomeCards(phase: WeddingPhase) {
+export function getHomeCards(phase: WeddingPhase, locale: Locale) {
+  const { cards: c } = resolve(homeMessages, locale);
+
   const cards = [
     {
-      title: "Il Matrimonio",
-      description:
-        phase === "after"
-          ? "Il nostro giorno a Li Capanni: il luogo, le foto e i ricordi."
-          : "Scopri quando, dove e tutti i dettagli della giornata.",
+      title: c.matrimonio.title,
+      description: phase === "after" ? c.matrimonio.after : c.matrimonio.before,
       image: "/cards/wedding.jpg",
       icon: CalendarDays,
       href: "/matrimonio",
     },
     {
-      title: "RSVP",
-      description:
-        phase === "rsvp"
-          ? "Conferma la tua presenza entro il 12 marzo 2027."
-          : "La scadenza è passata: se non hai ancora risposto, fallo al più presto.",
+      title: c.rsvp.title,
+      description: phase === "rsvp" ? c.rsvp.open : c.rsvp.late,
       image: "/cards/rsvp.jpg",
       icon: Mail,
       href: "/rsvp",
     },
     {
-      title: "La Sardegna che amiamo",
-      description:
-        "Spiagge, tavole e paesi che vi consigliamo di scoprire.",
+      title: c.sardegna.title,
+      description: c.sardegna.text,
       image: "/cards/sardinia.jpg",
       icon: MapPinned,
       href: "/sardegna",
     },
     {
-      title: "Per tutto ciò che verrà",
-      description:
-        "Se desiderate farci un regalo, potete contribuire ai progetti della nostra famiglia.",
+      title: c.gift.title,
+      description: c.gift.text,
       image: "/cards/gift.jpg",
       icon: Gift,
       href: "/lista-nozze",

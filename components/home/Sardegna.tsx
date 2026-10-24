@@ -1,12 +1,15 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 import { currentTemporalContext } from "@/lib/temporal-now";
+import { useM } from "@/i18n/use-messages";
+import { homeMessages } from "@/i18n/messages/home";
 
 export default function Sardegna() {
   // Dopo il matrimonio nessuno "si ferma qualche giorno in più":
   // la guida resta per chi vorrà tornare.
   const after = currentTemporalContext().phase === "after";
+  const { sardegna: t } = useM(homeMessages);
 
   return (
     <section className="px-5 pb-16 lg:px-6 lg:pb-20">
@@ -17,7 +20,7 @@ export default function Sardegna() {
         <div className="relative min-h-[260px] sm:min-h-[350px]">
           <Image
             src="/home/sardegna.jpg"
-            alt="Sardegna"
+            alt={t.alt}
             fill
             sizes="(max-width: 1024px) 100vw, 60vw"
             className="object-cover"
@@ -39,22 +42,20 @@ export default function Sardegna() {
           <div className="relative z-10 max-w-sm">
 
             <h2 className="font-heading text-[30px] font-normal leading-[1.08] text-primary sm:text-[35px]">
-              {after ? "Per quando tornerete" : "Qualche giorno in più"}
+              {after ? t.titleAfter : t.titleBefore}
               <br />
-              in Sardegna.
+              {t.titleEnd}
             </h2>
 
             <p className="mt-6 text-[16px] leading-7 text-secondary sm:mt-7 sm:text-[18px] sm:leading-8">
-              {after
-                ? "Abbiamo raccolto per voi i posti che vi consigliamo di non perdere."
-                : "Se decidete di fermarvi, abbiamo raccolto per voi i posti che vi consigliamo di non perdere."}
+              {after ? t.textAfter : t.textBefore}
             </p>
 
             <Link
               href="/sardegna"
               className="mt-8 inline-flex items-center gap-3 bg-[#55634d] px-6 py-3 text-[11px] font-medium uppercase tracking-[0.2em] text-white transition hover:bg-[#475541] sm:mt-9 sm:gap-4 sm:px-9 sm:py-4 sm:text-[12px] sm:tracking-[0.24em]"
             >
-              Scopri la Sardegna
+              {t.cta}
               <span>→</span>
             </Link>
 

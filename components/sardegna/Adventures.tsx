@@ -4,7 +4,10 @@ import Image from "next/image";
 import { useState } from "react";
 import { ArrowUpRight, Lightbulb } from "lucide-react";
 
-import { adventures } from "@/data/adventures";
+import { adventures as adventureData } from "@/data/adventures";
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
+
 
 /**
  * Verde di ogni fascia: dal salvia della sezione scende verso il verde
@@ -17,6 +20,9 @@ function bandColor(index: number, total: number): string {
 }
 
 export default function Adventures() {
+  const adventures = useM(adventureData);
+  const { adventures: t } = useM(sardegnaMessages);
+
   // Tutte chiuse all'arrivo: si apre solo quella che interessa.
   const [open, setOpen] = useState<number | null>(null);
 
@@ -28,11 +34,11 @@ export default function Adventures() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-16">
           <p className="text-xs uppercase tracking-[0.4em] text-white/85">
-            Da vivere
+            {t.eyebrow}
           </p>
 
           <h2 className="mt-4 font-heading text-5xl font-light text-white md:text-6xl">
-            Avventure
+            {t.title}
           </h2>
         </div>
 

@@ -130,3 +130,26 @@ describe("parseRsvp", () => {
     });
   });
 });
+
+describe("parseRsvp: lingua dei messaggi", () => {
+  it("di default gli errori sono in italiano", () => {
+    const result = parseRsvp({ ...valid, firstName: "" });
+
+    assert.equal(result.ok, false);
+    if (!result.ok) assert.equal(result.errors.firstName, "Inserisci il tuo nome.");
+  });
+
+  it("con locale 'es' gli errori sono in spagnolo", () => {
+    const result = parseRsvp(
+      { ...valid, firstName: "", partySize: "99" },
+      { locale: "es" },
+    );
+
+    assert.equal(result.ok, false);
+    if (!result.ok) {
+      assert.equal(result.errors.firstName, "Escribe tu nombre.");
+      assert.match(result.errors.partySize ?? "", /entre 1 y/);
+    }
+  });
+});
+

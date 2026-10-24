@@ -1,8 +1,14 @@
 import Image from "next/image";
 
 import Section from "@/components/ui/Section";
+import Lines from "@/components/ui/Lines";
+import { useM } from "@/i18n/use-messages";
+import { rsvpMessages } from "@/i18n/messages/rsvp";
+
 
 export default function Intro() {
+  const { intro } = useM(rsvpMessages);
+
   return (
     <Section>
       <div className="relative">
@@ -28,9 +34,7 @@ export default function Intro() {
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <h2 className="font-heading text-[48px] font-light leading-[1.15] tracking-[0.04em] text-primary md:text-[40px]">
-            La vostra presenza
-            <br />
-            renderà questo giorno unico.
+            <Lines text={intro.title} />
           </h2>
 
           <div className="mt-8 flex items-center justify-center">
@@ -44,17 +48,9 @@ export default function Intro() {
           </div>
 
           <div className="mt-8 space-y-2 text-lg leading-5 text-secondary">
-            <p>
-              Vi chiediamo di confermare la vostra presenza
-            </p>
-
-            <p>
-              compilando il form qui sotto.
-            </p>
-
-            <p>
-              Ogni dettaglio ci aiuterà a rendere tutto perfetto.
-            </p>
+            {intro.lines.split("\n").map((line) => (
+              <p key={line}>{line}</p>
+            ))}
           </div>
         </div>
       </div>

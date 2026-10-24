@@ -1,19 +1,27 @@
 import PageHero from "@/components/ui/PageHero";
 import { rsvpDeadlineLabel } from "@/lib/rsvp/deadline";
 import { isRsvpClosed, type WeddingPhase } from "@/lib/temporal";
+import { useLocale } from "next-intl";
+import { fill } from "@/i18n/pair";
+import { useM } from "@/i18n/use-messages";
+import { rsvpMessages } from "@/i18n/messages/rsvp";
+
 
 export default function Hero({ phase }: { phase: WeddingPhase }) {
+  const locale = useLocale();
+  const { hero } = useM(rsvpMessages);
+
   // La scadenza si cita solo finché non è passata.
   const subtitle =
     phase === "rsvp"
-      ? `Conferma entro il ${rsvpDeadlineLabel()}`
+      ? fill(hero.open, { date: rsvpDeadlineLabel(locale) })
       : isRsvpClosed(phase)
-        ? "Le conferme sono chiuse"
-        : "Conferma la tua presenza";
+        ? hero.closed
+        : hero.late;
 
   return (
     <PageHero
-      title="RSVP"
+      title={hero.title}
       subtitle={subtitle}
       image="/rsvp/rsvp-hero.jpg"
       alt=""

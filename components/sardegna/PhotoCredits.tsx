@@ -1,10 +1,15 @@
 import { photoCredits } from "@/data/photoCredits";
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
+
 
 /**
  * Crediti fotografici. Le licenze Creative Commons chiedono di citare
  * autore e licenza: qui, in piccolo, in fondo alla pagina.
  */
 export default function PhotoCredits() {
+  const { credits } = useM(sardegnaMessages);
+
   // Nessuna foto da accreditare: la sezione non compare.
   if (photoCredits.length === 0) return null;
 
@@ -13,7 +18,7 @@ export default function PhotoCredits() {
       <div className="mx-auto max-w-6xl">
         <details className="group">
           <summary className="cursor-pointer text-xs uppercase tracking-[0.28em] text-secondary transition-colors hover:text-primary">
-            Crediti fotografici
+            {credits}
           </summary>
 
           <ul className="mt-6 grid gap-x-10 gap-y-2 text-xs leading-6 text-secondary md:grid-cols-2">

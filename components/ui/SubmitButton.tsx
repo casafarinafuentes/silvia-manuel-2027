@@ -4,6 +4,9 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useFormStatus } from "react-dom";
 
+import { useM } from "@/i18n/use-messages";
+import { rsvpMessages } from "@/i18n/messages/rsvp";
+
 type SubmitButtonProps = {
   children: React.ReactNode;
   pendingLabel?: string;
@@ -11,8 +14,9 @@ type SubmitButtonProps = {
 
 export default function SubmitButton({
   children,
-  pendingLabel = "Invio in corso…",
+  pendingLabel,
 }: SubmitButtonProps) {
+  const { form } = useM(rsvpMessages);
   const { pending } = useFormStatus();
 
   return (
@@ -58,7 +62,7 @@ export default function SubmitButton({
       {/* Testo */}
 
       <span className="relative z-10 flex items-center gap-4">
-        {pending ? pendingLabel : children}
+        {pending ? (pendingLabel ?? form.sending) : children}
 
         {pending ? (
           <Loader2 size={16} className="animate-spin" />

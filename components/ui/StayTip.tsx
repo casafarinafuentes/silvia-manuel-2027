@@ -1,22 +1,21 @@
 import { BedDouble } from "lucide-react";
 
-/** Ricerche già impostate sulla zona della location. */
-const links = [
-  {
-    label: "Cerca su Airbnb",
-    href: "https://www.airbnb.it/s/Cannigione--Sardegna/homes",
-  },
-  {
-    label: "Cerca su Booking",
-    href: "https://www.booking.com/searchresults.it.html?ss=Cannigione",
-  },
-];
+import { useM } from "@/i18n/use-messages";
+import { uiMessages } from "@/i18n/messages/ui";
 
 /**
  * Barra con un consiglio sull'alloggio: non gestiamo noi gli hotel,
  * quindi indirizziamo gli ospiti a cercare per conto proprio.
  */
 export default function StayTip() {
+  const { stayTip: t } = useM(uiMessages);
+
+  /* Ricerche già impostate sulla zona della location. */
+  const links = [
+    { label: t.airbnb, href: t.airbnbUrl },
+    { label: t.booking, href: t.bookingUrl },
+  ];
+
   return (
     <section id="dove-dormire" className="anchor-offset px-6 py-10 lg:px-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 bg-primary px-8 py-8 text-center text-white lg:flex-row lg:gap-10 lg:px-12 lg:text-left">
@@ -29,13 +28,11 @@ export default function StayTip() {
 
         <div className="flex-1">
           <h2 className="font-heading text-2xl font-light text-white sm:text-3xl">
-            Hai bisogno di un consiglio su dove dormire?
+            {t.title}
           </h2>
 
           <p className="mt-3 leading-7 text-white/90">
-            Ti suggeriamo di cercare su Airbnb o Booking nelle zone
-            limitrofe: Cannigione, Arzachena, Baja Sardinia e Palau sono
-            tutte a pochi minuti dalla location.
+            {t.text}
           </p>
         </div>
 

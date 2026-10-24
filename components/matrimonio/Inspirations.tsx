@@ -3,19 +3,22 @@ import Image from "next/image";
 import Section from "@/components/ui/Section";
 import SectionTitle from "@/components/ui/SectionTitle";
 
-import { inspirations } from "@/data/inspirations";
+import { useM } from "@/i18n/use-messages";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
 
 export default function Inspirations() {
+  const { inspirations: t } = useM(matrimonioMessages);
+
   return (
     <Section>
       <SectionTitle
-        eyebrow="ISPIRAZIONI"
-        title="L'atmosfera che ci aspetta"
-        subtitle="Un piccolo assaggio dei colori, dei dettagli e delle emozioni che renderanno speciale questa giornata."
+        eyebrow={t.eyebrow}
+        title={t.title}
+        subtitle={t.subtitle}
       />
 
       <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {inspirations.map((item) => (
+        {t.items.map((item) => (
           <div
             key={item.image}
             className="relative aspect-[3/2] overflow-hidden"

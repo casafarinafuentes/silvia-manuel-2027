@@ -4,6 +4,9 @@ import ParallaxImage from "@/components/ui/ParallaxImage";
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
+import { useM } from "@/i18n/use-messages";
+import { uiMessages } from "@/i18n/messages/ui";
+
 type PageHeroProps = {
   title: string;
   /** Riga in maiuscoletto sotto il titolo: compare in dissolvenza. */
@@ -33,6 +36,7 @@ export default function PageHero({
   heightClassName = "min-h-screen",
 }: PageHeroProps) {
   const reduceMotion = useReducedMotion();
+  const ui = useM(uiMessages);
 
   return (
     <section className={`relative flex overflow-hidden ${heightClassName}`}>
@@ -81,7 +85,7 @@ export default function PageHero({
             className="mt-8 flex flex-col items-center"
           >
             <p className="text-xs uppercase tracking-[0.35em] sm:tracking-[0.45em]">
-              Scorri
+              {ui.scroll}
             </p>
 
             <motion.div

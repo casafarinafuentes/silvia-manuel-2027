@@ -1,14 +1,23 @@
 import Image from "next/image";
-import Link from "next/link";
+import { useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import Countdown from "@/components/ui/Countdown";
 import Logo from "@/components/ui/Logo";
 import { googleCalendarUrl } from "@/lib/calendar";
 import { currentTemporalContext } from "@/lib/temporal-now";
+import Lines from "@/components/ui/Lines";
+import { useM } from "@/i18n/use-messages";
+import { siteMessages } from "@/i18n/messages/site";
+import { uiMessages } from "@/i18n/messages/ui";
 
 export default function Footer() {
+  const locale = useLocale();
   const { phase } = currentTemporalContext();
   const after = phase === "after";
   const weddingDay = phase === "wedding";
+  const site = useM(siteMessages);
+  const ui = useM(uiMessages);
+  const f = ui.footer;
 
   return (
     <footer className="relative overflow-hidden border-t border-border bg-background">
@@ -25,17 +34,17 @@ export default function Footer() {
           {after ? (
             <>
               <p className="mb-6 text-xs uppercase tracking-[0.35em] text-secondary">
-                12 giugno 2027
+                {site.date}
               </p>
 
               <p className="font-heading text-3xl font-light text-primary sm:text-4xl">
-                Grazie per aver festeggiato con noi.
+                {ui.thanks}
               </p>
             </>
           ) : (
             <>
               <p className="mb-6 text-xs uppercase tracking-[0.35em] text-secondary">
-                {weddingDay ? "12 giugno 2027" : "Countdown"}
+                {weddingDay ? site.date : f.countdown}
               </p>
 
               <div className="flex justify-center lg:justify-start">
@@ -51,24 +60,16 @@ export default function Footer() {
           {/* A matrimonio passato le FAQ non ci sono più: al loro posto
               l'invio delle foto. */}
           <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-            {after ? "Le vostre foto" : "Domande frequenti"}
+            {after ? f.photosTitle : f.faqTitle}
           </p>
 
           {after ? (
             <p className="mt-5 text-sm leading-7 text-secondary">
-              Avete foto e video
-              <br />
-              della giornata?
-              <br />
-              Inviateceli da qui.
+              <Lines text={f.photosText} />
             </p>
           ) : (
             <p className="mt-5 text-sm leading-7 text-secondary">
-              Hai qualche dubbio?
-              <br />
-              Trova qui le risposte
-              <br />
-              alle domande più comuni.
+              <Lines text={f.faqText} />
             </p>
           )}
 
@@ -76,7 +77,7 @@ export default function Footer() {
             href={after ? "/matrimonio#foto" : "/matrimonio#faq"}
             className="mt-5 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-primary transition hover:text-accent"
           >
-            {after ? "Invia le tue foto →" : "Scopri di più →"}
+            {after ? f.photosLink : f.faqLink}
           </Link>
         </div>
 
@@ -84,20 +85,18 @@ export default function Footer() {
 
         <div className="w-full text-center lg:border-l lg:border-border lg:pl-10 lg:text-left">
           <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-            Contatti
+            {f.contactsTitle}
           </p>
 
           <p className="mt-5 text-sm leading-7 text-secondary">
-            Per qualsiasi necessità
-            <br />
-            siamo a vostra disposizione.
+            <Lines text={f.contactsText} />
           </p>
 
           <Link
             href="/rsvp#contatti"
             className="mt-5 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-primary transition hover:text-accent"
           >
-            Scrivici →
+            {f.contactsLink}
           </Link>
 
           <Image
@@ -113,7 +112,7 @@ export default function Footer() {
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-5 gap-y-2 px-6 py-5">
           <p className="text-center text-xs text-secondary">
-            Con amore,{" "}
+            {f.withLove}{" "}
             <span className="text-primary">
               Silvia &amp; Manuel
             </span>{" "}
@@ -129,10 +128,10 @@ export default function Footer() {
               />
 
               <a
-                href="/calendario"
+                href={locale === "it" ? "/calendario" : `/${locale}/calendario`}
                 className="text-xs text-secondary transition hover:text-primary"
               >
-                Aggiungi al calendario
+                {f.addToCalendar}
               </a>
 
               <span
@@ -142,12 +141,12 @@ export default function Footer() {
 
               {/* Per Android: apre l'evento già compilato, senza file. */}
               <a
-                href={googleCalendarUrl()}
+                href={googleCalendarUrl(locale)}
                 target="_blank"
                 rel="noreferrer"
                 className="text-xs text-secondary transition hover:text-primary"
               >
-                Google Calendar
+                {f.googleCalendar}
               </a>
             </>
           )}
@@ -161,7 +160,7 @@ export default function Footer() {
             href="/lista-nozze"
             className="text-xs text-secondary transition hover:text-primary"
           >
-            Per tutto ciò che verrà
+            {f.gift}
           </Link>
         </div>
       </div>

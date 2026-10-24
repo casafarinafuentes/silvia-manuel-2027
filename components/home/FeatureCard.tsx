@@ -1,7 +1,10 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 import { ArrowRight, LucideIcon } from "lucide-react";
+
+import { useM } from "@/i18n/use-messages";
+import { uiMessages } from "@/i18n/messages/ui";
 
 type FeatureCardProps = {
   title: string;
@@ -19,10 +22,12 @@ export default function FeatureCard({
   image,
   icon: Icon,
 }: FeatureCardProps) {
+  const ui = useM(uiMessages);
+
   return (
     <Link
       href={href}
-      data-cursor="Scopri"
+      data-cursor={ui.cursor.discover}
       className="group flex h-full flex-col overflow-hidden border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
       {/* Immagine */}

@@ -5,6 +5,9 @@ import { useState } from "react";
 
 import { wedding } from "@/config/wedding";
 import { usePhase } from "@/components/layout/PhaseProvider";
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
+import { fill } from "@/i18n/pair";
 
 /**
  * Mappa stilizzata della costa nord-est, disegnata a mano: la linea di
@@ -179,9 +182,9 @@ type Beach = {
   image?: string;
 };
 
-const groups: { title: string; beaches: Beach[] }[] = [
+const groups: { title: "near" | "far"; beaches: Beach[] }[] = [
   {
-    title: "Vicino alla location",
+    title: "near",
     beaches: [
       {
         name: "Spiaggia del Principe",
@@ -201,7 +204,7 @@ const groups: { title: string; beaches: Beach[] }[] = [
     ],
   },
   {
-    title: "Un po' più lontano",
+    title: "far",
     beaches: [
       {
         name: "Cala Moresca",
@@ -273,12 +276,13 @@ export default function BeachMap() {
 
   // L'etichetta della location segue la fase: prima, il giorno, dopo.
   const phase = usePhase();
+  const { beaches: t } = useM(sardegnaMessages);
   const venueLabel =
     phase === "after"
-      ? "Ci siamo sposati qui"
+      ? t.venueAfter
       : phase === "wedding"
-        ? "Noi siamo qui"
-        : "Noi saremo qui";
+        ? t.venueDay
+        : t.venueBefore;
 
   /* Dalla mappa: apre la foto e, se il riquadro è fuori schermo (su
      telefono l'elenco sta sotto la mappa), ci porta la pagina. */
@@ -300,7 +304,7 @@ export default function BeachMap() {
         <svg
           viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
           role="img"
-          aria-label="Mappa della costa nord-est della Sardegna con le spiagge consigliate"
+          aria-label={t.mapLabel}
           className="block w-full rounded-photo bg-[color-mix(in_srgb,var(--primary)_16%,var(--background))]"
         >
           {/* Alone chiaro lungo la costa, per dare profondità al mare. */}
@@ -397,7 +401,7 @@ export default function BeachMap() {
             <button
               key={beach.name}
               type="button"
-              aria-label={`${beach.name}: mostra la foto`}
+              aria-label={fill(t.showPhoto, { name: beach.name })}
               aria-pressed={isSelected}
               onMouseEnter={() => setHovered(beach.name)}
               onMouseLeave={() => setHovered(null)}
@@ -441,7 +445,7 @@ export default function BeachMap() {
         {groups.map((group) => (
           <div key={group.title}>
             <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-              {group.title}
+              {t[group.title]}
             </p>
 
             <ul className="mt-4 border-t border-border">
@@ -507,7 +511,7 @@ export default function BeachMap() {
                             />
                           ) : (
                             <p className="absolute inset-0 flex items-center justify-center px-6 text-center font-heading text-lg text-secondary">
-                              Foto in arrivo
+                              {t.photoSoon}
                             </p>
                           )}
                         </div>

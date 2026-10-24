@@ -13,15 +13,33 @@ import PhotoCredits from "@/components/sardegna/PhotoCredits";
 import NextStep from "@/components/ui/NextStep";
 import Footer from "@/components/matrimonio/Footer";
 import { currentTemporalContext } from "@/lib/temporal-now";
+import { initLocale } from "@/i18n/init-locale";
+import { alternatesFor } from "@/i18n/metadata";
+import { isLocale } from "@/i18n/locales";
+import { resolve } from "@/i18n/pair";
+import { getM } from "@/i18n/get-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
 
-export const metadata: Metadata = {
-  title: "La Sardegna che amiamo",
-  description:
-    "I posti che Silvia e Manuel consigliano in Gallura e dintorni: dove mangiare, spiagge, paesini e qualche avventura.",
-  alternates: { canonical: "/sardegna" },
-};
+type PageProps = { params: Promise<{ locale: string }> };
 
-export default function SardegnaPage() {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+
+  if (!isLocale(locale)) return {};
+
+  const m = resolve(sardegnaMessages.metadata, locale);
+
+  return {
+    title: m.title,
+    description: m.description,
+    alternates: alternatesFor(locale, "/sardegna"),
+  };
+}
+
+export default async function SardegnaPage({ params }: PageProps) {
+  await initLocale(params);
+
+  const { nextStep: n } = await getM(sardegnaMessages);
   const { phase } = currentTemporalContext();
   const after = phase === "after";
 
@@ -43,25 +61,21 @@ export default function SardegnaPage() {
           non c'è un passo successivo. */}
       {phase === "rsvp" && (
         <NextStep
-          eyebrow="Ci vediamo presto"
-          title="Manca solo la tua conferma"
-          description="Fateci sapere se ci sarete: bastano un minuto e qualche informazione."
+          eyebrow={n.rsvpEyebrow}
+          title={n.rsvpTitle}
+          description={n.rsvpText}
           href="/rsvp"
-          cta="Conferma la tua presenza"
+          cta={n.rsvpCta}
         />
       )}
 
       {phase !== "rsvp" && phase !== "after" && (
         <NextStep
-          eyebrow={phase === "wedding" ? "È il giorno" : "Ci vediamo presto"}
-          title="Tutti i dettagli della giornata"
-          description={
-            phase === "wedding"
-              ? "Programma, location e informazioni pratiche."
-              : "Programma, location e informazioni pratiche per il 12 giugno."
-          }
+          eyebrow={phase === "wedding" ? n.dayEyebrow : n.soonEyebrow}
+          title={n.title}
+          description={phase === "wedding" ? n.textDay : n.textSoon}
           href="/matrimonio"
-          cta="Il matrimonio"
+          cta={n.cta}
         />
       )}
 

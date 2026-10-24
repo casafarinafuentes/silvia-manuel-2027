@@ -1,11 +1,16 @@
+import Lines from "@/components/ui/Lines";
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
+
 export default function Intro({ after = false }: { after?: boolean }) {
+  const { intro } = useM(sardegnaMessages);
+
   return (
     <section className="px-6 py-20 md:py-24">
       <div className="mx-auto max-w-3xl text-center">
 
         <p className="font-heading text-[30px] font-light leading-tight text-primary md:text-[38px]">
-          La Sardegna è molto più
-          del posto in cui {after ? "ci siamo sposati" : "ci sposiamo"}.
+          <Lines text={after ? intro.titleAfter : intro.titleBefore} />
         </p>
 
         <div className="my-8 flex items-center justify-center gap-5">
@@ -40,9 +45,7 @@ export default function Intro({ after = false }: { after?: boolean }) {
         </div>
 
         <p className="mx-auto max-w-2xl text-[17px] leading-8 text-secondary">
-          {after
-            ? "Se avete voglia di tornarci, abbiamo raccolto per voi alcuni dei nostri posti del cuore."
-            : "Se avete voglia di fermarvi qualche giorno in più, abbiamo raccolto per voi alcuni dei nostri posti del cuore."}
+          {after ? intro.textAfter : intro.textBefore}
         </p>
 
       </div>

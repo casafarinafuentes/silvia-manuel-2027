@@ -1,8 +1,13 @@
 import ParallaxImage from "@/components/ui/ParallaxImage";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Magnetic from "@/components/ui/Magnetic";
 
+import { useLocale } from "next-intl";
+
+import Lines from "@/components/ui/Lines";
 import { primaryAction, type PhaseAction } from "@/lib/phase-content";
+import { useM } from "@/i18n/use-messages";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
 import type { WeddingPhase } from "@/lib/temporal";
 
 /**
@@ -13,28 +18,26 @@ import type { WeddingPhase } from "@/lib/temporal";
  * alla Sardegna, e a matrimonio passato non c'è pulsante.
  */
 export default function CTA({ phase }: { phase: WeddingPhase }) {
-  const main = primaryAction(phase);
+  const locale = useLocale();
+  const { cta: t } = useM(matrimonioMessages);
+  const main = primaryAction(phase, locale);
 
   const action: PhaseAction | null =
     phase === "after"
       ? null
       : main.href.startsWith("/matrimonio")
-        ? { href: "/sardegna", label: "Scopri la Sardegna" }
+        ? { href: "/sardegna", label: t.sardegna }
         : main;
 
-  const [first, second] =
-    phase === "after"
-      ? ["Un giorno che", "porteremo sempre con noi."]
-      : phase === "wedding"
-        ? ["Ci siamo:", "è ora di festeggiare."]
-        : ["Non vediamo l'ora", "di festeggiare con voi."];
+  const title =
+    phase === "after" ? t.after : phase === "wedding" ? t.wedding : t.before;
 
   return (
     <section className="relative overflow-hidden">
       <div className="relative h-[260px] sm:h-[280px] md:h-[320px]">
         <ParallaxImage
           src="/matrimonio/cta.jpg"
-          alt="Panorama della location"
+          alt={t.alt}
           sizes="100vw"
           className="object-cover"
         />
@@ -49,9 +52,7 @@ export default function CTA({ phase }: { phase: WeddingPhase }) {
           <div className="mx-auto flex w-full max-w-3xl flex-col items-center text-center">
 
             <h2 className="font-heading text-[30px] font-light leading-[1.2] text-white sm:text-[38px] md:text-[56px]">
-              {first}
-              <br />
-              {second}
+              <Lines text={title} />
             </h2>
 
             <div className="mt-4 h-px w-10 bg-white/60" />

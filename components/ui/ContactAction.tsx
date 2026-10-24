@@ -1,6 +1,9 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 import { wedding, whatsappUrl } from "@/config/wedding";
+import { useM } from "@/i18n/use-messages";
+import { uiMessages } from "@/i18n/messages/ui";
+import Lines from "@/components/ui/Lines";
 
 const PILL = `
   inline-flex
@@ -30,11 +33,10 @@ const PILL = `
  * viene reso alcun link: mostrare un numero inventato significherebbe
  * mandare gli invitati a scrivere a uno sconosciuto.
  */
-export default function ContactAction({
-  label = "Scrivici",
-}: {
-  label?: string;
-}) {
+export default function ContactAction({ label }: { label?: string }) {
+  const { contact } = useM(uiMessages);
+  label ??= contact.write;
+
   const whatsapp = whatsappUrl();
 
   if (whatsapp) {
@@ -60,9 +62,7 @@ export default function ContactAction({
 
   return (
     <p className="text-[13px] leading-6 text-secondary">
-      Stiamo preparando i nostri recapiti:
-      <br />
-      li troverete qui a breve.
+      <Lines text={contact.preparing} />
     </p>
   );
 }

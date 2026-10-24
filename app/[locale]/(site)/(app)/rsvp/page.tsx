@@ -10,20 +10,34 @@ import StayTip from "@/components/ui/StayTip";
 import { isRsvpClosed } from "@/lib/temporal";
 import { currentTemporalContext } from "@/lib/temporal-now";
 import Footer from "@/components/matrimonio/Footer";
+import { initLocale } from "@/i18n/init-locale";
+import { alternatesFor } from "@/i18n/metadata";
+import { isLocale } from "@/i18n/locales";
+import { resolve } from "@/i18n/pair";
+import { getM } from "@/i18n/get-messages";
+import { rsvpMessages } from "@/i18n/messages/rsvp";
 
-export function generateMetadata(): Metadata {
+type PageProps = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+
+  if (!isLocale(locale)) return {};
+
+  const m = resolve(rsvpMessages.metadata, locale);
   const closed = isRsvpClosed(currentTemporalContext().phase);
 
   return {
-    title: closed ? "RSVP" : "Conferma la tua presenza",
-    description: closed
-      ? "Le conferme di presenza sono chiuse."
-      : "Fateci sapere se ci sarete: bastano un minuto e qualche informazione.",
-    alternates: { canonical: "/rsvp" },
+    title: closed ? m.titleClosed : m.titleOpen,
+    description: closed ? m.descriptionClosed : m.descriptionOpen,
+    alternates: alternatesFor(locale, "/rsvp"),
   };
 }
 
-export default function RSVPPage() {
+export default async function RSVPPage({ params }: PageProps) {
+  await initLocale(params);
+
+  const m = await getM(rsvpMessages);
   const { phase } = currentTemporalContext();
 
   // Dal giorno del matrimonio le conferme sono chiuse: niente modulo,
@@ -38,13 +52,11 @@ export default function RSVPPage() {
         <Section>
           <div className="mx-auto max-w-2xl py-10 text-center">
             <h2 className="font-heading text-4xl font-light text-primary sm:text-5xl">
-              {after ? "Grazie a tutti." : "Ci siamo."}
+              {after ? m.closedPage.titleAfter : m.closedPage.titleDay}
             </h2>
 
             <p className="mx-auto mt-6 max-w-md leading-8 text-secondary">
-              {after
-                ? "Il matrimonio è passato e le conferme sono chiuse. Grazie a chi ha festeggiato con noi e a chi ci ha pensato da lontano."
-                : "Oggi è il giorno del matrimonio e le conferme sono chiuse. Per qualsiasi cosa dell'ultimo minuto, scriveteci."}
+              {after ? m.closedPage.textAfter : m.closedPage.textDay}
             </p>
           </div>
         </Section>
@@ -66,10 +78,10 @@ export default function RSVPPage() {
       <Contact />
 
       <NextStep
-        title="Se vi fermate qualche giorno in più"
-        description="Spiagge, tavole e paesi della Gallura che vi consigliamo di scoprire."
+        title={m.nextStep.title}
+        description={m.nextStep.description}
         href="/sardegna"
-        cta="Scopri la Sardegna"
+        cta={m.nextStep.cta}
       />
 
       <Footer />

@@ -1,8 +1,14 @@
 import Image from "next/image";
 import ParallaxImage from "@/components/ui/ParallaxImage";
 import Reveal from "@/components/ui/Reveal";
+import Lines from "@/components/ui/Lines";
+import { useM } from "@/i18n/use-messages";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
+
 
 export default function Intro({ after = false }: { after?: boolean }) {
+  const { intro: t } = useM(matrimonioMessages);
+
   return (
     <section className="bg-background py-16 lg:py-20">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-10">
@@ -11,7 +17,7 @@ export default function Intro({ after = false }: { after?: boolean }) {
         <Reveal variant="left" className="relative aspect-[4/3] overflow-hidden">
           <ParallaxImage
             src="/matrimonio/intro.jpg"
-            alt="Cerimonia"
+            alt={t.alt}
             sizes="(max-width:1024px) 100vw, 50vw"
             className="object-cover"
           />
@@ -21,31 +27,17 @@ export default function Intro({ after = false }: { after?: boolean }) {
 
         <Reveal variant="right" delay={120} className="relative mx-auto flex w-full max-w-xl flex-col text-center lg:mx-0 lg:text-left">
           <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-            IL MATRIMONIO
+            {t.eyebrow}
           </p>
 
           <h2 className="mt-3 font-heading text-5xl font-light leading-tight text-primary sm:text-6xl">
-            {after ? (
-              <>
-                È stato
-                <br />
-                bellissimo.
-              </>
-            ) : (
-              <>
-                Finalmente
-                <br />
-                ci siamo.
-              </>
-            )}
+            <Lines text={after ? t.titleAfter : t.titleBefore} />
           </h2>
 
           <div className="mx-auto my-6 h-px w-20 bg-border lg:mx-0" />
 
           <p className="text-lg leading-8 text-secondary">
-            {after
-              ? "Il 12 giugno 2027 è stato il giorno che avevamo sognato per tanto tempo. Grazie per averlo festeggiato insieme a noi in uno dei luoghi che più amiamo."
-              : "Il 12 giugno 2027 sarà il giorno che abbiamo sognato per tanto tempo. Non vediamo l'ora di festeggiare insieme a voi in uno dei luoghi che più amiamo."}
+            {after ? t.textAfter : t.textBefore}
           </p>
 
           <Image

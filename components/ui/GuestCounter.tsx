@@ -3,6 +3,9 @@
 import { Minus, Plus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { useM } from "@/i18n/use-messages";
+import { rsvpMessages } from "@/i18n/messages/rsvp";
+
 type GuestCounterProps = {
   value: number;
   onChange: (value: number) => void;
@@ -12,10 +15,12 @@ export default function GuestCounter({
   value,
   onChange,
 }: GuestCounterProps) {
+  const { form } = useM(rsvpMessages);
+
   return (
     <div>
       <label className="form-label">
-        Numero invitati
+        {form.guests}
       </label>
 
       <div className="mt-8 flex items-center justify-center gap-8">
@@ -26,6 +31,7 @@ export default function GuestCounter({
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.94 }}
           type="button"
+          aria-label={form.guestsLess}
           onClick={() => onChange(Math.max(1, value - 1))}
           className="
             flex
@@ -78,6 +84,7 @@ export default function GuestCounter({
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.94 }}
           type="button"
+          aria-label={form.guestsMore}
           onClick={() => onChange(value + 1)}
           className="
             flex

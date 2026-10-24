@@ -1,4 +1,7 @@
 import { wedding } from "@/config/wedding";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
+import { resolve } from "@/i18n/pair";
+import type { Locale } from "@/i18n/locales";
 import { isRsvpClosed, type WeddingPhase } from "@/lib/temporal";
 
 export type FaqItem = {
@@ -13,45 +16,35 @@ export type FaqItem = {
  * dipendono dalla fase: a conferme chiuse non si può più rimandare
  * all'RSVP.
  */
-export function getPracticalInfo(phase: WeddingPhase): {
+export function getPracticalInfo(
+  phase: WeddingPhase,
+  locale: Locale,
+): {
   left: FaqItem[];
   right: FaqItem[];
 } {
   const { uploadUrl } = wedding.photos;
+  const { faq } = resolve(matrimonioMessages, locale);
 
   return {
     left: [
+      { title: faq.parking.title, content: faq.parking.content },
+      { title: faq.kids.title, content: faq.kids.content },
       {
-        title: "Parcheggio e navetta",
-        content:
-          "Stiamo predisponendo un'area di parcheggio dedicata con un servizio navetta che vi porterà direttamente alla location.",
-      },
-      {
-        title: "Bambini",
-        content:
-          "I bambini sono i benvenuti ed è previsto un menù dedicato.",
-      },
-      {
-        title: "Allergie",
+        title: faq.allergies.title,
         content: isRsvpClosed(phase)
-          ? "Le abbiamo raccolte con le conferme. Se c'è qualcosa da aggiungere, ditecelo."
-          : "Segnalatele durante la conferma RSVP.",
+          ? faq.allergies.closed
+          : faq.allergies.open,
       },
     ],
 
     right: [
+      { title: faq.animals.title, content: faq.animals.content },
       {
-        title: "Animali",
-        content:
-          "Purtroppo non sono ammessi animali.",
-      },
-      {
-        title: "Fotografie",
-        content: uploadUrl
-          ? "Scattate pure tutte le foto e i video che volete. Ci farebbe piacere vederli: potete inviarceli dal pulsante qui sotto. Arrivano solo a noi."
-          : "Scattate pure tutte le foto e i video che volete. Ci farebbe piacere vederli: in questa pagina troverete il link per inviarceli.",
+        title: faq.photos.title,
+        content: uploadUrl ? faq.photos.withLink : faq.photos.withoutLink,
         action: uploadUrl
-          ? { label: "Carica le tue foto", href: uploadUrl }
+          ? { label: faq.photos.action, href: uploadUrl }
           : undefined,
       },
     ],

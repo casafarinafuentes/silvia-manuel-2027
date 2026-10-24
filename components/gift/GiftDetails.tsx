@@ -3,18 +3,20 @@
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 
+import { useM } from "@/i18n/use-messages";
+import { giftMessages } from "@/i18n/messages/gift";
+
 type GiftDetailsProps = {
   iban: string;
   holder: string;
-  reference: string;
 };
 
 /** Coordinate per il bonifico, sempre in vista e con IBAN copiabile. */
 export default function GiftDetails({
   iban,
   holder,
-  reference,
 }: GiftDetailsProps) {
+  const { details: t } = useM(giftMessages);
   const [copied, setCopied] = useState(false);
 
   /* L'IBAN si scrive a gruppi per leggerlo, ma si incolla senza
@@ -37,7 +39,7 @@ export default function GiftDetails({
       <dl className="border-t border-white/30">
         <div className="border-b border-white/30 py-5">
           <dt className="text-xs uppercase tracking-[0.28em] text-white/75">
-            Intestato a
+            {t.holder}
           </dt>
 
           <dd className="mt-2 text-[15px] leading-6 text-white">
@@ -47,7 +49,7 @@ export default function GiftDetails({
 
         <div className="border-b border-white/30 py-5">
           <dt className="text-xs uppercase tracking-[0.28em] text-white/75">
-            IBAN
+            {t.iban}
           </dt>
 
           <dd className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-3">
@@ -68,25 +70,25 @@ export default function GiftDetails({
               "
             >
               {copied ? <Check size={14} /> : <Copy size={14} />}
-              {copied ? "Copiato" : "Copia"}
+              {copied ? t.copied : t.copy}
             </button>
 
             {/* Annuncio per chi usa uno screen reader. */}
             <span aria-live="polite" className="sr-only">
-              {copied ? "IBAN copiato negli appunti" : ""}
+              {copied ? t.copiedAnnounce : ""}
             </span>
           </dd>
         </div>
 
         <div className="border-b border-white/30 py-5">
           <dt className="text-xs uppercase tracking-[0.28em] text-white/75">
-            Causale
+            {t.reference}
           </dt>
 
           <dd className="mt-2 text-[15px] leading-6 text-white">
-            {reference}
+            {t.referenceValue}
             <span className="block text-[13px] text-white/75">
-              Aggiungete il vostro nome, così sappiamo chi ringraziare.
+              {t.referenceNote}
             </span>
           </dd>
         </div>

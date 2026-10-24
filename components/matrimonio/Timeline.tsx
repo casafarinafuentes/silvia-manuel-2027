@@ -2,14 +2,18 @@ import Divider from "@/components/ui/Divider";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/ui/Reveal";
 
-import { timeline } from "@/data/timeline";
+import { useM } from "@/i18n/use-messages";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
 import { timelineIcons } from "@/lib/icons";
 
 export default function Timeline() {
+  const { timeline: t } = useM(matrimonioMessages);
+  const timeline = t.items;
+
   return (
     <Section>
       <Divider
-        title="La Giornata"
+        title={t.title}
         className="mb-12"
       />
 

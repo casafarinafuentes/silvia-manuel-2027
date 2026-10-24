@@ -1,16 +1,19 @@
 import Section from "@/components/ui/Section";
-import { dressCode } from "@/data/dressCode";
+import { useM } from "@/i18n/use-messages";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
 import { dressCodeIcons } from "@/lib/icons";
 
 export default function DressCode() {
+  const { dressCode: t } = useM(matrimonioMessages);
+
   return (
     <Section>
       <p className="mb-7 text-center text-xs uppercase tracking-[0.35em] text-secondary">
-        Cosa indossare
+        {t.title}
       </p>
 
       <div className="mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
-        {dressCode.map((item) => {
+        {t.items.map((item) => {
           const Icon = dressCodeIcons[item.icon];
 
           return (

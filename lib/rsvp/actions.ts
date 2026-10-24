@@ -1,6 +1,9 @@
 "use server";
 
 import { clientIp } from "@/lib/request";
+import { defaultLocale, isLocale } from "@/i18n/locales";
+import { rsvpErrors } from "@/i18n/messages/rsvp";
+import { resolve } from "@/i18n/pair";
 import { HOTEL_SECTION_ENABLED } from "@/data/hotels";
 import { isRsvpClosed } from "@/lib/temporal";
 import { currentTemporalContext } from "@/lib/temporal-now";
@@ -22,12 +25,17 @@ export async function submitRsvp(
   _previous: RsvpState,
   formData: FormData,
 ): Promise<RsvpState> {
+  // La lingua della pagina arriva con il modulo: serve per i messaggi.
+  const requested = formData.get("locale");
+  const locale = isLocale(requested) ? requested : defaultLocale;
+  const t = resolve(rsvpErrors, locale);
+
   // Dal giorno del matrimonio il modulo non è più in pagina: questo
   // ferma anche chi lo inviasse da una scheda rimasta aperta.
   if (isRsvpClosed(currentTemporalContext().phase)) {
     return {
       status: "error",
-      errors: { form: "Le conferme sono chiuse." },
+      errors: { form: t.closed },
     };
   }
 
@@ -42,7 +50,7 @@ export async function submitRsvp(
     hotel: formData.get("hotel"),
     message: formData.get("message"),
     },
-    { hotelRequired: HOTEL_SECTION_ENABLED && !isPastRsvpDeadline() },
+    { hotelRequired: HOTEL_SECTION_ENABLED && !isPastRsvpDeadline(), locale },
   );
 
   if (!parsed.ok) {
@@ -56,7 +64,7 @@ export async function submitRsvp(
       return {
         status: "error",
         errors: {
-          form: "Hai inviato troppe conferme di seguito. Riprova tra un'ora.",
+          form: t.rateLimited,
         },
       };
     }
@@ -68,9 +76,7 @@ export async function submitRsvp(
       return {
         status: "error",
         errors: {
-          form:
-            "Risulta già una conferma con questo nome. " +
-            "Se devi correggere qualcosa, scrivici pure.",
+          form: t.duplicate,
         },
       };
     }
@@ -82,9 +88,7 @@ export async function submitRsvp(
     return {
       status: "error",
       errors: {
-        form:
-          "Non siamo riusciti a salvare la conferma. " +
-          "Riprova tra poco o scrivici.",
+        form: t.failed,
       },
     };
   }

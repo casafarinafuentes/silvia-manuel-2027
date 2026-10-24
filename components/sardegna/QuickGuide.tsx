@@ -1,57 +1,21 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
 
 import Reveal from "@/components/ui/Reveal";
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
+
 
 /**
- * Itinerari indicativi, composti solo con luoghi già presenti in
- * questa pagina. Ogni luogo rimanda alla sezione che lo descrive.
+ * Itinerari indicativi (in `sardegnaMessages.quickGuide.itineraries`),
+ * composti solo con luoghi già presenti in questa pagina. Ogni luogo
+ * rimanda alla sezione che lo descrive.
  */
-type Stop = { name: string; href?: string };
-
-const itineraries: {
-  days: string;
-  unit: string;
-  lead: string;
-  stops: Stop[];
-}[] = [
-  {
-    days: "1",
-    unit: "giorno",
-    lead: "Il minimo indispensabile",
-    stops: [
-      { name: "Spiaggia del Principe", href: "#spiagge" },
-      { name: "San Pantaleo", href: "#paesini" },
-      { name: "Aperitivo" },
-      { name: "Cena" },
-    ],
-  },
-  {
-    days: "3",
-    unit: "giorni",
-    lead: "Il tempo di respirare",
-    stops: [
-      { name: "Tour della Maddalena", href: "#avventure" },
-      { name: "Cala Moresca", href: "#spiagge" },
-      { name: "San Pantaleo", href: "#paesini" },
-      { name: "Porto Cervo", href: "#paesini" },
-    ],
-  },
-  {
-    days: "5+",
-    unit: "giorni",
-    lead: "Fino in fondo",
-    stops: [
-      { name: "Golfo di Orosei", href: "#avventure" },
-      { name: "Cala Moresca", href: "#spiagge" },
-      { name: "Castelsardo", href: "#paesini" },
-      { name: "Alghero", href: "#paesini" },
-    ],
-  },
-];
-
 export default function QuickGuide({ after = false }: { after?: boolean }) {
+  const { quickGuide: t } = useM(sardegnaMessages);
+  const itineraries = t.itineraries;
+
   return (
     <section className="relative overflow-hidden bg-panel px-6 py-24 md:py-32">
       {/* Ramo botanico dietro il titolo, come nelle altre pagine. */}
@@ -67,25 +31,26 @@ export default function QuickGuide({ after = false }: { after?: boolean }) {
       <div className="relative mx-auto max-w-6xl">
         <Reveal className="mb-14 max-w-2xl md:mb-16">
           <p className="text-xs uppercase tracking-[0.4em] text-secondary">
-            Piccoli itinerari
+            {t.eyebrow}
           </p>
 
           <h2 className="mt-4 font-heading text-4xl font-light leading-tight text-primary md:text-6xl">
             {after ? (
               <>
-                Per quando <em className="font-light italic">tornerete</em>
+                {t.titleAfterStart}{" "}
+                <em className="font-light italic">{t.titleAfterEm}</em>
               </>
             ) : (
               <>
-                Se avete <em className="font-light italic">qualche giorno</em> in più
+                {t.titleBeforeStart}{" "}
+                <em className="font-light italic">{t.titleBeforeEm}</em>{" "}
+                {t.titleBeforeEnd}
               </>
             )}
           </h2>
 
           <p className="mt-6 text-[17px] leading-8 text-secondary">
-            Qualche idea per organizzare il vostro tempo in Sardegna
-            senza dover pensare troppo. Toccate un luogo per vedere di
-            cosa si tratta.
+            {t.text}
           </p>
         </Reveal>
 

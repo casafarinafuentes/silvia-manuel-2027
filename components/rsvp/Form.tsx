@@ -3,7 +3,9 @@
 import { useActionState, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { useLocale } from "next-intl";
 
+import { Link } from "@/i18n/navigation";
 import Section from "@/components/ui/Section";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
@@ -12,13 +14,15 @@ import GuestCounter from "@/components/ui/GuestCounter";
 import SubmitButton from "@/components/ui/SubmitButton";
 import Magnetic from "@/components/ui/Magnetic";
 import { usePhase } from "@/components/layout/PhaseProvider";
+import { useM } from "@/i18n/use-messages";
+import { rsvpMessages } from "@/i18n/messages/rsvp";
+import { fill } from "@/i18n/pair";
 
 import { submitRsvp, type RsvpState } from "@/lib/rsvp/actions";
 import { isPastRsvpDeadline, rsvpDeadlineLabel } from "@/lib/rsvp/deadline";
 import {
   HOTEL_SECTION_ENABLED,
   HOTEL_SELF_ARRANGED,
-  HOTEL_SELF_ARRANGED_LABEL,
   hotels,
 } from "@/data/hotels";
 
@@ -31,6 +35,8 @@ function Success({
   firstName: string;
   attending: boolean;
 }) {
+  const { success } = useM(rsvpMessages);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -43,13 +49,11 @@ function Success({
       </div>
 
       <h2 className="mt-8 font-heading text-4xl font-light text-primary md:text-5xl">
-        Grazie, {firstName}
+        {fill(success.title, { name: firstName })}
       </h2>
 
       <p className="mx-auto mt-6 max-w-md leading-8 text-secondary">
-        {attending
-          ? "Abbiamo registrato la tua conferma. Non vediamo l'ora di festeggiare con te."
-          : "Ci dispiace che non potrai esserci, ma grazie per avercelo fatto sapere."}
+        {attending ? success.yes : success.no}
       </p>
     </motion.div>
   );
@@ -57,6 +61,9 @@ function Success({
 
 export default function Form() {
   const [state, formAction] = useActionState(submitRsvp, INITIAL);
+  const locale = useLocale();
+  const { form: t } = useM(rsvpMessages);
+  const date = rsvpDeadlineLabel(locale);
 
   // Scadenza passata ma matrimonio non ancora arrivato: il modulo
   // resta aperto, con un invito a fare presto.
@@ -97,25 +104,24 @@ export default function Form() {
               />
             ) : (
               <form action={formAction} noValidate>
+                <input type="hidden" name="locale" value={locale} />
+
                 <div className="text-center">
                   <p className="text-xs uppercase tracking-[0.34em] text-secondary">
-                    RSVP
+                    {t.eyebrow}
                   </p>
 
                   <h2 className="mt-3 font-heading text-4xl font-light text-primary sm:text-5xl">
-                    Conferma la tua presenza
+                    {t.title}
                   </h2>
 
                   <p className="mx-auto mt-6 max-w-xl text-secondary">
-                    Compila il modulo qui sotto. Ti richiederà meno di un
-                    minuto.
+                    {t.lead}
                   </p>
 
                   {late && (
                     <p className="mx-auto mt-8 max-w-xl border border-border bg-panel-photo px-6 py-4 text-sm leading-7 text-secondary">
-                      La scadenza del {rsvpDeadlineLabel()} è passata: se
-                      non hai ancora risposto, fallo al più presto, così
-                      possiamo organizzarci.
+                      {fill(t.late, { date })}
                     </p>
                   )}
                 </div>
@@ -124,9 +130,9 @@ export default function Form() {
 
                 <div className="mt-14 grid gap-10 md:grid-cols-2">
                   <Input
-                    label="Nome"
+                    label={t.firstName}
                     name="firstName"
-                    placeholder="Mario"
+                    placeholder={t.firstNamePlaceholder}
                     autoComplete="given-name"
                     maxLength={80}
                     required
@@ -134,9 +140,9 @@ export default function Form() {
                   />
 
                   <Input
-                    label="Cognome"
+                    label={t.lastName}
                     name="lastName"
-                    placeholder="Rossi"
+                    placeholder={t.lastNamePlaceholder}
                     autoComplete="family-name"
                     maxLength={80}
                     required
@@ -150,10 +156,10 @@ export default function Form() {
                     blocco condizionale più sotto, dove ha senso. */}
                 <div className="mt-10">
                   <Input
-                    label="Email"
+                    label={t.email}
                     name="email"
                     type="email"
-                    placeholder="nome@email.com"
+                    placeholder={t.emailPlaceholder}
                     autoComplete="email"
                     maxLength={160}
                     error={errors.email}
@@ -177,21 +183,21 @@ export default function Form() {
 
                 <fieldset className="mt-14 border-0 p-0">
                   <legend className="mb-6 text-xs uppercase tracking-[0.34em] text-secondary">
-                    Parteciperai?
+                    {t.attendingLegend}
                   </legend>
 
                   <div role="radiogroup" className="grid gap-5 md:grid-cols-2">
                     <RadioCard
                       selected={attending === true}
-                      title="Ci saremo"
-                      subtitle="Non vediamo l'ora!"
+                      title={t.yes}
+                      subtitle={t.yesSub}
                       onClick={() => setAttending(true)}
                     />
 
                     <RadioCard
                       selected={attending === false}
-                      title="Non potremo esserci"
-                      subtitle="Vi penseremo quel giorno."
+                      title={t.no}
+                      subtitle={t.noSub}
                       onClick={() => setAttending(false)}
                     />
                   </div>
@@ -218,9 +224,9 @@ export default function Form() {
                         <GuestCounter value={guests} onChange={setGuests} />
 
                         <Input
-                          label="Allergie o intolleranze"
+                          label={t.dietary}
                           name="dietary"
-                          placeholder="Facoltativo"
+                          placeholder={t.optional}
                           maxLength={500}
                           error={errors.dietary}
                         />
@@ -231,36 +237,31 @@ export default function Form() {
                       {HOTEL_SECTION_ENABLED && (
                       <fieldset className="mt-12 border-0 p-0">
                         <legend className="mb-2 text-xs uppercase tracking-[0.34em] text-secondary">
-                          Dove dormirai?
+                          {t.lodging.legend}
                         </legend>
 
                         {pastDeadline ? (
                           <p className="mt-4 border border-border bg-panel-photo px-6 py-5 text-sm leading-7 text-secondary">
-                            Il termine per segnalare l&apos;alloggio ({rsvpDeadlineLabel()})
-                            è passato: gli hotel sono già stati contattati.
-                            Scrivici e vediamo insieme cosa è ancora
-                            disponibile.
+                            {fill(t.lodging.pastDeadline, { date })}
                           </p>
                         ) : (
                           <>
                             <input type="hidden" name="hotel" value={hotel} />
 
                             <p className="mb-6 text-[13px] leading-6 text-secondary">
-                              Non c&apos;è una convenzione: il {rsvpDeadlineLabel()}{" "}
-                              diremo agli hotel quante persone siamo e vi
-                              gireremo le indicazioni per prenotare.{" "}
-                              <a
+                              {fill(t.lodging.note, { date })}{" "}
+                              <Link
                                 href="/hotel"
                                 className="underline underline-offset-4"
                               >
-                                Vedi gli hotel
-                              </a>
+                                {t.lodging.seeHotels}
+                              </Link>
                               .
                             </p>
 
                             <div
                               role="radiogroup"
-                              aria-label="Alloggio"
+                              aria-label={t.lodging.label}
                               className="grid gap-3"
                             >
                               {[
@@ -273,8 +274,8 @@ export default function Form() {
                                 })),
                                 {
                                   id: HOTEL_SELF_ARRANGED,
-                                  title: HOTEL_SELF_ARRANGED_LABEL,
-                                  subtitle: "Prenoto per conto mio, dove preferisco.",
+                                  title: t.lodging.selfArranged,
+                                  subtitle: t.lodging.selfArrangedSub,
                                 },
                               ].map((option) => (
                                 <button
@@ -328,9 +329,9 @@ export default function Form() {
 
                 <div className="mt-12">
                   <Textarea
-                    label="Messaggio"
+                    label={t.message}
                     name="message"
-                    placeholder="Lasciaci un pensiero..."
+                    placeholder={t.messagePlaceholder}
                     maxLength={2000}
                     error={errors.message}
                   />
@@ -348,7 +349,7 @@ export default function Form() {
 
                 <div className="mt-16 flex justify-center">
                   <Magnetic>
-                    <SubmitButton>Invia conferma</SubmitButton>
+                    <SubmitButton>{t.submit}</SubmitButton>
                   </Magnetic>
                 </div>
               </form>

@@ -1,4 +1,9 @@
 import FoodTile from "./FoodTile";
+import Lines from "@/components/ui/Lines";
+import type { Resolved } from "@/i18n/pair";
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
+
 
 /**
  * Indirizzi verificati.
@@ -11,24 +16,27 @@ import FoodTile from "./FoodTile";
  * `href` solo dove il sito ufficiale è stato verificato.
  */
 
-const cantina = [
+function getPlaces(f: Resolved<typeof sardegnaMessages>["food"]) {
+  const { places } = f;
+
+  const cantina = [
   {
     name: "Sa Crescia Ezza",
-    subtitle: "Sapori della tradizione gallurese",
+    subtitle: places.saCrescia,
     location: "Olbia",
     image: "/sardegna/sa-crescia-ezza.jpg",
     href: "https://www.sacresciaezza.com/",
   },
   {
     name: "Tenuta Paltusa",
-    subtitle: "Vini, vigneti e degustazioni",
-    location: "Gallura",
+    subtitle: places.paltusa,
+    location: places.locationGallura,
     image: "/sardegna/paltusa.jpg",
     href: "https://www.paltusa.it/",
   },
   {
     name: "Podere Guardia Grande",
-    subtitle: "Vini e sapori della Sardegna",
+    subtitle: places.guardia,
     location: "Alghero",
     image: "/sardegna/podere-guardia-grande.jpg",
     href: "https://podereguardiagrande.com/it",
@@ -38,7 +46,7 @@ const cantina = [
 const restaurant = [
   {
     name: "Sushi Mio",
-    subtitle: "Sushi à la carte",
+    subtitle: places.sushi,
     location: "Olbia",
     image: "/sardegna/sushi-mio.jpg",
   },
@@ -47,17 +55,20 @@ const restaurant = [
 const breakfast = [
   {
     name: "Pasticceria Pace",
-    subtitle: "Colazioni e dolci",
+    subtitle: places.pace,
     location: "Porto Cervo",
     image: "/sardegna/pasticceria-pace.jpg",
   },
   {
     name: "Pistacchio",
-    subtitle: "Caffetteria e pasticceria",
+    subtitle: places.pistacchio,
     location: "Olbia",
     image: "/sardegna/pistacchio-colazione.jpg",
   },
 ];
+
+  return { cantina, restaurant, breakfast };
+}
 
 function CategoryTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -77,6 +88,9 @@ export default function Food({
   /** Il riquadro "stiamo ancora scegliendo" della categoria Aperitivi. */
   showComingSoon?: boolean;
 }) {
+  const { food: t } = useM(sardegnaMessages);
+  const { cantina, restaurant, breakfast } = getPlaces(t);
+
   return (
     <section id="cibo" className="anchor-offset px-6 py-24 md:py-32">
       <div className="mx-auto max-w-6xl">
@@ -85,13 +99,11 @@ export default function Food({
 
         <div className="mb-16 max-w-2xl">
           <h2 className="font-heading text-5xl font-light leading-none text-primary md:text-6xl">
-            Food
+            {t.title}
           </h2>
 
           <p className="mt-7 max-w-xl text-[15px] leading-7 text-secondary">
-            Qualche indirizzo che ci piace particolarmente,
-            tra sapori locali, colazioni, vino e posti dove
-            fermarsi per qualcosa di buono.
+            {t.text}
           </p>
         </div>
 
@@ -101,7 +113,7 @@ export default function Food({
 
         <div>
           <CategoryTitle>
-            Agriturismo / Cantina
+            {t.cantina}
           </CategoryTitle>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -121,7 +133,7 @@ export default function Food({
 
         <div className="mt-12">
           <CategoryTitle>
-            Ristorante
+            {t.restaurant}
           </CategoryTitle>
 
           <FoodTile
@@ -136,7 +148,7 @@ export default function Food({
 
         <div className="mt-12">
           <CategoryTitle>
-            Colazioni
+            {t.breakfast}
           </CategoryTitle>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -159,7 +171,7 @@ export default function Food({
         {showComingSoon && (
         <div className="mt-12">
           <CategoryTitle>
-            Aperitivi
+            {t.aperitifs}
           </CategoryTitle>
 
           <div
@@ -176,9 +188,7 @@ export default function Food({
             "
           >
             <p className="text-center font-heading text-[15px] leading-6 text-secondary">
-              Stiamo ancora scegliendo qualche posto
-              <br />
-              da consigliarvi...
+              <Lines text={t.comingSoon} />
             </p>
           </div>
         </div>

@@ -3,8 +3,13 @@ import ParallaxImage from "@/components/ui/ParallaxImage";
 import Reveal from "@/components/ui/Reveal";
 
 import { wedding } from "@/config/wedding";
+import { useM } from "@/i18n/use-messages";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
+
 
 export default function Location() {
+  const { location: t } = useM(matrimonioMessages);
+
   return (
     <section className="py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -27,7 +32,7 @@ export default function Location() {
             <div className="relative z-10 w-full px-8 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-16">
 
               <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-                LA LOCATION
+                {t.eyebrow}
               </p>
 
               <h2 className="mt-4 font-heading text-4xl font-light leading-tight text-primary sm:text-5xl">
@@ -37,14 +42,12 @@ export default function Location() {
               <div className="my-7 h-px w-16 bg-border" />
 
               <p className="leading-8 text-secondary">
-                Affacciata sul mare cristallino della Sardegna,
+                {t.before}
                 <strong className="font-medium text-primary">
                   {" "}
                   {wedding.location.venue}
                 </strong>{" "}
-                è il luogo che abbiamo scelto per celebrare il nostro
-                amore, immersi nella natura e circondati dalla
-                bellezza della costa.
+                {t.after}
               </p>
 
               <a
@@ -53,7 +56,7 @@ export default function Location() {
                 rel="noreferrer"
                 className="mt-9 inline-flex items-center justify-center bg-primary px-8 py-4 text-sm uppercase tracking-[0.22em] text-white transition hover:opacity-90"
               >
-                Scopri la location →
+                {t.cta}
               </a>
 
             </div>

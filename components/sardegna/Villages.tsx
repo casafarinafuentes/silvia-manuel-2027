@@ -1,6 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale } from "next-intl";
+
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
+import { fill } from "@/i18n/pair";
 
 const nearby = [
   "San Pantaleo",
@@ -17,14 +22,14 @@ const further = ["Alghero", "Castelsardo"];
  * paese, così il punto è sempre quello giusto e non dipende da
  * coordinate scritte a mano.
  */
-function mapSrc(place: string): string {
-  const query = encodeURIComponent(`${place}, Sardegna, Italia`);
-  return `https://www.google.com/maps?q=${query}&z=13&output=embed`;
+function mapSrc(place: string, country: string, hl: string): string {
+  const query = encodeURIComponent(`${place}, ${country}`);
+  return `https://www.google.com/maps?q=${query}&z=13&hl=${hl}&output=embed`;
 }
 
 /** Vista d'insieme mostrata quando nessun paese è selezionato. */
-const OVERVIEW_SRC =
-  "https://www.google.com/maps?q=Gallura%2C%20Sardegna&z=9&output=embed";
+const overviewSrc = (hl: string) =>
+  `https://www.google.com/maps?q=Gallura%2C%20Sardegna&z=9&hl=${hl}&output=embed`;
 
 function VillageList({
   items,
@@ -75,24 +80,26 @@ function VillageList({
 
 export default function Villages() {
   const [active, setActive] = useState<string | null>(null);
+  const { villages: t } = useM(sardegnaMessages);
+  const locale = useLocale();
 
   return (
     <section id="paesini" className="anchor-offset px-6 py-24 md:py-32">
       <div className="mx-auto max-w-6xl">
         <div className="mb-16 max-w-2xl">
           <p className="text-xs uppercase tracking-[0.4em] text-secondary">
-            Da scoprire
+            {t.eyebrow}
           </p>
 
           <h2 className="mt-4 font-heading text-5xl font-light text-primary md:text-6xl">
-            Paesini
+            {t.title}
           </h2>
         </div>
 
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div>
             <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-              In zona
+              {t.nearby}
             </p>
 
             <VillageList
@@ -103,7 +110,7 @@ export default function Villages() {
 
             <div className="mt-16">
               <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-                Se avete più tempo
+                {t.further}
               </p>
 
               <VillageList
@@ -125,8 +132,8 @@ export default function Villages() {
           >
             <iframe
               key={active ?? "panoramica"}
-              title={active ? `Mappa di ${active}` : "Mappa della Gallura"}
-              src={active ? mapSrc(active) : OVERVIEW_SRC}
+              title={active ? fill(t.mapOf, { name: active }) : t.mapGallura}
+              src={active ? mapSrc(active, t.country, locale) : overviewSrc(locale)}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="absolute inset-0 h-full w-full border-0 animate-[fadeIn_600ms_ease-out] motion-reduce:animate-none"
@@ -138,9 +145,7 @@ export default function Villages() {
               </p>
 
               <p className="mt-2 text-xs uppercase tracking-[0.28em] text-secondary">
-                {active
-                  ? "Sulla mappa"
-                  : "Passate il mouse sui nomi (o toccateli) per vederli"}
+                {active ? t.onMap : t.hint}
               </p>
             </div>
           </div>

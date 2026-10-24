@@ -1,5 +1,6 @@
 import { wedding } from "@/config/wedding";
 import { calendarDate, weddingEvent } from "@/lib/calendar";
+import { isLocale } from "@/i18n/locales";
 
 /**
  * "Aggiungi al calendario": file .ics con data e luogo del matrimonio.
@@ -16,13 +17,21 @@ function escapeText(text: string): string {
     .replace(/\n/g, "\\n");
 }
 
-export function GET() {
-  const { start, end, title, place, description } = weddingEvent;
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ locale: string }> },
+) {
+  const { locale } = await params;
+
+  if (!isLocale(locale)) return new Response("Not found", { status: 404 });
+
+  const { start, end, title, place, description, reminder } =
+    weddingEvent(locale);
 
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Silvia e Manuel//Matrimonio 2027//IT",
+    `PRODID:-//Silvia e Manuel//Matrimonio 2027//${locale.toUpperCase()}`,
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VEVENT",
@@ -36,7 +45,7 @@ export function GET() {
     `DESCRIPTION:${escapeText(description)}`,
     "BEGIN:VALARM",
     "ACTION:DISPLAY",
-    `DESCRIPTION:${escapeText("Tra una settimana: il matrimonio di Silvia & Manuel")}`,
+    `DESCRIPTION:${escapeText(reminder)}`,
     "TRIGGER:-P7D",
     "END:VALARM",
     "END:VEVENT",

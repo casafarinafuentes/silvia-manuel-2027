@@ -7,17 +7,35 @@ import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
 import { hasRealIban, wedding } from "@/config/wedding";
 import { currentTemporalContext } from "@/lib/temporal-now";
+import Lines from "@/components/ui/Lines";
+import { initLocale } from "@/i18n/init-locale";
+import { isLocale } from "@/i18n/locales";
+import { resolve } from "@/i18n/pair";
+import { getM } from "@/i18n/get-messages";
+import { giftMessages } from "@/i18n/messages/gift";
 
-export const metadata: Metadata = {
-  title: "Per tutto ciò che verrà",
-  description:
-    "Se desiderate farci un regalo, qui trovate le coordinate per contribuire ai progetti della nostra famiglia.",
-  /* Contiene coordinate bancarie: non deve finire nei motori di
-     ricerca. Per lo stesso motivo la pagina è fuori dalla sitemap. */
-  robots: { index: false, follow: false },
-};
+type PageProps = { params: Promise<{ locale: string }> };
 
-export default function ListaNozzePage() {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+
+  if (!isLocale(locale)) return {};
+
+  const m = resolve(giftMessages.metadata, locale);
+
+  return {
+    title: m.title,
+    description: m.description,
+    /* Contiene coordinate bancarie: non deve finire nei motori di
+       ricerca. Per lo stesso motivo la pagina è fuori dalla sitemap. */
+    robots: { index: false, follow: false },
+  };
+}
+
+export default async function ListaNozzePage({ params }: PageProps) {
+  await initLocale(params);
+
+  const m = await getM(giftMessages);
   const { gift } = wedding;
 
   const after = currentTemporalContext().phase === "after";
@@ -28,8 +46,8 @@ export default function ListaNozzePage() {
   return (
     <>
       <PageHero
-        title="Per tutto ciò che verrà"
-        subtitle="I nostri progetti"
+        title={m.hero.title}
+        subtitle={m.hero.subtitle}
         image="/lista-nozze/hero.jpg"
         alt=""
         overlayClassName="bg-gradient-to-b from-black/35 via-black/20 to-black/45"
@@ -50,18 +68,16 @@ export default function ListaNozzePage() {
         <div className="relative mx-auto max-w-3xl text-center">
           <Reveal>
             <p className="font-heading text-[30px] font-light leading-snug text-primary md:text-[44px]">
-              Una famiglia,
-              <br />
-              e tanti <em className="italic">progetti da realizzare</em>.
+              <TitleWithEmphasis
+                text={m.message.title}
+                emphasis={m.message.emphasis}
+              />
             </p>
           </Reveal>
 
           <Reveal delay={100}>
             <p className="mx-auto mt-8 max-w-xl text-[17px] leading-8 text-secondary">
-              Con il matrimonio {after ? "abbiamo iniziato" : "iniziamo"} a
-              costruire i progetti della nostra famiglia. Se desiderate farci un regalo, potete
-              aiutarci a trasformarli in realtà: qui sotto trovate le
-              coordinate per il bonifico.
+              {after ? m.message.textAfter : m.message.textBefore}
             </p>
           </Reveal>
         </div>
@@ -71,7 +87,7 @@ export default function ListaNozzePage() {
         <Reveal delay={200} className="relative mx-auto mt-14 max-w-xl">
           <div className="rounded-photo bg-primary px-8 py-10 text-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] sm:px-12">
             <h2 className="text-center text-xs uppercase tracking-[0.35em] text-white/85">
-              Coordinate per il bonifico
+              {m.details.title}
             </h2>
 
             <div className="mt-8 flex justify-center">
@@ -79,13 +95,10 @@ export default function ListaNozzePage() {
                 <GiftDetails
                   iban={gift.iban}
                   holder={gift.holder as string}
-                  reference={gift.reference}
                 />
               ) : (
                 <p className="text-center text-[15px] leading-7 text-white/90">
-                  Stiamo preparando le coordinate:
-                  <br />
-                  le troverete qui a breve.
+                  <Lines text={m.details.preparing} />
                 </p>
               )}
             </div>
@@ -94,12 +107,31 @@ export default function ListaNozzePage() {
 
         <Reveal delay={300}>
           <p className="mx-auto mt-10 max-w-md text-center text-[15px] leading-7 text-secondary">
-            Grazie di cuore, da entrambi.
+            {m.thanks}
           </p>
         </Reveal>
       </section>
 
       <Footer />
+    </>
+  );
+}
+
+/** Titolo su due righe con una parte in corsivo al posto di `{em}`. */
+function TitleWithEmphasis({
+  text,
+  emphasis,
+}: {
+  text: string;
+  emphasis: string;
+}) {
+  const [before, after] = text.split("{em}");
+
+  return (
+    <>
+      <Lines text={before} />
+      <em className="italic">{emphasis}</em>
+      {after}
     </>
   );
 }

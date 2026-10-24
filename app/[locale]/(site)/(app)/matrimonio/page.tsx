@@ -12,20 +12,32 @@ import CTA from "@/components/matrimonio/CTA";
 import Footer from "@/components/matrimonio/Footer";
 import StayTip from "@/components/ui/StayTip";
 import { currentTemporalContext } from "@/lib/temporal-now";
+import { initLocale } from "@/i18n/init-locale";
+import { alternatesFor } from "@/i18n/metadata";
+import { isLocale } from "@/i18n/locales";
+import { resolve } from "@/i18n/pair";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
 
-export function generateMetadata(): Metadata {
+type PageProps = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+
+  if (!isLocale(locale)) return {};
+
+  const m = resolve(matrimonioMessages.metadata, locale);
   const after = currentTemporalContext().phase === "after";
 
   return {
-    title: "Il matrimonio",
-    description: after
-      ? "Il 12 giugno 2027 a Li Capanni: il luogo, le foto e i ricordi della giornata."
-      : "Programma della giornata, location, dress code e informazioni pratiche per il 12 giugno 2027.",
-    alternates: { canonical: "/matrimonio" },
+    title: m.title,
+    description: after ? m.after : m.before,
+    alternates: alternatesFor(locale, "/matrimonio"),
   };
 }
 
-export default function MatrimonioPage() {
+export default async function MatrimonioPage({ params }: PageProps) {
+  await initLocale(params);
+
   const { phase } = currentTemporalContext();
 
   /* L'ordine delle sezioni segue la fase:

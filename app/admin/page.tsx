@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -228,12 +229,12 @@ export default async function AdminPage({
         </button>
 
         {q && (
-          <a
+          <Link
             href="/admin"
             className="self-center text-xs uppercase tracking-[0.26em] text-secondary hover:text-primary"
           >
             Azzera
-          </a>
+          </Link>
         )}
       </form>
 

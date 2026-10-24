@@ -7,6 +7,9 @@
  */
 
 import { isValidHotelChoice } from "../../data/hotels.ts";
+import { defaultLocale, type Locale } from "../../i18n/locales.ts";
+import { rsvpErrors } from "../../i18n/messages/rsvp.ts";
+import { fill, resolve } from "../../i18n/pair.ts";
 
 export type RsvpInput = {
   firstName: string;
@@ -53,6 +56,8 @@ export type ParseOptions = {
    * Dopo la scadenza la scelta non viene più richiesta né salvata.
    */
   hotelRequired?: boolean;
+  /** Lingua dei messaggi di errore (di default l'italiano). */
+  locale?: Locale;
 };
 
 export function parseRsvp(
@@ -60,6 +65,7 @@ export function parseRsvp(
   options: ParseOptions = {},
 ): ParseResult {
   const errors: RsvpFieldErrors = {};
+  const t = resolve(rsvpErrors, options.locale ?? defaultLocale);
 
   const source = (raw ?? {}) as Record<string, unknown>;
 
@@ -71,21 +77,21 @@ export function parseRsvp(
   let hotel = clean(source.hotel);
 
   if (!firstName) {
-    errors.firstName = "Inserisci il tuo nome.";
+    errors.firstName = t.firstNameRequired;
   } else if (firstName.length > LIMITS.name) {
-    errors.firstName = `Massimo ${LIMITS.name} caratteri.`;
+    errors.firstName = fill(t.maxLength, { max: LIMITS.name });
   }
 
   if (!lastName) {
-    errors.lastName = "Inserisci il tuo cognome.";
+    errors.lastName = t.lastNameRequired;
   } else if (lastName.length > LIMITS.name) {
-    errors.lastName = `Massimo ${LIMITS.name} caratteri.`;
+    errors.lastName = fill(t.maxLength, { max: LIMITS.name });
   }
 
   if (email && !EMAIL_PATTERN.test(email)) {
-    errors.email = "Controlla l'indirizzo email.";
+    errors.email = t.emailInvalid;
   } else if (email.length > LIMITS.email) {
-    errors.email = `Massimo ${LIMITS.email} caratteri.`;
+    errors.email = fill(t.maxLength, { max: LIMITS.email });
   }
 
   // `attending` non ha default: se manca è perché non è stata fatta
@@ -97,7 +103,7 @@ export function parseRsvp(
   } else if (source.attending === "true" || source.attending === "false") {
     attending = source.attending === "true";
   } else {
-    errors.attending = "Facci sapere se ci sarai.";
+    errors.attending = t.attendingRequired;
     attending = false;
   }
 
@@ -108,10 +114,10 @@ export function parseRsvp(
     : Number.NaN;
 
   if (!Number.isFinite(partySize)) {
-    errors.partySize = "Indica quante persone siete.";
+    errors.partySize = t.partySizeRequired;
     partySize = 1;
   } else if (partySize < 1 || partySize > MAX_PARTY_SIZE) {
-    errors.partySize = `Inserisci un numero tra 1 e ${MAX_PARTY_SIZE}.`;
+    errors.partySize = fill(t.partySizeRange, { max: MAX_PARTY_SIZE });
     partySize = Math.min(Math.max(partySize, 1), MAX_PARTY_SIZE);
   }
 
@@ -124,17 +130,17 @@ export function parseRsvp(
   if (!attending || !options.hotelRequired) {
     hotel = "";
   } else if (!hotel) {
-    errors.hotel = "Facci sapere dove pensi di dormire.";
+    errors.hotel = t.hotelRequired;
   } else if (!isValidHotelChoice(hotel)) {
-    errors.hotel = "Scegli una delle opzioni indicate.";
+    errors.hotel = t.hotelInvalid;
   }
 
   if (dietary.length > LIMITS.dietary) {
-    errors.dietary = `Massimo ${LIMITS.dietary} caratteri.`;
+    errors.dietary = fill(t.maxLength, { max: LIMITS.dietary });
   }
 
   if (message.length > LIMITS.message) {
-    errors.message = `Massimo ${LIMITS.message} caratteri.`;
+    errors.message = fill(t.maxLength, { max: LIMITS.message });
   }
 
   if (Object.keys(errors).length > 0) {

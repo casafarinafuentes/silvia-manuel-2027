@@ -1,4 +1,5 @@
 import { wedding } from "@/config/wedding";
+import type { Locale } from "@/i18n/locales";
 
 /**
  * Fine della scadenza RSVP: le 23:59 del giorno indicato in config,
@@ -14,9 +15,12 @@ export function isPastRsvpDeadline(now: Date = new Date()): boolean {
   return now.getTime() > RSVP_DEADLINE_END.getTime();
 }
 
-/** "12 marzo": la scadenza come va scritta nei testi, presa da config. */
-export function rsvpDeadlineLabel(): string {
-  return new Intl.DateTimeFormat("it-IT", {
+/**
+ * "12 marzo" / "12 de marzo": la scadenza come va scritta nei testi
+ * della lingua, presa da config.
+ */
+export function rsvpDeadlineLabel(locale: Locale = "it"): string {
+  return new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "it-IT", {
     day: "numeric",
     month: "long",
     timeZone: "UTC",

@@ -4,8 +4,9 @@ import ParallaxImage from "@/components/ui/ParallaxImage";
 import BackgroundVideo from "@/components/ui/BackgroundVideo";
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useLocale } from "next-intl";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 import SplitTitle from "@/components/ui/SplitTitle";
 import Magnetic from "@/components/ui/Magnetic";
@@ -14,14 +15,21 @@ import Countdown from "@/components/ui/Countdown";
 import { wedding } from "@/config/wedding";
 import SiteMenu from "@/components/layout/Menu";
 import { usePhase } from "@/components/layout/PhaseProvider";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { primaryAction } from "@/lib/phase-content";
+import { useM } from "@/i18n/use-messages";
+import { siteMessages } from "@/i18n/messages/site";
+import { uiMessages } from "@/i18n/messages/ui";
 
 export default function Hero() {
   const reduceMotion = useReducedMotion();
+  const locale = useLocale();
+  const site = useM(siteMessages);
+  const ui = useM(uiMessages);
 
   // Countdown e pulsante seguono la fase del matrimonio.
   const phase = usePhase();
-  const action = primaryAction(phase);
+  const action = primaryAction(phase, locale);
 
   return (
     <section className="relative min-h-screen overflow-hidden">
@@ -58,7 +66,11 @@ export default function Hero() {
       <div className="absolute left-0 top-0 z-20 flex w-full items-center justify-between p-6 text-white">
         <Logo className="h-16 w-auto" />
 
-        <SiteMenu variant="light" />
+        <div className="flex items-center gap-3 sm:gap-5">
+          <LanguageSwitcher variant="light" />
+
+          <SiteMenu variant="light" />
+        </div>
       </div>
 
       {/* Contenuto */}
@@ -76,7 +88,7 @@ export default function Hero() {
         </h1>
 
         <p className="mt-8 text-sm uppercase tracking-[0.35em]">
-          12 GIUGNO 2027
+          {site.dateUpper}
         </p>
 
         <div className="mt-5 h-px w-32 bg-white/60" />
@@ -95,7 +107,7 @@ export default function Hero() {
         <div className="mt-12">
           {phase === "after" ? (
             <p className="font-heading text-3xl font-light italic sm:text-4xl">
-              Grazie per aver festeggiato con noi.
+              {ui.thanks}
             </p>
           ) : (
             <Countdown variant="hero" />
@@ -127,7 +139,7 @@ export default function Hero() {
         className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-center text-primary"
       >
         <p className="mb-2 text-xs uppercase tracking-[0.35em]">
-          Scorri
+          {ui.scroll}
         </p>
 
         <ChevronDown size={28} aria-hidden="true" className="block" />

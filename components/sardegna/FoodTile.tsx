@@ -1,5 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useM } from "@/i18n/use-messages";
+import { sardegnaMessages } from "@/i18n/messages/sardegna";
+import { uiMessages } from "@/i18n/messages/ui";
+
 
 type FoodTileProps = {
   name: string;
@@ -32,6 +36,7 @@ export default function FoodTile({
   href,
   aspect = "wide",
 }: FoodTileProps) {
+  const { food } = useM(sardegnaMessages);
   const hasLink = Boolean(href);
 
   /* ------------------------------------------------------------------
@@ -104,7 +109,7 @@ export default function FoodTile({
 
             {hasLink && (
               <span className="mt-4 inline-block border-b border-primary/50 pb-1 text-xs uppercase tracking-[0.3em] text-primary">
-                Scopri →
+                {food.discover}
               </span>
             )}
           </div>
@@ -185,7 +190,7 @@ export default function FoodTile({
 
           {hasLink && (
             <span className="mt-4 inline-block border-b border-white/60 pb-1 text-[8px] uppercase tracking-[0.3em] text-white">
-              Scopri →
+              {food.discover}
             </span>
           )}
         </div>
@@ -201,12 +206,14 @@ function Wrapper({
   href?: string;
   children: React.ReactNode;
 }) {
+  const ui = useM(uiMessages);
+
   if (!href) return <>{children}</>;
 
   return (
     <Link
       href={href}
-      data-cursor="Scopri"
+      data-cursor={ui.cursor.discover}
       target="_blank"
       rel="noopener noreferrer"
       className="block rounded-tile"

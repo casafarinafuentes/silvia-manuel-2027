@@ -1,19 +1,24 @@
+import { uiMessages } from "@/i18n/messages/ui";
+
+const { nav } = uiMessages;
+
+/** Le voci del menu: i testi sono nelle due lingue (`uiMessages.nav`). */
 export const navigation = [
   {
-    label: "Il Matrimonio",
+    label: nav.matrimonio,
     href: "/matrimonio",
   },
   {
-    label: "RSVP",
+    label: nav.rsvp,
     href: "/rsvp",
   },
   {
-    label: "La Sardegna che amiamo",
+    label: nav.sardegna,
     href: "/sardegna",
   },
   {
     // Volutamente ultima: presente per chi la cerca, mai in evidenza.
-    label: "Per tutto ciò che verrà",
+    label: nav.gift,
     href: "/lista-nozze",
   },
 ];

@@ -6,17 +6,22 @@ import Divider from "@/components/ui/Divider";
 import Accordion from "@/components/ui/Accordion";
 import { usePhase } from "@/components/layout/PhaseProvider";
 
+import { useLocale } from "next-intl";
+
 import { getPracticalInfo } from "@/data/faq";
+import { useM } from "@/i18n/use-messages";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
 
 export default function FaqColumn() {
   const [openItem, setOpenItem] = useState<string | null>(null);
 
-  const { left, right } = getPracticalInfo(usePhase());
+  const { faq } = useM(matrimonioMessages);
+  const { left, right } = getPracticalInfo(usePhase(), useLocale());
 
   return (
     <div>
       <Divider
-        title="FAQ"
+        title={faq.title}
         className="mb-6"
       />
 

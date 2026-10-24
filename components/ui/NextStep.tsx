@@ -1,8 +1,10 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
 
 import Section from "@/components/ui/Section";
 import Magnetic from "@/components/ui/Magnetic";
+import { useM } from "@/i18n/use-messages";
+import { uiMessages } from "@/i18n/messages/ui";
 
 type NextStepProps = {
   /** Frase breve sopra il titolo, es. "Prossimo passo". */
@@ -19,17 +21,19 @@ type NextStepProps = {
  * sa sempre dove andare, senza dover riaprire il menu.
  */
 export default function NextStep({
-  eyebrow = "Prossimo passo",
+  eyebrow,
   title,
   description,
   href,
   cta,
 }: NextStepProps) {
+  const ui = useM(uiMessages);
+
   return (
     <Section>
       <div className="mx-auto max-w-2xl border-y border-border py-14 text-center">
         <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-          {eyebrow}
+          {eyebrow ?? ui.nextStep.eyebrow}
         </p>
 
         <h2 className="mt-4 font-heading text-3xl font-light text-primary md:text-4xl">

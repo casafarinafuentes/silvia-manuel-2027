@@ -1,12 +1,16 @@
 import type { ReactNode } from "react";
 
 import PageHeader from "@/components/layout/PageHeader";
+import { initLocale } from "@/i18n/init-locale";
 
 type AppLayoutProps = {
   children: ReactNode;
+  params: Promise<{ locale: string }>;
 };
 
-export default function AppLayout({ children }: AppLayoutProps) {
+export default async function AppLayout({ children, params }: AppLayoutProps) {
+  await initLocale(params);
+
   return (
     <>
       <PageHeader />

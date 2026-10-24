@@ -4,11 +4,16 @@ import Section from "@/components/ui/Section";
 import FeatureCard from "./FeatureCard";
 
 import { getHomeCards } from "@/data/homeCards";
+import { useLocale } from "next-intl";
+import { useM } from "@/i18n/use-messages";
+import { homeMessages } from "@/i18n/messages/home";
 import { currentTemporalContext } from "@/lib/temporal-now";
 
 export default function Welcome() {
   const { phase } = currentTemporalContext();
-  const homeCards = getHomeCards(phase);
+  const locale = useLocale();
+  const { welcome } = useM(homeMessages);
+  const homeCards = getHomeCards(phase, locale);
 
   return (
     <Section>
@@ -39,11 +44,9 @@ export default function Welcome() {
           {/* Il ritorno a capo manuale spezza male le righe su schermi
               stretti: lo lasciamo solo da md in su. */}
           <p className="font-heading text-[26px] leading-[1.2] text-primary sm:text-[30px] md:text-[34px]">
-            {phase === "after"
-              ? "Grazie per aver condiviso con noi"
-              : "Siamo felici di condividere con voi"}
+            {phase === "after" ? welcome.after : welcome.before}
             <br className="hidden md:inline" />{" "}
-            uno dei giorni più importanti della nostra vita.
+            {welcome.rest}
           </p>
 
           <div className="mt-7 flex items-center justify-center">

@@ -5,6 +5,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { wedding } from "@/config/wedding";
 import { usePhase } from "@/components/layout/PhaseProvider";
+import { useM } from "@/i18n/use-messages";
+import { uiMessages } from "@/i18n/messages/ui";
 
 type CountdownProps = {
   variant?: "hero" | "footer";
@@ -91,6 +93,7 @@ export default function Countdown({ variant = "footer" }: CountdownProps) {
   );
 
   const phase = usePhase();
+  const { countdown: c } = useM(uiMessages);
 
   const dark = variant === "footer";
 
@@ -106,7 +109,7 @@ export default function Countdown({ variant = "footer" }: CountdownProps) {
         }`}
         style={{ animation: "heartbeat 2.4s ease-in-out infinite" }}
       >
-        È il giorno! ♡
+        {c.today}
       </p>
     );
   }
@@ -114,23 +117,23 @@ export default function Countdown({ variant = "footer" }: CountdownProps) {
   const items =
     seconds === null
       ? [
-          { label: "Giorni", value: null },
-          { label: "Ore", value: null },
-          { label: "Minuti", value: null },
-          { label: "Secondi", value: null },
+          { label: c.days, value: null },
+          { label: c.hours, value: null },
+          { label: c.minutes, value: null },
+          { label: c.seconds, value: null },
         ]
       : [
-          { label: "Giorni", value: Math.floor(seconds / 86_400) },
-          { label: "Ore", value: Math.floor(seconds / 3_600) % 24 },
-          { label: "Minuti", value: Math.floor(seconds / 60) % 60 },
-          { label: "Secondi", value: seconds % 60 },
+          { label: c.days, value: Math.floor(seconds / 86_400) },
+          { label: c.hours, value: Math.floor(seconds / 3_600) % 24 },
+          { label: c.minutes, value: Math.floor(seconds / 60) % 60 },
+          { label: c.seconds, value: seconds % 60 },
         ];
 
   return (
     <div
       className="flex items-center justify-center whitespace-nowrap"
       role="timer"
-      aria-label="Tempo mancante al matrimonio"
+      aria-label={c.label}
     >
       {items.map((item, index) => (
         <div key={item.label} className="flex items-center">

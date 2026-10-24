@@ -3,6 +3,9 @@ import { Camera } from "lucide-react";
 import ParallaxImage from "@/components/ui/ParallaxImage";
 import Reveal from "@/components/ui/Reveal";
 import { wedding } from "@/config/wedding";
+import { useM } from "@/i18n/use-messages";
+import { matrimonioMessages } from "@/i18n/messages/matrimonio";
+
 
 /**
  * Raccolta delle foto degli ospiti: striscia a tutta larghezza con foto
@@ -22,6 +25,7 @@ export default function PhotoSharing({
   after?: boolean;
 }) {
   const { uploadUrl } = wedding.photos;
+  const { photos: t } = useM(matrimonioMessages);
 
   return (
     <section
@@ -46,19 +50,17 @@ export default function PhotoSharing({
           <Camera size={28} strokeWidth={1.3} aria-hidden="true" />
 
           <p className="mt-6 text-xs uppercase tracking-[0.4em] text-white/85">
-            Le vostre foto
+            {t.eyebrow}
           </p>
 
           <h2 className="mt-4 font-heading text-4xl font-light leading-tight sm:text-5xl md:text-6xl">
-            La giornata
+            {t.title1}
             <br />
-            <em className="italic">vista da voi</em>.
+            <em className="italic">{t.title2}</em>.
           </h2>
 
           <p className="mt-6 max-w-md leading-8 text-white/90">
-            {after
-              ? "Avete foto e video della giornata? Inviateceli da qui: li raccogliamo tutti in un posto solo, e arrivano solo a noi."
-              : "Scattate pure tutte le foto e i video che volete, poi inviateceli da qui: li raccogliamo tutti in un posto solo, e arrivano solo a noi."}
+            {after ? t.textAfter : t.textBefore}
           </p>
 
           {uploadUrl ? (
@@ -68,13 +70,11 @@ export default function PhotoSharing({
               rel="noreferrer"
               className="mt-9 inline-flex items-center justify-center border border-white bg-white px-8 py-3.5 text-xs uppercase tracking-[0.28em] text-[#2f2b28] transition hover:bg-transparent hover:text-white"
             >
-              Carica le tue foto →
+              {t.upload}
             </a>
           ) : (
             <p className="mt-9 inline-block border border-white/50 px-6 py-3 text-xs uppercase tracking-[0.24em] text-white/90">
-              {started || after
-                ? "Il link arriverà qui a breve"
-                : "Il link arriverà qui prima del matrimonio"}
+              {started || after ? t.soonStarted : t.soonBefore}
             </p>
           )}
         </Reveal>

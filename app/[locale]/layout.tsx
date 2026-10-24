@@ -1,13 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/next";
-import "./globals.css";
 
-import { wedding } from "@/config/wedding";
+import "../globals.css";
+import { fontVariables } from "../fonts";
+
 import { siteUrl } from "@/config/site";
 import CustomCursor from "@/components/ui/CustomCursor";
 import { PhaseProvider } from "@/components/layout/PhaseProvider";
 import PreviewBar from "@/components/layout/PreviewBar";
+import { initLocale } from "@/i18n/init-locale";
+import { locales, localeTags } from "@/i18n/locales";
+import { alternatesFor, localizedPath } from "@/i18n/metadata";
+import { resolve } from "@/i18n/pair";
+import { siteMessages } from "@/i18n/messages/site";
 import { isRsvpClosed } from "@/lib/temporal";
 import { currentTemporalContext, getPreviewDate } from "@/lib/temporal-now";
 
@@ -16,36 +22,34 @@ import { currentTemporalContext, getPreviewDate } from "@/lib/temporal-now";
    sole quando si passa da una fase all'altra. */
 export const revalidate = 3600;
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const title = `${wedding.branding.title} — ${wedding.branding.subtitle}`;
-
-const place = `${wedding.location.venue}, ${wedding.location.address.locality} (${wedding.location.address.region})`;
+type LayoutProps = {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+};
 
 /* Anche la descrizione che compare su Google e nelle anteprime dei
    link segue la fase: dopo il matrimonio non si può più dire "si
    sposano" né invitare a confermare. */
-export function generateMetadata(): Metadata {
+export async function generateMetadata({
+  params,
+}: Pick<LayoutProps, "params">): Promise<Metadata> {
+  const locale = await initLocale(params);
+  const m = resolve(siteMessages, locale);
+
   const { phase } = currentTemporalContext();
 
   const description =
     phase === "after"
-      ? `${wedding.branding.title} si sono sposati il ${wedding.branding.subtitle} a ${place}. Il luogo, le foto e i ricordi della giornata.`
+      ? m.description.after
       : isRsvpClosed(phase)
-        ? `${wedding.branding.title} si sposano il ${wedding.branding.subtitle} a ${place}. Programma e informazioni pratiche.`
-        : `${wedding.branding.title} si sposano il ${wedding.branding.subtitle} a ${place}. Programma, informazioni pratiche e conferma di presenza.`;
+        ? m.description.rsvpClosed
+        : m.description.rsvpOpen;
+
+  const title = `${m.title} — ${m.date}`;
 
   return {
     metadataBase: new URL(siteUrl()),
@@ -53,22 +57,23 @@ export function generateMetadata(): Metadata {
     title: {
       default: title,
       // Le pagine interne aggiungono solo il proprio nome.
-      template: `%s — ${wedding.branding.title}`,
+      template: `%s — ${m.title}`,
     },
 
     description,
 
-    applicationName: wedding.branding.title,
+    applicationName: m.title,
 
-    alternates: {
-      canonical: "/",
-    },
+    alternates: alternatesFor(locale, "/"),
 
     openGraph: {
       type: "website",
-      locale: "it_IT",
-      url: "/",
-      siteName: wedding.branding.title,
+      locale: localeTags[locale],
+      alternateLocale: locales
+        .filter((l) => l !== locale)
+        .map((l) => localeTags[l]),
+      url: localizedPath(locale, "/"),
+      siteName: m.title,
       title,
       description,
     },
@@ -92,20 +97,19 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function LocaleLayout({ children, params }: LayoutProps) {
+  const locale = await initLocale(params);
+  const m = resolve(siteMessages, locale);
+
   const temporal = currentTemporalContext();
 
   return (
     <html
-      lang="it"
+      lang={locale}
       // Lo script inline qui sotto aggiunge `js` a <html> prima del paint:
       // React vedrebbe un className diverso da quello renderizzato sul server.
       suppressHydrationWarning
-      className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
+      className={`${fontVariables} h-full antialiased`}
     >
       <head>
         {/*
@@ -124,16 +128,18 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         {/* Primo elemento raggiungibile da tastiera: salta menu e hero. */}
         <a href="#main" className="skip-link">
-          Vai al contenuto
+          {m.skipLink}
         </a>
 
-        <PhaseProvider phase={temporal.phase}>{children}</PhaseProvider>
+        <NextIntlClientProvider>
+          <PhaseProvider phase={temporal.phase}>{children}</PhaseProvider>
 
-        {process.env.NODE_ENV !== "production" && (
-          <PreviewBar context={temporal} previewDate={getPreviewDate()} />
-        )}
+          {process.env.NODE_ENV !== "production" && (
+            <PreviewBar context={temporal} previewDate={getPreviewDate()} />
+          )}
 
-        <CustomCursor />
+          <CustomCursor />
+        </NextIntlClientProvider>
 
         {/* Statistiche di visita senza cookie. Si attivano dalla dashboard
             Vercel (Analytics → Enable); finché non sono attive non fanno nulla. */}
