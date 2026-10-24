@@ -20,11 +20,45 @@ Comandi utili: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`.
 | Cosa | Dove |
 | --- | --- |
 | Data, luogo, orari, coordinate | `config/wedding.ts` (solo dati verificati: i campi incerti restano `null` e non vengono mostrati) |
-| Programma della giornata | `data/timeline.ts` |
-| Schede della home | `data/homeCards.ts` |
-| Voci del menu | `data/navigation.ts` |
-| Hotel, FAQ, dress code, Sardegna | `data/` |
+| Programma della giornata, dress code, FAQ, ispirazioni | `i18n/messages/matrimonio.ts` (IT + ES) |
+| Schede della home | `data/homeCards.ts` + testi in `i18n/messages/home.ts` |
+| Voci del menu | `data/navigation.ts` + testi in `i18n/messages/ui.ts` |
+| Hotel, avventure della Sardegna | `data/` |
 | Colori, font, raggi | `app/globals.css` (token in `:root`) |
+
+## Lingue (italiano e spagnolo)
+
+Il sito è in italiano (senza prefisso: `/matrimonio`) e in spagnolo
+(sotto `/es`: `/es/matrimonio`). Il cambio lingua è nell'intestazione,
+nel menu e nell'hero della home; chi arriva con il browser in spagnolo
+viene portato su `/es`.
+
+- **Testi**: stanno in `i18n/messages/*.ts` (e in `data/adventures.ts`),
+  sempre in coppia: `p("italiano", "español")`. Se manca una traduzione
+  il progetto non compila; `npm test` controlla anche che le due
+  versioni abbiano gli stessi segnaposto (`{date}`) e lo stesso numero
+  di righe.
+- **Nei componenti**: `useM(dizionario)` (componenti client e server non
+  async) oppure `await getM(dizionario)` (server async).
+- **Link interni**: sempre `Link` da `@/i18n/navigation`, che mantiene la
+  lingua. Ogni pagina nuova in `app/[locale]/` chiama `initLocale(params)`.
+- **Per aggiungere una lingua** (es. inglese): una riga in
+  `i18n/locales.ts` e un campo in `Pair` (`i18n/pair.ts`); il compilatore
+  elenca ogni testo da tradurre.
+- La pagina `/hotel` (nascosta) non è tradotta.
+
+## Invito interattivo
+
+Una busta con sigillo che si apre e mostra l'invito, per chi non può
+ricevere quello di carta. Vive solo a `/invito/<INVITE_SLUG>` (e
+`/es/invito/<INVITE_SLUG>` in spagnolo); qualsiasi altro indirizzo dà
+"pagina non trovata". Non è in sitemap né in `robots.txt` e ha `noindex`.
+
+Il repository è pubblico, quindi il segreto è una variabile d'ambiente:
+`INVITE_SLUG` (su Vercel: Settings → Environment Variables, poi un nuovo
+deploy). In sviluppo, senza variabile, vale `/invito/prova`. Codice in
+`components/invito/`, immagini in `public/invito/` (ritagli del file di
+stampa), testi in `i18n/messages/invite.ts`.
 
 ## RSVP e area admin
 

@@ -1,0 +1,523 @@
+/*
+  La busta che si apre.
+
+  Tutte le misure sono in `cqw`: 1cqw = 1% della larghezza di `.wrap`,
+  quindi busta e cartolina scalano insieme su qualsiasi schermo.
+
+  Geometria (in cqw):
+    busta   100 x 66.67, a 46 dal bordo alto della scena
+    patta   100 x 43.7, un triangolo che arriva al 65% dell'altezza
+    carta   78 x 115.3 (115x170 mm), larga come l'invito stampato
+
+  Lo stato sta in `data-phase` sulla scena e cambia nel tempo, scelto
+  da Envelope.tsx:
+
+    closed  busta chiusa, in attesa del tocco
+    seal    il sigillo si preme
+    flap    la patta si apre
+    rise    la cartolina esce dalla busta
+    reveal  la cartolina si ingrandisce, la busta svanisce
+    open    fine: compaiono i pulsanti
+*/
+
+.wrap {
+  container-type: inline-size;
+  /* Larga al massimo 520px, e mai tanto da non stare in altezza: a
+     cartolina aperta (128cqw) più i pulsanti deve entrare nello
+     schermo di un portatile. */
+  width: min(92vw, max(280px, min(520px, calc((100svh - 13rem) / 1.28))));
+  margin-inline: auto;
+}
+
+.scene {
+  position: relative;
+  height: 116cqw;
+  perspective: 150cqw;
+  perspective-origin: 50% 46cqw;
+  transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scene[data-phase="reveal"],
+.scene[data-phase="open"] {
+  height: 128cqw;
+}
+
+/* ---------- Intestazione, nello spazio sopra la busta ---------- */
+
+.header {
+  position: absolute;
+  inset: 4cqw 0 auto;
+  text-align: center;
+  transition: opacity 0.5s ease;
+}
+
+.eyebrow {
+  font-size: 3.4cqw;
+  letter-spacing: 1.1em;
+  padding-left: 1.1em;
+  color: var(--text-muted);
+}
+
+.names {
+  margin-top: 3cqw;
+  font-size: 3.6cqw;
+  letter-spacing: 0.28em;
+  padding-left: 0.28em;
+  color: var(--text);
+}
+
+.scene:not([data-phase="closed"]) .header {
+  opacity: 0;
+}
+
+/* ---------- Strati della busta (tutti sulla stessa area) ---------- */
+
+.layer {
+  position: absolute;
+  left: 0;
+  top: 46cqw;
+  width: 100cqw;
+  height: 66.67cqw;
+  transition:
+    opacity 0.9s ease,
+    translate 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back {
+  z-index: 1;
+  background: linear-gradient(180deg, #6c7b5f 0%, #7b8a6d 55%, #839277 100%);
+  box-shadow:
+    0 2.4cqw 5cqw rgba(54, 66, 48, 0.28),
+    0 0.4cqw 1cqw rgba(54, 66, 48, 0.2);
+}
+
+.front {
+  z-index: 3;
+  display: block;
+  overflow: visible;
+}
+
+.flapShadow {
+  position: absolute;
+  left: 0;
+  top: 46.6cqw;
+  width: 100cqw;
+  height: 43.7cqw;
+  z-index: 4;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: rgba(32, 44, 26, 0.55);
+  filter: blur(1cqw);
+  transition: opacity 0.3s ease;
+}
+
+.flap {
+  position: absolute;
+  left: 0;
+  top: 46cqw;
+  width: 100cqw;
+  height: 43.7cqw;
+  z-index: 5;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.95s cubic-bezier(0.55, 0, 0.25, 1),
+    opacity 0.9s ease,
+    translate 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flapFace {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  backface-visibility: hidden;
+}
+
+.flapFront {
+  background: linear-gradient(180deg, #8b9a7b 0%, #889777 100%);
+}
+
+/* Il rovescio guarda dall'altra parte (asse verticale): così, a patta
+   alzata, la punta resta in alto e la base sulla cerniera. */
+.flapBack {
+  transform: rotateY(180deg);
+  background: linear-gradient(0deg, #6a7a5d 0%, #7a896c 100%);
+}
+
+/* Il sigillo vive sulla patta: quando questa si alza, lo porta con sé. */
+.seal {
+  position: absolute;
+  left: 41.75cqw;
+  top: 32.5cqw;
+  width: 16.5cqw;
+  height: auto;
+  backface-visibility: hidden;
+  filter: drop-shadow(0 0.5cqw 0.7cqw rgba(30, 42, 26, 0.4));
+  transition: scale 0.4s ease;
+  animation: breathe 3.4s ease-in-out infinite;
+}
+
+.scene[data-phase="seal"] .seal {
+  scale: 0.9;
+  animation: none;
+}
+
+.scene:not([data-phase="closed"]):not([data-phase="seal"]) .seal {
+  animation: none;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.045;
+  }
+}
+
+/* ---------- Apertura ---------- */
+
+.scene:is(
+    [data-phase="seal"],
+    [data-phase="flap"],
+    [data-phase="rise"],
+    [data-phase="reveal"],
+    [data-phase="open"]
+  )
+  .flapShadow {
+  opacity: 0;
+}
+
+.scene:is(
+    [data-phase="flap"],
+    [data-phase="rise"],
+    [data-phase="reveal"],
+    [data-phase="open"]
+  )
+  .flap {
+  transform: rotateX(-180deg);
+}
+
+/* Aperta, la patta sta sopra la busta: la cartolina le passa davanti. */
+.scene:is([data-phase="rise"], [data-phase="reveal"], [data-phase="open"]) .flap {
+  z-index: 1;
+}
+
+.scene:is([data-phase="reveal"], [data-phase="open"]) :is(.back, .front, .flap) {
+  opacity: 0;
+  translate: 0 16cqw;
+}
+
+/* ---------- La cartolina ---------- */
+
+.cardSlot {
+  position: absolute;
+  left: 11cqw;
+  top: 6.35cqw;
+  width: 78cqw;
+  z-index: 2;
+  /* Dentro la busta: piccola e abbassata. */
+  translate: 0 14cqw;
+  scale: 0.4625;
+  transition:
+    translate 1s cubic-bezier(0.4, 0, 0.2, 1),
+    scale 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scene[data-phase="rise"] .cardSlot {
+  translate: 0 -22cqw;
+}
+
+.scene:is([data-phase="reveal"], [data-phase="open"]) .cardSlot {
+  translate: 0 0;
+  scale: 1;
+  z-index: 6;
+  transition:
+    translate 1.25s cubic-bezier(0.3, 0, 0.2, 1),
+    scale 1.25s cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+/* ---------- Tocco ---------- */
+
+.hit {
+  position: absolute;
+  left: 0;
+  top: 46cqw;
+  width: 100cqw;
+  height: 66.67cqw;
+  z-index: 10;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  border-radius: 0.6cqw;
+}
+
+.hit:focus-visible {
+  outline: 2px solid var(--primary-dark);
+  outline-offset: 6px;
+}
+
+.hit:disabled {
+  pointer-events: none;
+}
+
+.scene:not([data-phase="closed"]) .hit {
+  display: none;
+}
+
+/* ---------- Sotto la scena: invito a toccare, poi i pulsanti ---------- */
+
+.under {
+  display: grid;
+  justify-items: center;
+  margin-top: 2cqw;
+}
+
+.under > * {
+  grid-area: 1 / 1;
+  align-self: start;
+}
+
+.hint {
+  font-size: 3.1cqw;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: opacity 0.4s ease;
+  animation: nudge 2.6s ease-in-out infinite;
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Prima dell'apertura i pulsanti non occupano spazio. */
+.scene:not([data-phase="open"]) ~ .under .actions {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.actions {
+  width: 100%;
+  opacity: 1;
+  transition: opacity 0.8s ease 0.1s;
+}
+
+.scene:not([data-phase="closed"]) ~ .under .hint {
+  opacity: 0;
+  animation: none;
+  visibility: hidden;
+}
+
+/* ---------- Cartolina: testi ---------- */
+
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 115 / 170;
+  background: #fff;
+  color: #555958;
+  font-family: var(--font-crimson), Georgia, serif;
+  box-shadow:
+    0 0 0 1px rgba(60, 60, 55, 0.14),
+    0 2.4cqw 6cqw rgba(48, 52, 44, 0.18);
+  text-align: center;
+}
+
+.card > * {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0;
+}
+
+.monogram {
+  top: 6.8%;
+  left: 39% !important;
+  right: auto !important;
+  width: 22%;
+  height: auto;
+}
+
+.intro {
+  top: 26.6%;
+  font-size: 2.55cqw;
+  font-style: italic;
+  line-height: 1.22;
+  letter-spacing: 0.012em;
+}
+
+.namesImg {
+  top: 33.4%;
+  left: 17.4% !important;
+  right: auto !important;
+  width: 65.2%;
+  aspect-ratio: 1171 / 234;
+}
+
+.namesImg img,
+.namesImg .y {
+  position: absolute;
+}
+
+.namesImg img {
+  top: 0;
+  height: 100%;
+  width: auto;
+}
+
+.nSilvia {
+  left: 0.43%;
+}
+.nE {
+  left: 44%;
+}
+.nManuel {
+  left: 52.8%;
+}
+
+.y {
+  left: 42.5%;
+  top: 4%;
+  width: 9%;
+  font-family: var(--font-corinthia), cursive;
+  font-size: 11cqw;
+  line-height: 1;
+  color: #95847a;
+  text-align: center;
+}
+
+.date {
+  top: 46.2%;
+  font-size: 4.25cqw;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.3em;
+  padding-left: 0.3em;
+  color: #95847a;
+}
+
+.rule {
+  left: 50% !important;
+  right: auto !important;
+  width: 3.3cqw;
+  height: 1px;
+  translate: -50% 0;
+  background: #b9a698;
+}
+
+.rule1 {
+  top: 53.3%;
+}
+.rule2 {
+  top: 71.4%;
+}
+
+.caps {
+  font-size: 2.15cqw;
+  line-height: 1.38;
+  letter-spacing: 0.07em;
+}
+
+.where {
+  top: 56.2%;
+}
+
+.place {
+  top: 62.3%;
+  font-size: 2.5cqw;
+  font-style: italic;
+  line-height: 1.22;
+  letter-spacing: 0.02em;
+  font-variant-numeric: oldstyle-nums;
+}
+
+.rsvp {
+  top: 74.4%;
+}
+
+.cardButton {
+  top: 84.6%;
+  left: 50% !important;
+  right: auto !important;
+  translate: -50% 0;
+  display: inline-block;
+  padding: 2.1cqw 5cqw;
+  font-size: 2.1cqw;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fff;
+  background: #95847a;
+  transition: background 0.3s ease;
+}
+
+.cardButton:hover {
+  background: #7d6d63;
+}
+
+/* ---------- Pulsanti sotto la cartolina ---------- */
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #3f5643;
+  transition: background 0.3s ease;
+}
+
+.primary:hover {
+  background: #334637;
+}
+
+.secondary {
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--primary-dark);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.3rem;
+  transition: opacity 0.3s ease;
+}
+
+.secondary:hover {
+  opacity: 0.65;
+}
+
+/* ---------- Senza JavaScript: la cartolina è già aperta ---------- */
+
+/* ---------- Meno movimento ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .layer,
+  .flap,
+  .flapShadow,
+  .cardSlot,
+  .actions,
+  .hint,
+  .header {
+    transition: none !important;
+  }
+
+  .seal,
+  .hint {
+    animation: none !important;
+  }
+}
