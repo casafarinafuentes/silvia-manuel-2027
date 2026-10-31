@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { redirect } from "@/i18n/navigation";
-import { initLocale } from "@/i18n/init-locale";
-import { alternatesFor } from "@/i18n/metadata";
-import { isLocale } from "@/i18n/locales";
 
 import Hero from "@/components/hotel/Hero";
 import Intro from "@/components/hotel/Intro";
@@ -15,20 +12,25 @@ import InfoSection from "@/components/hotel/InfoSection";
 import NextStep from "@/components/ui/NextStep";
 import Footer from "@/components/matrimonio/Footer";
 import { HOTEL_SECTION_ENABLED } from "@/data/hotels";
+import { initLocale } from "@/i18n/init-locale";
+import { alternatesFor } from "@/i18n/metadata";
+import { isLocale } from "@/i18n/locales";
+import { getM } from "@/i18n/get-messages";
+import { resolve } from "@/i18n/pair";
+import { hotelMessages } from "@/i18n/messages/hotel";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
-// La pagina hotel è nascosta e non tradotta: se si riaccende resta in
-// italiano finché non la si traduce.
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
 
   if (!isLocale(locale)) return {};
 
+  const m = resolve(hotelMessages.metadata, locale);
+
   return {
-    title: "Dove dormire",
-    description:
-      "Alberghi consigliati a Cannigione, navetta per la location e come funziona la prenotazione.",
+    title: m.title,
+    description: m.description,
     alternates: alternatesFor(locale, "/hotel"),
     robots: HOTEL_SECTION_ENABLED ? undefined : { index: false, follow: false },
   };
@@ -37,11 +39,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function HotelPage({ params }: PageProps) {
   const locale = await initLocale(params);
 
-  // Pagina nascosta: non gestiamo noi gli hotel. Chi arriva da un
-  // vecchio link finisce sul consiglio per cercare alloggio da sé.
+  // Sezione spenta: chi arriva da un vecchio link finisce sul consiglio
+  // per cercare alloggio da sé (barra "Dove dormire" nella pagina Matrimonio).
   if (!HOTEL_SECTION_ENABLED) {
     redirect({ href: "/matrimonio#dove-dormire", locale });
   }
+
+  const { nextStep } = await getM(hotelMessages);
 
   return (
     <>
@@ -58,10 +62,10 @@ export default async function HotelPage({ params }: PageProps) {
       <Contact />
 
       <NextStep
-        title="Se vi fermate qualche giorno in più"
-        description="I posti del cuore di Silvia e Manuel in Gallura: dove mangiare, spiagge e paesini."
+        title={nextStep.title}
+        description={nextStep.description}
         href="/sardegna"
-        cta="La nostra Sardegna"
+        cta={nextStep.cta}
       />
 
       <Footer />

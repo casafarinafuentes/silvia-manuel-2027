@@ -95,7 +95,7 @@ describe("parseRsvp", () => {
     });
 
     it("accetta un hotel della lista e 'mi organizzo da solo'", () => {
-      for (const hotel of ["moma", "self"]) {
+      for (const hotel of ["micalosu", "self"]) {
         const result = parseRsvp({ ...valid, hotel }, { hotelRequired: true });
 
         assert.equal(result.ok, true, hotel);
@@ -114,7 +114,7 @@ describe("parseRsvp", () => {
 
     it("chi non partecipa non ha alloggio, anche se lo invia", () => {
       const result = parseRsvp(
-        { ...valid, attending: "false", hotel: "moma" },
+        { ...valid, attending: "false", hotel: "micalosu" },
         { hotelRequired: true },
       );
 
@@ -123,7 +123,7 @@ describe("parseRsvp", () => {
     });
 
     it("dopo la scadenza (non richiesto) l'alloggio viene ignorato", () => {
-      const result = parseRsvp({ ...valid, hotel: "moma" });
+      const result = parseRsvp({ ...valid, hotel: "micalosu" });
 
       assert.equal(result.ok, true);
       if (result.ok) assert.equal(result.data.hotel, "");
@@ -150,6 +150,22 @@ describe("parseRsvp: lingua dei messaggi", () => {
       assert.equal(result.errors.firstName, "Escribe tu nombre.");
       assert.match(result.errors.partySize ?? "", /entre 1 y/);
     }
+  });
+});
+
+describe("hotel dell'elenco precedente", () => {
+  it("un id uscito dalla selezione non è più accettato, ma resta leggibile in admin", async () => {
+    const result = parseRsvp(
+      { ...valid, hotel: "moma" },
+      { hotelRequired: true },
+    );
+
+    assert.equal(result.ok, false);
+
+    const { hotelLabel } = await import("../../data/hotels.ts");
+
+    assert.equal(hotelLabel("moma"), "Moma Hotel");
+    assert.equal(hotelLabel("sconosciuto"), "sconosciuto");
   });
 });
 

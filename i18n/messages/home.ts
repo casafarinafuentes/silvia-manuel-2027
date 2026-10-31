@@ -55,6 +55,13 @@ export const homeMessages = {
         "El plazo ya pasó: si aún no has respondido, hazlo cuanto antes.",
       ),
     },
+    hotel: {
+      title: p("Hotel", "Hoteles"),
+      text: p(
+        "Gli alberghi di Cannigione, la navetta e come prenotare.",
+        "Los hoteles de Cannigione, el transporte y cómo reservar.",
+      ),
+    },
     sardegna: {
       title: p("La Sardegna che amiamo", "La Cerdeña que amamos"),
       text: p(

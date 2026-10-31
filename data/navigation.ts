@@ -13,6 +13,10 @@ export const navigation = [
     href: "/rsvp",
   },
   {
+    label: nav.hotel,
+    href: "/hotel",
+  },
+  {
     label: nav.sardegna,
     href: "/sardegna",
   },

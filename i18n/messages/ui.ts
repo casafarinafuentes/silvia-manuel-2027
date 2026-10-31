@@ -10,6 +10,7 @@ export const uiMessages = {
   nav: {
     matrimonio: p("Il Matrimonio", "La Boda"),
     rsvp: p("RSVP", "Confirmar asistencia"),
+    hotel: p("Hotel", "Hoteles"),
     sardegna: p("La Sardegna che amiamo", "La Cerdeña que amamos"),
     gift: p("Per tutto ciò che verrà", "Para todo lo que vendrá"),
   },

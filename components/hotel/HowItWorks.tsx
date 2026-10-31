@@ -1,33 +1,27 @@
+import { useLocale } from "next-intl";
+
 import { Link } from "@/i18n/navigation";
-
+import { fill } from "@/i18n/pair";
+import { rsvpDeadlineLabel } from "@/lib/rsvp/deadline";
 import Section from "@/components/ui/Section";
-
-const steps = [
-  {
-    title: "Confermi la presenza",
-    text: "Nel modulo RSVP indichi l'hotel che preferisci, oppure che ti organizzi da solo. Serve solo a farci un'idea: non è ancora una prenotazione.",
-  },
-  {
-    title: "Il 31 gennaio contattiamo gli hotel",
-    text: "Comunichiamo a ogni struttura il numero certo di persone, così possono riservare le camere e proporci la tariffa per il gruppo.",
-  },
-  {
-    title: "Ricevi le indicazioni per prenotare",
-    text: "Gli hotel ci diranno come procedere (per esempio un link personale per prenotare e pagare). Te lo giriamo non appena disponibile.",
-  },
-];
+import { useM } from "@/i18n/use-messages";
+import { hotelMessages } from "@/i18n/messages/hotel";
 
 export default function HowItWorks() {
+  const { how } = useM(hotelMessages);
+  const date = rsvpDeadlineLabel(useLocale());
+  const steps = how.steps;
+
   return (
     <Section className="pt-6 pb-10">
       <div className="mx-auto max-w-7xl">
         <div className="rounded-panel bg-panel px-8 py-12 md:px-14">
           <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-            Come funziona
+            {how.eyebrow}
           </p>
 
           <h2 className="mt-4 max-w-2xl font-heading text-4xl font-light text-primary md:text-5xl">
-            Dormire a Cannigione, in tre passi
+            {how.title}
           </h2>
 
           <ol className="mt-12 grid gap-10 md:grid-cols-3">
@@ -38,7 +32,7 @@ export default function HowItWorks() {
                 </span>
 
                 <h3 className="mt-3 font-heading text-2xl text-primary">
-                  {step.title}
+                  {fill(step.title, { date })}
                 </h3>
 
                 <p className="mt-3 leading-7 text-secondary">{step.text}</p>
@@ -48,17 +42,16 @@ export default function HowItWorks() {
 
           <p className="mt-12 max-w-3xl border-t border-border pt-6 text-sm leading-7 text-secondary">
             <strong className="font-medium text-primary">
-              Confermi dopo il 31 gennaio?
+              {fill(how.lateTitle, { date })}
             </strong>{" "}
-            Puoi farlo comunque, ma gli hotel saranno già stati contattati:
+            {how.lateText}
             <Link
               href="/rsvp#contatti"
-              className="ml-1 underline underline-offset-4"
+              className="mx-1 underline underline-offset-4"
             >
-              scrivici
+              {how.lateLink}
             </Link>{" "}
-            e cerchiamo insieme una soluzione, compatibilmente con le
-            disponibilità.
+            {how.lateEnd}
           </p>
         </div>
       </div>

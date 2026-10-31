@@ -1,4 +1,9 @@
+import { useM } from "@/i18n/use-messages";
+import { hotelMessages } from "@/i18n/messages/hotel";
+
 export default function Map() {
+  const { map } = useM(hotelMessages);
+
   return (
     <div
       className="
@@ -12,13 +17,13 @@ export default function Map() {
     >
       <div className="px-8 pt-8">
         <h2 className="font-heading text-[42px] font-light text-primary">
-          Dove siamo
+          {map.title}
         </h2>
       </div>
 
       <div className="p-8 pt-6">
         <iframe
-          title="Mappa di Cannigione"
+          title={map.mapTitle}
           src="https://www.google.com/maps?q=41.1078363,9.4381003&z=13&output=embed"
           className="h-[380px] w-full rounded-tile border-0"
           loading="lazy"
@@ -32,7 +37,7 @@ export default function Map() {
           rel="noopener noreferrer"
           className="mt-4 inline-block border-b border-border pb-1 text-xs uppercase tracking-[0.24em] text-primary transition hover:border-primary"
         >
-          Apri Cannigione su Google Maps →
+          {map.open}
         </a>
       </div>
     </div>

@@ -3,6 +3,7 @@ import {
   Mail,
   MapPinned,
   Gift,
+  BedDouble,
 } from "lucide-react";
 
 import { homeMessages } from "@/i18n/messages/home";
@@ -30,6 +31,13 @@ export function getHomeCards(phase: WeddingPhase, locale: Locale) {
       href: "/rsvp",
     },
     {
+      title: c.hotel.title,
+      description: c.hotel.text,
+      image: "/cards/hotel.jpg",
+      icon: BedDouble,
+      href: "/hotel",
+    },
+    {
       title: c.sardegna.title,
       description: c.sardegna.text,
       image: "/cards/sardinia.jpg",
@@ -45,8 +53,11 @@ export function getHomeCards(phase: WeddingPhase, locale: Locale) {
     },
   ];
 
-  // Dal giorno del matrimonio non c'è più niente da confermare.
-  return isRsvpClosed(phase)
-    ? cards.filter((card) => card.href !== "/rsvp")
-    : cards;
+  // Dal giorno del matrimonio non c'è più niente da confermare, e dopo
+  // la festa nessuno cerca più un hotel.
+  return cards.filter(
+    (card) =>
+      !(isRsvpClosed(phase) && card.href === "/rsvp") &&
+      !(phase === "after" && card.href === "/hotel"),
+  );
 }

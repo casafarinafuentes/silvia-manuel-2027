@@ -10,7 +10,7 @@ import { localizedPath } from "@/i18n/metadata";
  * coordinate bancarie) e la pagina dell'invito, che si raggiunge solo
  * da chi ha il link.
  */
-const routes = ["/", "/matrimonio", "/rsvp", "/sardegna"] as const;
+const routes = ["/", "/matrimonio", "/rsvp", "/hotel", "/sardegna"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl();

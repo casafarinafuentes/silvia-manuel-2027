@@ -1,8 +1,12 @@
 import Image from "next/image";
 
 import ContactAction from "@/components/ui/ContactAction";
+import { useM } from "@/i18n/use-messages";
+import { hotelMessages } from "@/i18n/messages/hotel";
 
 export default function Contact() {
+  const { contact } = useM(hotelMessages);
+
   return (
     <section className="relative border-y border-border bg-white py-24">
       <Image
@@ -24,18 +28,15 @@ export default function Contact() {
       <div className="relative mx-auto max-w-3xl px-6 text-center">
 
         <p className="text-xs uppercase tracking-[0.35em] text-secondary">
-          Hai bisogno di aiuto?
+          {contact.eyebrow}
         </p>
 
         <h2 className="mt-4 font-heading text-[42px] font-light text-primary">
-          Siamo felici di aiutarti.
+          {contact.title}
         </h2>
 
         <p className="mx-auto mt-6 max-w-2xl leading-8 text-secondary">
-          Se avete dubbi riguardo agli hotel
-          o al vostro soggiorno, non esitate a contattarci.
-          Saremo felici di darvi tutte le informazioni
-          necessarie.
+          {contact.text}
         </p>
 
         <div className="mt-12">

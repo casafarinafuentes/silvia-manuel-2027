@@ -1,8 +1,12 @@
 import { Bus } from "lucide-react";
 
 import Section from "@/components/ui/Section";
+import { useM } from "@/i18n/use-messages";
+import { hotelMessages } from "@/i18n/messages/hotel";
 
 export default function Navetta() {
+  const { navetta } = useM(hotelMessages);
+
   return (
     <Section className="py-6">
       <div
@@ -45,28 +49,21 @@ export default function Navetta() {
           {/* Titolo */}
 
           <h2 className="mt-6 font-heading text-[38px] font-light text-primary">
-            Servizio navetta
+            {navetta.title}
           </h2>
 
           {/* Testo */}
 
           <div className="mt-5 space-y-1 text-lg leading-8 text-secondary">
-            <p>
-              Per gli ospiti che soggiorneranno negli hotel
-              che vi consigliamo,
-            </p>
-
-            <p>
-              sarà disponibile una navetta dedicata
-              da e per la location del matrimonio.
-            </p>
+            {navetta.text.split("\n").map((line) => (
+              <p key={line}>{line}</p>
+            ))}
           </div>
 
           {/* Nota */}
 
           <p className="mt-8 text-sm italic text-secondary">
-            Gli orari saranno comunicati nei giorni
-            precedenti all&apos;evento.
+            {navetta.note}
           </p>
         </div>
         

@@ -17,6 +17,7 @@ import { usePhase } from "@/components/layout/PhaseProvider";
 import { useM } from "@/i18n/use-messages";
 import { rsvpMessages } from "@/i18n/messages/rsvp";
 import { fill } from "@/i18n/pair";
+import { hotelSummary } from "@/data/hotel-labels";
 
 import { submitRsvp, type RsvpState } from "@/lib/rsvp/actions";
 import { isPastRsvpDeadline, rsvpDeadlineLabel } from "@/lib/rsvp/deadline";
@@ -268,9 +269,7 @@ export default function Form() {
                                 ...hotels.map((h) => ({
                                   id: h.id,
                                   title: h.name,
-                                  subtitle: [`${"★".repeat(h.stars)}`, h.priceRange]
-                                    .filter(Boolean)
-                                    .join(" · "),
+                                  subtitle: hotelSummary(h, locale),
                                 })),
                                 {
                                   id: HOTEL_SELF_ARRANGED,

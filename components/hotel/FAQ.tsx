@@ -2,42 +2,18 @@
 
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
+import { useLocale } from "next-intl";
 
-const faqs = [
-  {
-    question: "C'è una convenzione con gli hotel?",
-    answer:
-      "No. Gli hotel non ci hanno dato una convenzione: hanno una tariffa dedicata solo per i gruppi. Per questo raccogliamo le preferenze con la conferma di presenza e il 31 gennaio comunichiamo loro il numero certo di persone.",
-  },
-  {
-    question: "Posso prenotare per conto mio?",
-    answer:
-      "Certo. Nel modulo RSVP puoi scegliere \"Mi organizzo autonomamente\" e prenotare dove preferisci, anche direttamente sul sito dell'hotel.",
-  },
-  {
-    question: "Quanto costano gli hotel?",
-    answer:
-      "Sotto ogni struttura trovi una fascia di prezzo indicativa per camera doppia. Il prezzo definitivo dipende dalla tariffa che ci verrà proposta per il gruppo.",
-  },
-  {
-    question: "C'è la navetta?",
-    answer:
-      "Sì: per chi alloggia negli hotel che vi consigliamo è prevista una navetta dedicata da e per la location. Gli orari saranno comunicati nei giorni precedenti al matrimonio.",
-  },
-  {
-    question: "Dove sono rispetto alla location?",
-    answer:
-      "Tutte le strutture sono a Cannigione, la stessa località di Li Capanni. Nella mappa qui accanto vedi la zona.",
-  },
-  {
-    question: "Posso cancellare o modificare la prenotazione?",
-    answer:
-      "Le condizioni di modifica e cancellazione dipendono dalla struttura scelta. Vi consigliamo di verificarle al momento della prenotazione.",
-  },
-];
+import { fill } from "@/i18n/pair";
+import { rsvpDeadlineLabel } from "@/lib/rsvp/deadline";
+import { useM } from "@/i18n/use-messages";
+import { hotelMessages } from "@/i18n/messages/hotel";
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
+  const { faq: t } = useM(hotelMessages);
+  const date = rsvpDeadlineLabel(useLocale());
+  const faqs = t.items;
 
   return (
     <div
@@ -51,7 +27,7 @@ export default function FAQ() {
       "
     >
       <h2 className="font-heading text-[42px] font-light text-primary">
-        Domande frequenti
+        {t.title}
       </h2>
 
       <div className="mt-8 divide-y divide-border">
@@ -98,13 +74,13 @@ export default function FAQ() {
                   duration-300
                   ${
                     isOpen
-                      ? "max-h-40 pb-6"
+                      ? "max-h-56 pb-6"
                       : "max-h-0"
                   }
                 `}
               >
                 <p className="max-w-xl pr-10 leading-7 text-secondary">
-                  {faq.answer}
+                  {fill(faq.answer, { date })}
                 </p>
               </div>
             </div>

@@ -1,6 +1,12 @@
 import ParallaxImage from "@/components/ui/ParallaxImage";
+import { useM } from "@/i18n/use-messages";
+import { hotelMessages } from "@/i18n/messages/hotel";
+import { uiMessages } from "@/i18n/messages/ui";
 
 export default function Hero() {
+  const { hero } = useM(hotelMessages);
+  const ui = useM(uiMessages);
+
   return (
     <section className="relative h-[82vh] min-h-[720px] overflow-hidden">
 
@@ -8,7 +14,7 @@ export default function Hero() {
 
       <ParallaxImage
         src="/hotel/hotel-hero.jpg"
-        alt="Hotel in Sardegna"
+        alt={hero.alt}
         priority
         className="object-cover object-center"
       />
@@ -33,7 +39,7 @@ export default function Hero() {
                 text-white/80
               "
             >
-              HOTEL
+              {hero.eyebrow}
             </p>
 
             <h1
@@ -46,7 +52,7 @@ export default function Hero() {
                 md:text-[108px]
               "
             >
-              Hotel
+              {hero.title}
             </h1>
 
             <p
@@ -58,10 +64,7 @@ export default function Hero() {
                 text-white/90
               "
             >
-              Abbiamo selezionato alcune strutture nelle
-              vicinanze della location, per permettervi di
-              vivere un soggiorno rilassante e godervi al
-              meglio il weekend del matrimonio.
+              {hero.text}
             </p>
 
           </div>
@@ -88,7 +91,7 @@ export default function Hero() {
             text-white/80
           "
         >
-          Scorri
+          {ui.scroll}
         </p>
 
         <svg

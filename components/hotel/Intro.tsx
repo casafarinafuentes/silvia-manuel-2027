@@ -1,8 +1,13 @@
 import Image from "next/image";
 
 import Section from "@/components/ui/Section";
+import Lines from "@/components/ui/Lines";
+import { useM } from "@/i18n/use-messages";
+import { hotelMessages } from "@/i18n/messages/hotel";
 
 export default function Intro() {
+  const { intro } = useM(hotelMessages);
+
   return (
     <Section className="pb-0">
       <div className="relative">
@@ -28,9 +33,7 @@ export default function Intro() {
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <h2 className="font-heading text-[48px] font-light leading-[1.15] text-primary md:text-[40px]">
-            Per un soggiorno
-            
-            indimenticabile
+            <Lines text={intro.title} />
           </h2>
 
           <div className="mt-8 flex items-center justify-center">
@@ -44,14 +47,9 @@ export default function Intro() {
           </div>
 
           <div className="mt-8 space-y-4 text-lg leading-8 text-secondary">
-            <p>
-              Abbiamo raccolto alcune strutture a Cannigione, a pochi
-              minuti dalla location. Gli hotel non ci hanno dato una
-              convenzione, ma applicano una tariffa dedicata ai gruppi:
-              per questo vi chiediamo di indicare la vostra preferenza
-              già nella conferma di presenza. Per chi alloggia in questi
-              hotel è prevista una navetta da e per la location.
-            </p>
+            <p>{intro.planner}</p>
+
+            <p>{intro.group}</p>
           </div>
 
         </div>
