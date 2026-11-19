@@ -56,10 +56,10 @@ export const homeMessages = {
       ),
     },
     hotel: {
-      title: p("Hotel", "Hoteles"),
+      title: p("Viaggio & Hotel", "Viaje & Hotel"),
       text: p(
-        "Gli alberghi di Cannigione, la navetta e come prenotare.",
-        "Los hoteles de Cannigione, el transporte y cómo reservar.",
+        "Come arrivare in nave o in aereo e gli hotel consigliati a Cannigione.",
+        "Cómo llegar en barco o en avión y los hoteles recomendados en Cannigione.",
       ),
     },
     sardegna: {

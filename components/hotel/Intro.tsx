@@ -9,7 +9,7 @@ export default function Intro() {
   const { intro } = useM(hotelMessages);
 
   return (
-    <Section className="pb-0">
+    <Section id="hotel" className="anchor-offset pb-0">
       <div className="relative">
         {/* Decorazione */}
 

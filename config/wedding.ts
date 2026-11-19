@@ -111,6 +111,20 @@ export const wedding = {
     uploadUrl: null as string | null,
   },
 
+  /**
+   * Gruppo aggiornamenti: il link d'invito al gruppo annunci della
+   * Community WhatsApp (ci scrivono solo gli sposi).
+   *
+   * DA FORNIRE. Finché resta `null` il riquadro non compare da nessuna
+   * parte. Il link si mostra solo dove arriva chi è invitato davvero:
+   * dopo la conferma RSVP, nell'invito con la busta e nella pagina
+   * Viaggio & Hotel (non nel footer, per non aprirlo a chiunque trovi
+   * il sito).
+   */
+  community: {
+    whatsappUrl: null as string | null,
+  },
+
   rsvpDeadline: "2027-03-12",
 };
 

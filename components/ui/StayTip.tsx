@@ -1,5 +1,7 @@
 import { BedDouble } from "lucide-react";
 
+import { Link } from "@/i18n/navigation";
+import { HOTEL_SECTION_ENABLED } from "@/data/hotels";
 import { useM } from "@/i18n/use-messages";
 import { uiMessages } from "@/i18n/messages/ui";
 
@@ -37,6 +39,15 @@ export default function StayTip() {
         </div>
 
         <div className="flex shrink-0 flex-wrap justify-center gap-x-8 gap-y-3">
+          {HOTEL_SECTION_ENABLED && (
+            <Link
+              href="/viaggio#hotel"
+              className="border-b border-white pb-1 text-xs uppercase tracking-[0.24em] text-white transition hover:text-[#e6d3b3]"
+            >
+              {t.hotels} →
+            </Link>
+          )}
+
           {links.map((link) => (
             <a
               key={link.href}

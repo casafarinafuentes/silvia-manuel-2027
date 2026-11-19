@@ -5,6 +5,7 @@ import Envelope from "@/components/invito/Envelope";
 import InvitationCard from "@/components/invito/InvitationCard";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { Link } from "@/i18n/navigation";
+import CommunityJoin from "@/components/viaggio/CommunityJoin";
 import { initLocale } from "@/i18n/init-locale";
 import { isLocale } from "@/i18n/locales";
 import { getM } from "@/i18n/get-messages";
@@ -92,6 +93,8 @@ export default async function InvitoPage({ params }: PageProps) {
             <p className="max-w-xs text-sm leading-6 text-secondary">
               {m.actions.note}
             </p>
+
+            <CommunityJoin compact />
           </div>
         }
       />

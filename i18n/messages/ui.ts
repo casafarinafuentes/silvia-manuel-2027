@@ -10,7 +10,7 @@ export const uiMessages = {
   nav: {
     matrimonio: p("Il Matrimonio", "La Boda"),
     rsvp: p("RSVP", "Confirmar asistencia"),
-    hotel: p("Hotel", "Hoteles"),
+    hotel: p("Viaggio & Hotel", "Viaje & Hotel"),
     sardegna: p("La Sardegna che amiamo", "La Cerdeña que amamos"),
     gift: p("Per tutto ciò che verrà", "Para todo lo que vendrá"),
   },
@@ -56,9 +56,10 @@ export const uiMessages = {
       "¿Necesitas un consejo sobre dónde alojarte?",
     ),
     text: p(
-      "Ti suggeriamo di cercare su Airbnb o Booking nelle zone limitrofe: Cannigione, Arzachena, Baja Sardinia e Palau sono tutte a pochi minuti dalla location.",
-      "Te sugerimos buscar en Airbnb o Booking en las zonas cercanas: Cannigione, Arzachena, Baja Sardinia y Palau están todas a pocos minutos del lugar.",
+      "Abbiamo selezionato alcuni hotel a Cannigione. In alternativa potete cercare su Airbnb o Booking nelle zone limitrofe: Cannigione, Arzachena, Baja Sardinia e Palau sono tutte a pochi minuti dalla location.",
+      "Seleccionamos algunos hoteles en Cannigione. Como alternativa pueden buscar en Airbnb o Booking en las zonas cercanas: Cannigione, Arzachena, Baja Sardinia y Palau están todas a pocos minutos del lugar.",
     ),
+    hotels: p("Hotel consigliati", "Hoteles recomendados"),
     airbnb: p("Cerca su Airbnb", "Buscar en Airbnb"),
     booking: p("Cerca su Booking", "Buscar en Booking"),
     airbnbUrl: p(

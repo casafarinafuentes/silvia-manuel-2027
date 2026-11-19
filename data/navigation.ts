@@ -14,7 +14,7 @@ export const navigation = [
   },
   {
     label: nav.hotel,
-    href: "/hotel",
+    href: "/viaggio",
   },
   {
     label: nav.sardegna,

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { redirect } from "@/i18n/navigation";
 
 import Hero from "@/components/hotel/Hero";
 import Intro from "@/components/hotel/Intro";
 import Navetta from "@/components/hotel/Navetta";
 import HowItWorks from "@/components/hotel/HowItWorks";
 import Hotels from "@/components/hotel/Hotels";
+import PageNav from "@/components/viaggio/PageNav";
+import Arrivals from "@/components/viaggio/Arrivals";
+import CarNotice from "@/components/viaggio/CarNotice";
+import CommunityJoin from "@/components/viaggio/CommunityJoin";
 
 import Contact from "@/components/hotel/Contact";
 import InfoSection from "@/components/hotel/InfoSection";
@@ -31,19 +34,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: m.title,
     description: m.description,
-    alternates: alternatesFor(locale, "/hotel"),
-    robots: HOTEL_SECTION_ENABLED ? undefined : { index: false, follow: false },
+    alternates: alternatesFor(locale, "/viaggio"),
   };
 }
 
-export default async function HotelPage({ params }: PageProps) {
-  const locale = await initLocale(params);
-
-  // Sezione spenta: chi arriva da un vecchio link finisce sul consiglio
-  // per cercare alloggio da sé (barra "Dove dormire" nella pagina Matrimonio).
-  if (!HOTEL_SECTION_ENABLED) {
-    redirect({ href: "/matrimonio#dove-dormire", locale });
-  }
+/**
+ * Viaggio & Hotel: prima come arrivare (nave o aereo) e perché serve
+ * l'auto, poi la navetta e gli hotel consigliati. /hotel porta qui
+ * (vedi next.config.ts).
+ *
+ * Con la sezione hotel spenta (`HOTEL_SECTION_ENABLED`) resta solo la
+ * parte sul viaggio.
+ */
+export default async function ViaggioPage({ params }: PageProps) {
+  await initLocale(params);
 
   const { nextStep } = await getM(hotelMessages);
 
@@ -51,13 +55,22 @@ export default async function HotelPage({ params }: PageProps) {
     <>
       <Hero />
 
-      <Intro />
+      <PageNav showHotels={HOTEL_SECTION_ENABLED} />
 
-      <Navetta />
-      <HowItWorks />
-      <Hotels />
+      <Arrivals />
+      <CarNotice />
 
-      <InfoSection />
+      {HOTEL_SECTION_ENABLED && (
+        <>
+          <Navetta />
+          <Intro />
+          <HowItWorks />
+          <Hotels />
+          <InfoSection />
+        </>
+      )}
+
+      <CommunityJoin />
 
       <Contact />
 

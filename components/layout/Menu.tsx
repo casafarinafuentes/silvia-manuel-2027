@@ -32,7 +32,7 @@ export default function SiteMenu({
   const items = useM(navigation).filter(
     (item) =>
       !(isRsvpClosed(phase) && item.href === "/rsvp") &&
-      !(phase === "after" && item.href === "/hotel"),
+      !(phase === "after" && item.href === "/viaggio"),
   );
 
   // Il portal esiste solo nel browser: sul server non c'è un body.

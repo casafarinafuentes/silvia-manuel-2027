@@ -6,20 +6,20 @@ import { p } from "../pair.ts";
  */
 export const hotelMessages = {
   metadata: {
-    title: p("Dove dormire", "Dónde alojarse"),
+    title: p("Viaggio & Hotel", "Viaje & Hotel"),
     description: p(
-      "Alberghi consigliati a Cannigione, prezzi indicativi per il 12 giugno 2027 e come funziona la prenotazione.",
-      "Hoteles recomendados en Cannigione, precios orientativos para el 12 de junio de 2027 y cómo funciona la reserva.",
+      "Come arrivare in Sardegna (nave o aereo), perché serve l'auto, gli alberghi consigliati a Cannigione e i prezzi indicativi per il 12 giugno 2027.",
+      "Cómo llegar a Cerdeña (barco o avión), por qué se necesita auto, los hoteles recomendados en Cannigione y los precios orientativos para el 12 de junio de 2027.",
     ),
   },
 
   hero: {
-    eyebrow: p("HOTEL", "HOTEL"),
-    title: p("Hotel", "Hoteles"),
+    eyebrow: p("COME ARRIVARE E DOVE DORMIRE", "CÓMO LLEGAR Y DÓNDE ALOJARSE"),
+    title: p("Viaggio & Hotel", "Viaje & Hotel"),
     alt: p("Hotel in Sardegna", "Hotel en Cerdeña"),
     text: p(
-      "Abbiamo selezionato alcune strutture nelle vicinanze della location, per permettervi di vivere un soggiorno rilassante e godervi al meglio il weekend del matrimonio.",
-      "Hemos seleccionado algunos alojamientos cerca del lugar, para que disfruten de una estadía relajante y aprovechen al máximo el fin de semana de la boda.",
+      "Come arrivare in Sardegna, come muoversi una volta qui e dove dormire vicino alla location: tutto quello che serve per organizzare il viaggio.",
+      "Cómo llegar a Cerdeña, cómo moverse una vez aquí y dónde alojarse cerca del lugar: todo lo que necesitan para organizar el viaje.",
     ),
   },
 

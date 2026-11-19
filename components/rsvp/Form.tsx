@@ -18,6 +18,7 @@ import { useM } from "@/i18n/use-messages";
 import { rsvpMessages } from "@/i18n/messages/rsvp";
 import { fill } from "@/i18n/pair";
 import { hotelSummary } from "@/data/hotel-labels";
+import CommunityJoin from "@/components/viaggio/CommunityJoin";
 
 import { submitRsvp, type RsvpState } from "@/lib/rsvp/actions";
 import { isPastRsvpDeadline, rsvpDeadlineLabel } from "@/lib/rsvp/deadline";
@@ -56,6 +57,9 @@ function Success({
       <p className="mx-auto mt-6 max-w-md leading-8 text-secondary">
         {attending ? success.yes : success.no}
       </p>
+
+      {/* Gli aggiornamenti servono a chi viene. */}
+      {attending && <CommunityJoin compact />}
     </motion.div>
   );
 }
@@ -252,7 +256,7 @@ export default function Form() {
                             <p className="mb-6 text-[13px] leading-6 text-secondary">
                               {fill(t.lodging.note, { date })}{" "}
                               <Link
-                                href="/hotel"
+                                href="/viaggio#hotel"
                                 className="underline underline-offset-4"
                               >
                                 {t.lodging.seeHotels}

@@ -8,6 +8,7 @@ import { homeMessages } from "./messages/home.ts";
 import { hotelMessages } from "./messages/hotel.ts";
 import { hotels } from "../data/hotels.ts";
 import { inviteMessages } from "./messages/invite.ts";
+import { travelMessages } from "./messages/travel.ts";
 import { matrimonioMessages } from "./messages/matrimonio.ts";
 import { rsvpErrors, rsvpMessages } from "./messages/rsvp.ts";
 import { sardegnaMessages } from "./messages/sardegna.ts";
@@ -20,6 +21,7 @@ const dictionaries = {
   hotel: hotelMessages,
   hotels,
   invite: inviteMessages,
+  travel: travelMessages,
   matrimonio: matrimonioMessages,
   rsvp: rsvpMessages,
   rsvpErrors,

@@ -35,7 +35,7 @@ export function getHomeCards(phase: WeddingPhase, locale: Locale) {
       description: c.hotel.text,
       image: "/cards/hotel.jpg",
       icon: BedDouble,
-      href: "/hotel",
+      href: "/viaggio",
     },
     {
       title: c.sardegna.title,
@@ -58,6 +58,6 @@ export function getHomeCards(phase: WeddingPhase, locale: Locale) {
   return cards.filter(
     (card) =>
       !(isRsvpClosed(phase) && card.href === "/rsvp") &&
-      !(phase === "after" && card.href === "/hotel"),
+      !(phase === "after" && card.href === "/viaggio"),
   );
 }

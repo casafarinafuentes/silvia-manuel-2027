@@ -56,8 +56,8 @@ export const inviteMessages = {
     rsvp: p("Conferma la tua presenza", "Confirma tu asistencia"),
     site: p("Scopri il sito del matrimonio", "Descubre el sitio de la boda"),
     note: p(
-      "Sul sito trovate il programma, come arrivare e dove dormire.",
-      "En el sitio encontrarán el programa, cómo llegar y dónde alojarse.",
+      "Sul sito trovate il programma, come arrivare in nave o in aereo e dove dormire.",
+      "En el sitio encontrarán el programa, cómo llegar en barco o en avión y dónde alojarse.",
     ),
   },
 };

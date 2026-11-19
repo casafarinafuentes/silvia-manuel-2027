@@ -74,7 +74,7 @@ export default function FAQ() {
                   duration-300
                   ${
                     isOpen
-                      ? "max-h-56 pb-6"
+                      ? "max-h-[40rem] pb-6"
                       : "max-h-0"
                   }
                 `}
